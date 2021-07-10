@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  api_fridge_spy:
+    build:
+      context: ./
+      target: development
+    volumes:
+      - .:/src
+    depends_on:
+      - postgres
+    command: yarn dev
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/db
+      NODE_ENV: development
+
+  adminer:
+    depends_on:
+      - postgres
+    image: adminer
+    restart: always
+    ports:
+      - 8008:8080
+    logging:
+      driver: none
+
+  postgres:
+    image: postgres:12.7
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
