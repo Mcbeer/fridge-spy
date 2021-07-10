@@ -11,13 +11,13 @@ export const App = () => (
       <Route exact path="/login" />
       <Layout>
         <Switch>
-          <Route path="/" component={Home} />
-
           <Route path="/location" />
 
           <Route path="/overview" />
 
           <Route path="/shopping" />
+
+          <Route path="/" component={Home} />
         </Switch>
       </Layout>
     </Router>
