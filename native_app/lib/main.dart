@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:native_app/widgets/screens/HomeScreen.dart';
 import 'package:native_app/widgets/shared/AppTitle.dart';
-import 'package:native_app/widgets/titleBar.dart';
 
 void main() {
+  // Stops the harsh lines in gradients
+  Paint.enableDithering = true;
   runApp(FridgeMaterialScaffold());
 }
 
@@ -12,19 +14,12 @@ class FridgeMaterialScaffold extends StatelessWidget {
     return MaterialApp(
       title: 'Fridge App',
       home: Scaffold(
-        appBar: TitleBar(
-          child: AppTitle(),
-          title: 'Fridge Spy App',
+        appBar: AppBar(
+          title: AppTitle(),
         ),
-        // appBar: AppBar(
-        //   title: AppTitle(),
-        // ),
         body: Container(
           margin: EdgeInsets.all(20),
-          child: Text(
-            'Home',
-            style: TextStyle(fontSize: 32, color: Colors.blue),
-          ),
+          child: HomeScreen(),
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
