@@ -2,7 +2,13 @@ import React from "react";
 import { AiOutlineCaretRight, AiOutlineHome } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 import { Card } from "../Card/Card";
-import { HomeEntryContent, HomeEntryListElement } from "./HomeEntry.styles";
+import {
+  HomeEntryCallToAction,
+  HomeEntryContent,
+  HomeEntryHomeIcon,
+  HomeEntryListElement,
+  HomeEntryText,
+} from "./HomeEntry.styles";
 
 interface HomeEntryProps {
   id: string;
@@ -28,12 +34,16 @@ export const HomeEntry = ({ id, name, countryCode }: HomeEntryProps) => {
     <HomeEntryListElement onClick={handleElementClick}>
       <Card>
         <HomeEntryContent>
-          <AiOutlineHome size="1.5rem" />
-          <div>{name}</div>
-          <div>
+          <HomeEntryHomeIcon>
+            <AiOutlineHome size="1.5rem" />
+          </HomeEntryHomeIcon>
+          <HomeEntryText>{name}</HomeEntryText>
+          <HomeEntryText>
             {locations} {locations > 1 ? "Locations" : "Location"}
-          </div>
-          <AiOutlineCaretRight size="1.5rem" />
+          </HomeEntryText>
+          <HomeEntryCallToAction>
+            <AiOutlineCaretRight size="1.5rem" />
+          </HomeEntryCallToAction>
         </HomeEntryContent>
       </Card>
     </HomeEntryListElement>
