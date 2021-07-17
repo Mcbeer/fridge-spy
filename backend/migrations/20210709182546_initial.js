@@ -21,13 +21,13 @@ exports.up = async function (knex) {
 
   await knex("country").insert(countries);
 
-  await knex.schema.createTable("user_home_role", (table) => {
+  await knex.schema.createTable("user_house_role", (table) => {
     table.text("role").primary();
   });
 
-  await knex("user_home_role").insert(roles);
+  await knex("user_house_role").insert(roles);
 
-  await knex.schema.createTable("home", (table) => {
+  await knex.schema.createTable("house", (table) => {
     table.uuid("id").primary();
     table.string("name", 255).notNullable();
     table.string("country_code", 2).references("country.code");
@@ -38,15 +38,15 @@ exports.up = async function (knex) {
     table.uuid("id").primary();
     table.string("name", 255).notNullable();
     table.string("description", 255).notNullable();
-    table.uuid("home_id").references("home.id");
+    table.uuid("house_id").references("house.id");
     betterTimestamps(table);
   });
 
-  await knex.schema.createTable("user_home", (table) => {
+  await knex.schema.createTable("user_house", (table) => {
     table.uuid("id").primary();
     table.uuid("user_id").references("user.id");
-    table.uuid("home_id").references("home.id");
-    table.text("user_role").references("user_home_role.role").notNullable();
+    table.uuid("house_id").references("house.id");
+    table.text("user_role").references("user_house_role.role").notNullable();
     betterTimestamps(table);
   });
 
@@ -111,10 +111,10 @@ exports.down = async function (knex) {
   await knex.schema.dropTableIfExists("product");
   await knex.schema.dropTableIfExists("product_type");
   await knex.schema.dropTableIfExists("brand");
-  await knex.schema.dropTableIfExists("user_home");
+  await knex.schema.dropTableIfExists("user_house");
   await knex.schema.dropTableIfExists("location");
-  await knex.schema.dropTableIfExists("home");
-  await knex.schema.dropTableIfExists("user_home_role");
+  await knex.schema.dropTableIfExists("house");
+  await knex.schema.dropTableIfExists("user_house_role");
   await knex.schema.dropTableIfExists("user");
   return;
 };

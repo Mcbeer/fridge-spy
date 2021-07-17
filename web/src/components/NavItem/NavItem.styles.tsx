@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { cssVar, lighten } from "polished";
+import { lighten } from "polished";
 
 export const NavItemBase = styled.li`
   color: #fff;
