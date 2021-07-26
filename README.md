@@ -33,38 +33,47 @@ Any service must be run as a docker image, so it can either be deployed to the c
 
 Location service provides all the houses and locations within them
 This is also where product information on the locations are stored ie. how many of x product is stored in y location
+This service will run in an EC2 instance, since it must be always reactive, and ready to go
 
 #### User
 
 User service handles all user information storage and authentication for the entire application.
+This will be a service created with the Serverless Framework, since we don't need to access this info often
 
 #### Product
 
 Product service handles and stores all product information, brand info, and product type info. This is the service that is called, when another service or frontend needs details about a product ie. images, brand info, product name or product description etc.
+This service will run in an EC2 instance, since it must be always reactive, and ready to go
 
 #### Shopping
 
 Shopping service will handle the generation and upkeep of the shopping list that is generated based on the users set preferences
 This service will also handle the ability to save a normal document version of the shopping list, or even serve a printable version of that list
+This will be a service created with the Serverless Framework, since we don't need to access this info often
+
+### Discounts
+
+A serverless function, that will get run once a day, to gather in any discounts in any danish store, and save that information, so when the shopping service creates a shopping list, it can get the best deal for each item, if that item is discounted
+This will be a service created with the Serverless Framework, since it will run on a cron job timer
 
 ### Technologies
 
 #### Redis
 
-Redis is used as a "cache" for things like product information, or location information.
+Redis is used as a "cache" for things like product information, or location information. Ie. things that does not change often.
 There must be a clear, and harsh seperation of what data needs to be cached, and what must not. The databases are not slow, this is mainly just for the wow factor of incredibly fast data delivery.
-It also doubles as a pub/sub system, to publish any changes of any item to the web/native platforms
+It also doubles as a pub/sub system in case we ever need to scale vertically on any service
 
-#### RabbitMQ
+#### SNS
 
 Message Broker used for brokering messages between services, in case service A needs to know something has changed in Service B
 
 #### Postgres
 
 Used for saving highly relational data.
-Used in: Location Service
+Used in: Location Service, Product Service
 
-#### MongoDB
+#### DynamoDB
 
-Used for saving non-relational information, such as user information
-Used in: User Service
+Used for saving non-relational information, such as user information and product information
+Used in: User Service, Shopping Service
