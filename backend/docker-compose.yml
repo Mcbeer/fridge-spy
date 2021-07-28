@@ -1,32 +1,47 @@
 version: "3.8"
 services:
   product_service:
+    # restart: on-failure
     depends_on:
       - product_db
-      - location_db
     build:
       context: ./services/product
+      target: development
     volumes:
       - .:/services/product
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgres://user:pass@postgres:5433/db
+      DATABASE_URL: postgres://user:pass@product_db:5432/db
+      API_VERSION: 1
 
-      # location_service:
-      #   build:
-      #     context: ./
-      #     target: development
-      #   volumes:
-      #     - .:/src
-      #   depends_on:
-      #     - postgres
-      #   command: yarn dev
-      #   ports:
-      #     - "8000:8000"
-      #   environment:
-      #     DATABASE_URL: postgres://user:pass@postgres:5432/db
-      #     NODE_ENV: development
+  # user_service:
+  #   # restart: on-failure
+  #   depends_on:
+  #     - user_db
+  #   build:
+  #     context: ./services/user
+  #   volumes:
+  #     - .:/services/user
+  #   ports:
+  #     - "8001:8000"
+  #   environment:
+  #     DATABASE_URL: postgres://user:pass@postgres:5435/db
+  #     API_VERSION: 1
+
+  # location_service:
+  #   # restart: on-failure
+  #   depends_on:
+  #     - location_db
+  #   build:
+  #     context: ./services/location
+  #   volumes:
+  #     - .:/services/location
+  #   ports:
+  #     - "8002:8000"
+  #   environment:
+  #     DATABASE_URL: postgres://user:pass@postgres:5434/db
+  #     API_VERSION: 1
 
   product_db:
     image: postgres:12.7
@@ -37,11 +52,20 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: db
 
-  location_db:
-    image: postgres:12.7
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+  # location_db:
+  #   image: postgres:12.7
+  #   ports:
+  #     - "5434:5432"
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: pass
+  #     POSTGRES_DB: db
+
+  # user_db:
+  #   image: postgres:12.7
+  #   ports:
+  #     - "5435:5432"
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: pass
+  #     POSTGRES_DB: db

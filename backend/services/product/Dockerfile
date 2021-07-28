@@ -1,19 +1,28 @@
-FROM golang:1.16
+## PRODUCTION CONTAINER ##
+FROM node:14 as base_version
 
-WORKDIR /app
+# Create app directory
+WORKDIR /src
 
-# Download Go modules
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
+# Copy the package json into the app directory
+COPY package*.json ./
+COPY yarn.lock ./
 
-# Add wait-for-it
-COPY wait-for-it.sh wait-for-it.sh
-RUN chmod +x wait-for-it.sh
+FROM base_version as production
+ENV NODE_ENV=production
+RUN yarn global add pm2
+RUN yarn install --frozen-lockfile
+COPY . /
+ENV PORT=3000
+EXPOSE 3000
+CMD ["yarn" "start"]
 
-COPY *.go ./
-
-RUN go build -o /productservice
+FROM base_version as development
+ENV NODE_ENV=development
+RUN yarn global add pm2
+RUN yarn install
+COPY . .
 ENV PORT=8000
 EXPOSE 8000
-CMD ["./wait-for-it.sh","localhost:5433", "-t", "5", "--", "/productservice"]
+RUN ls -al
+CMD [ "yarn", "dev" ]

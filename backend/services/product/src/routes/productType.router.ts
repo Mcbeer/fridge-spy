@@ -1,0 +1,22 @@
+import { Router } from "express";
+
+export const productTypeRouter = (): Router => {
+  const productTypeRouter = Router();
+
+  // Get a specific product type
+  productTypeRouter.get("/:id");
+
+  // Get a specific product type (Query params can be an array of ids)
+  productTypeRouter.get("/");
+
+  // Add a product type
+  productTypeRouter.post("/");
+
+  // Update a product type
+  productTypeRouter.put("/");
+
+  // Delete a product type
+  productTypeRouter.delete("/:id");
+
+  return productTypeRouter;
+};
