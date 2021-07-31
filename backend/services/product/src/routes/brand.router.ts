@@ -1,23 +1,27 @@
 import { Router } from "express";
-import { addNewBrand } from "../lib/brand/addNewBrand";
+import { addBrand } from "../lib/brand/addBrand";
+import { getBrandById } from "../lib/brand/getBrandById";
+import { getBrands } from "../lib/brand/getBrands";
+import { putBrand } from "../lib/brand/putBrand";
+import { removeBrand } from "../lib/brand/removeBrand";
 
 export const brandRouter = (): Router => {
   const brandRouter = Router();
 
   // Get a specific brand
-  brandRouter.get("/:id");
+  brandRouter.get("/:id", getBrandById);
 
   // Get aall brand
-  brandRouter.get("/");
+  brandRouter.get("/", getBrands);
 
   // Add a brand
-  brandRouter.post("/", addNewBrand);
+  brandRouter.post("/", addBrand);
 
   // Update a brand
-  brandRouter.put("/");
+  brandRouter.put("/", putBrand);
 
   // Delete a brand
-  brandRouter.delete("/:id");
+  brandRouter.delete("/:id", removeBrand);
 
   return brandRouter;
 };

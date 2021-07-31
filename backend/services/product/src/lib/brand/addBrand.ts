@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { Request, Response } from "express";
 import { insertBrand } from "../../database/brand/insertBrand";
 import { yup } from "../../utils/exportYup";
@@ -16,10 +15,7 @@ interface AddNewBrandArgs {
 // This should be seen as a "helper" functionality.
 // A user can add a new Brand via this endpoint
 // This is meant to be something like "Coca Cola", "First Price", "Hatting", etc.
-export const addNewBrand = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const addBrand = async (req: Request, res: Response): Promise<void> => {
   // Extract body from request
   const body = getRequestBody<AddNewBrandArgs>(req);
 
