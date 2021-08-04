@@ -1,8 +1,19 @@
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
+// import { authMiddleware } from "../middleware/auth.middleware";
+import { IUser } from "../models/IUser";
 import { brandRouter } from "../routes/brand.router";
 import { productRouter } from "../routes/product.router";
 import { productTypeRouter } from "../routes/productType.router";
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      user: IUser;
+    }
+  }
+}
 
 export const setupExpressApp = (): Express => {
   const app = express();
@@ -19,6 +30,8 @@ export const setupExpressApp = (): Express => {
   app.use(cors());
   app.use(json());
   app.use(urlencoded({ extended: true }));
+
+  // app.use(authMiddleware);
 
   app.use(basePath, baseRouter);
 

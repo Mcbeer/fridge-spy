@@ -17,4 +17,5 @@ export interface IDBProduct extends IDBTimestamps {
   product_type_id: string;
   brand_id: string;
   added_by: string;
+  image_url: string;
 }

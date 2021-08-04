@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { getProducts } from "../lib/product/getProducts";
 
 export const productRouter = (): Router => {
   const productRouter = Router();
@@ -6,8 +7,8 @@ export const productRouter = (): Router => {
   // Get a specific product
   productRouter.get("/:id");
 
-  // Get a products (Query params will define an array of ids)
-  productRouter.get("/:id");
+  // Get products (Query params will define an array of ids)
+  productRouter.get("/", getProducts);
 
   // Add a new product
   productRouter.post("/");

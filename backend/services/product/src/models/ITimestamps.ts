@@ -4,6 +4,6 @@ export interface ITimestamps {
 }
 
 export interface IDBTimestamps {
-  created_at: string;
-  updatedAt: string;
+  created_at?: string;
+  updated_at?: string;
 }

@@ -2,17 +2,19 @@
 FROM node:14 as base_version
 
 # Create app directory
-WORKDIR /src
+WORKDIR /product_service
 
 # Copy the package json into the app directory
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json /product_service
+COPY yarn.lock /product_service
+
+RUN ls -al
 
 FROM base_version as production
 ENV NODE_ENV=production
 RUN yarn global add pm2
 RUN yarn install --frozen-lockfile
-COPY . /
+COPY . .
 ENV PORT=3000
 EXPOSE 3000
 CMD ["yarn" "start"]

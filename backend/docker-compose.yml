@@ -8,7 +8,8 @@ services:
       context: ./services/product
       target: development
     volumes:
-      - .:/services/product
+      - ./services/product:/product_service
+      - /product_service/node_modules
     ports:
       - "8000:8000"
     environment:
@@ -51,6 +52,8 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: db
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
 
   # location_db:
   #   image: postgres:12.7
