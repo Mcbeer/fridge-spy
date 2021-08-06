@@ -16,19 +16,20 @@ services:
       DATABASE_URL: postgres://user:pass@product_db:5432/db
       API_VERSION: 1
 
-  # user_service:
-  #   # restart: on-failure
-  #   depends_on:
-  #     - user_db
-  #   build:
-  #     context: ./services/user
-  #   volumes:
-  #     - .:/services/user
-  #   ports:
-  #     - "8001:8000"
-  #   environment:
-  #     DATABASE_URL: postgres://user:pass@postgres:5435/db
-  #     API_VERSION: 1
+  user_service:
+    depends_on:
+      - user_db
+    build:
+      context: ./services/user
+      target: development
+    volumes:
+      - ./services/user:/user_service
+      - /user_service/node_modules
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: mongodb://root:mongodbpassword@user_db:27017/db?authSource=admin
+      API_VERSION: 1
 
   # location_service:
   #   # restart: on-failure
@@ -64,11 +65,11 @@ services:
   #     POSTGRES_PASSWORD: pass
   #     POSTGRES_DB: db
 
-  # user_db:
-  #   image: postgres:12.7
-  #   ports:
-  #     - "5435:5432"
-  #   environment:
-  #     POSTGRES_USER: user
-  #     POSTGRES_PASSWORD: pass
-  #     POSTGRES_DB: db
+  user_db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongodbpassword
