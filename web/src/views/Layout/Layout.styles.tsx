@@ -7,6 +7,7 @@ export const LayoutMain = styled.main`
   display: grid;
   grid-template-columns: minmax(0, 8rem) 1fr;
   background-color: ${({ theme }) => lighten(0.4, theme.primary)};
+  overflow: hidden;
 `;
 export const LayoutNav = styled.div`
   margin: 1rem;
@@ -16,4 +17,5 @@ export const LayoutNav = styled.div`
 export const LayoutContent = styled.div`
   margin: 1rem;
   grid-column-start: 2;
+  overflow-y: auto;
 `;

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+//
 export const locationApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8002/api/v1/" }),
   tagTypes: [],

@@ -13,20 +13,19 @@ import {
 interface HomeEntryProps {
   id: string;
   name: string;
-  countryCode: string;
 }
 
 // Get number of locations in this home
 // A location could be a fridge, a freezer, or a pantry, or even a drawer...
 
-export const HomeEntry = ({ id, name, countryCode }: HomeEntryProps) => {
+export const HomeEntry = ({ id, name }: HomeEntryProps) => {
   const history = useHistory();
   // Get the locations for this home - Render it async
   const locations = 2;
   // Get the members on this home - Render it async
   // Always render the data we already have - ie. name and country...
 
-  const handleElementClick = () => {
+  const handleElementClick = (): void => {
     history.push("/house/" + id);
   };
 

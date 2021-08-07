@@ -1,16 +1,7 @@
-import { lighten } from "polished";
 import styled from "styled-components";
 
 export const HomeEntryListElement = styled.li`
   cursor: pointer;
-
-  & > div:hover {
-    background: ${({ theme }) =>
-      `linear-gradient(to bottom right, ${lighten(
-        0.2,
-        theme.primary
-      )} 30%, #fff )`};
-  }
 `;
 
 export const HomeEntryContent = styled.div`

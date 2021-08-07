@@ -17,6 +17,6 @@ const houseReducer = createSlice({
   },
 });
 
-const red = houseReducer.reducer;
+const reducer = houseReducer.reducer;
 
-export { red as houseReducer };
+export { reducer as houseReducer };

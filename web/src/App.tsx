@@ -5,26 +5,28 @@ import { Home } from "./views/Home/Home";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./theme/theme";
 import { House } from "./views/House/House";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 export const App = () => (
-  <ThemeProvider theme={theme}>
-    <Router>
-      <Route exact path="/login" />
-      <Layout>
-        <Switch>
-          <Route path="/house/:id" component={House} />
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Route exact path="/login" />
+        <Layout>
+          <Switch>
+            <Route path="/house/:id" component={House} />
 
-          <Route path="/location" />
+            <Route path="/overview" />
 
-          <Route path="/overview" />
+            <Route path="/shopping" />
 
-          <Route path="/shopping" />
-
-          <Route exact path="/" component={Home} />
-        </Switch>
-      </Layout>
-    </Router>
-  </ThemeProvider>
+            <Route exact path="/" component={Home} />
+          </Switch>
+        </Layout>
+      </Router>
+    </ThemeProvider>
+  </Provider>
 );
 
 export default App;
