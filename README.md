@@ -4,7 +4,7 @@
 
 ## Arhitechture
 
-Build on the Vitejs project, using React. When testing if finally implemented, must test any component rendering data, and not processing it.
+Build on the Vitejs project, using React. When testing is finally implemented, must test any component rendering data, and not processing it.
 
 The web platform uses Styled-Component and NO CSS LIBRARY to style component. This must visually match the rest of the application, and should be built with newer properties. (No tables!!).
 We also use Typescript for everything, and types/interfaces are required for anything that exists inside the application. Nothing is typed as any, since why are we using Typescript then? (In exceptional cases, and can be useful, but mostly not)
@@ -23,7 +23,7 @@ The native app must at all times, run perfectly, nothing is worse than an app th
 Split into (micro)services, to decouple different parts of the application
 Any one service that needs information from another service, must only make 1 call, to that service, and that service must then return all the required information to complete the request.
 
-At any point must we revalidate if a service needs to be split up, into more services - Live by a mantra of "The more split, the more better", but remember the above rule.
+At any point we revalidate if a service needs to be split up, into more services - Live by a mantra of "The more split, the more better", but remember the above rule.
 
 Any service must be run as a docker image, so it can either be deployed to the cloud, or run on own hardware.
 
@@ -54,7 +54,7 @@ This will be a service created with the Serverless Framework, since we don't nee
 ### Discounts
 
 A serverless function, that will get run once a day, to gather in any discounts in any danish store, and save that information, so when the shopping service creates a shopping list, it can get the best deal for each item, if that item is discounted
-This will be a service created with the Serverless Framework, since it will run on a cron job timer
+This will be a service created with the Serverless Framework, since it will run on a cron-style timer
 
 ### Technologies
 

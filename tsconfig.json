@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "ESNext",
+    "sourceMap": true,
+    "module": "commonjs",
+    "jsx": "preserve",
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "webworker"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "./apis/locationService"
+    },
+    {
+      "path": "./apis/productService"
+    },
+    {
+      "path": "./apis/userService"
+    },
+    {
+      "path": "./apps/web"
+    },
+    {
+      "path": "./libs/logging/tsconfig.json"
+    },
+    {
+      "path": "./libs/types/tsconfig.json"
+    }
+  ]
+}
