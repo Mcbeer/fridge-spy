@@ -1,7 +1,9 @@
-import { yup } from "./exportYup";
+import * as Yup from "yup";
+
+export { Yup as yup };
 
 export const validateSchema = async <T>(
-  schema: yup.AnySchema,
+  schema: Yup.AnySchema,
   obj: T
 ): Promise<boolean> => {
   return await schema.isValid(obj);

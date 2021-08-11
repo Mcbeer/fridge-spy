@@ -1,4 +1,4 @@
-import { IDBProduct } from "../../models/IProduct";
+import { IDBProduct } from "@fridgespy/types";
 import { database } from "../database";
 import { DatabaseTables } from "../dbTables";
 

@@ -1,7 +1,7 @@
+import { logger } from "@fridgespy/logging";
 import * as dotenv from "dotenv";
 // import { database } from "./database/database";
 import { setupExpressApp } from "./utils/setupExpressApp";
-import { logger } from "@fridgespy/logging";
 
 dotenv.config();
 

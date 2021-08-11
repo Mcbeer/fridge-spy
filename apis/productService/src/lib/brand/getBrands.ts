@@ -1,7 +1,7 @@
+import { respond } from "@fridgespy/express-helpers";
+import { perhaps } from "@fridgespy/perhaps";
 import { Request, Response } from "express";
 import { queryAllBrands } from "../../database/brand/queryAllBrands";
-import { perhaps } from "../../utils/perhaps";
-import { respond } from "../../utils/respond";
 import { formatDBBrandToBrand } from "./formatBrand";
 
 export const getBrands = async (req: Request, res: Response): Promise<void> => {

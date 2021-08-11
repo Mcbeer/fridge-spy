@@ -1,12 +1,10 @@
+import { getRequestBody, respond } from "@fridgespy/express-helpers";
+import { perhaps } from "@fridgespy/perhaps";
+import { IDBProduct } from "@fridgespy/types";
+import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
 import { insertProduct } from "../../database/product/insertProduct";
-import { IDBProduct } from "../../models/IProduct";
-import { yup } from "../../utils/exportYup";
-import { getRequestBody } from "../../utils/getRequestBody";
 import { getUuid } from "../../utils/getUuid";
-import { perhaps } from "../../utils/perhaps";
-import { respond } from "../../utils/respond";
-import { validateSchema } from "../../utils/validateSchema";
 import { formatDBProductToProduct } from "./formatProduct";
 
 interface AddProductArgs {
@@ -20,7 +18,7 @@ interface AddProductArgs {
 // This should be seen as a "helper" functionality.
 // A user can add a new product via this endpoint
 // It will be tied to a product_type, so that must be provided, or the product is invalid
-export const addNewProduct = async (
+export const postProduct = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -29,7 +27,7 @@ export const addNewProduct = async (
 
   // Validate the body
   const [inputValidationError, inputValidity] = await perhaps(
-    validateSchema(addNewProductSchema, body)
+    validateSchema(postProductSchema, body)
   );
 
   if (inputValidationError) {
@@ -83,10 +81,10 @@ export const addNewProduct = async (
   respond(res).success(formattedProduct);
 };
 
-const addNewProductSchema = yup.object({
+const postProductSchema = yup.object({
   productTypeId: yup.string().required(),
   name: yup.string().required(),
   brandId: yup.string().required(),
   barcode: yup.string().required(),
-  imageUrl: yup.string().required(),
+  imageUrl: yup.string(),
 });

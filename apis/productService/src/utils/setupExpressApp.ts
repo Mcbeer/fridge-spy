@@ -1,7 +1,7 @@
+// import { authMiddleware } from "../middleware/auth.middleware";
+import { IUser } from "@fridgespy/types";
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
-// import { authMiddleware } from "../middleware/auth.middleware";
-import { IUser } from "../models/IUser";
 import { brandRouter } from "../routes/brand.router";
 import { productRouter } from "../routes/product.router";
 import { productTypeRouter } from "../routes/productType.router";

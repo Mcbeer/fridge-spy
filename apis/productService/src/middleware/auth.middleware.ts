@@ -1,8 +1,7 @@
+import { getRequestToken, respond } from "@fridgespy/express-helpers";
+import { perhaps } from "@fridgespy/perhaps";
+import { IUser } from "@fridgespy/types";
 import { NextFunction, Request, Response } from "express";
-import { IUser } from "../models/IUser";
-import { getRequestToken } from "../utils/getRequestToken";
-import { perhaps } from "../utils/perhaps";
-import { respond } from "../utils/respond";
 
 export const authMiddleware = async (
   req: Request,

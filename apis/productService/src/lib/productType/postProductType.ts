@@ -1,14 +1,12 @@
+import { getRequestBody, respond } from "@fridgespy/express-helpers";
+import { perhaps } from "@fridgespy/perhaps";
+import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
-import { yup } from "../../utils/exportYup";
-import { getRequestBody } from "../../utils/getRequestBody";
-import { perhaps } from "../../utils/perhaps";
-import { respond } from "../../utils/respond";
-import { validateSchema } from "../../utils/validateSchema";
 
 // This should be seen as a "helper" functionality.
 // A user can add a new product type via this endpoint
 // This is meant to be something like "Milk", "Eggs", "Beer", etc.
-export const addNewProductType = async (
+export const postProductType = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -17,7 +15,7 @@ export const addNewProductType = async (
 
   // Validate the body
   const [inputValidationError, inputValidity] = await perhaps(
-    validateSchema(addNewProductTypeSchema, body)
+    validateSchema(postProductTypeSchema, body)
   );
 
   if (inputValidationError) {
@@ -39,7 +37,7 @@ export const addNewProductType = async (
   // Return the new product type
 };
 
-const addNewProductTypeSchema = yup.object({
+const postProductTypeSchema = yup.object({
   name: yup.string().required(),
   description: yup.string(),
 });

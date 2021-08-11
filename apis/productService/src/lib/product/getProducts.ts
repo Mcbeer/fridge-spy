@@ -1,9 +1,8 @@
+import { getRequestQueryParams, respond } from "@fridgespy/express-helpers";
+import { perhaps } from "@fridgespy/perhaps";
 import { Request, Response } from "express";
 import { queryAllProducts } from "../../database/product/queryAllProducts";
 import { queryProductWhereIn } from "../../database/product/queryProductWhereIn";
-import { getRequestQueryParams } from "../../utils/getRequestQueryParams";
-import { perhaps } from "../../utils/perhaps";
-import { respond } from "../../utils/respond";
 import { formatDBProductToProduct } from "./formatProduct";
 
 export const getProducts = async (

@@ -1,8 +1,7 @@
+import { getRequestParams, respond } from "@fridgespy/express-helpers";
+import { perhaps } from "@fridgespy/perhaps";
 import { Request, Response } from "express";
 import { deleteBrand } from "../../database/brand/deleteBrand";
-import { getRequestParams } from "../../utils/getRequestParams";
-import { perhaps } from "../../utils/perhaps";
-import { respond } from "../../utils/respond";
 import { formatDBBrandToBrand } from "./formatBrand";
 
 export const removeBrand = async (

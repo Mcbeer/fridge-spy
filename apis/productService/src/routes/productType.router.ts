@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { postProductType } from "../lib/productType/postProductType";
 
 export const productTypeRouter = (): Router => {
   const productTypeRouter = Router();
@@ -10,7 +11,7 @@ export const productTypeRouter = (): Router => {
   productTypeRouter.get("/");
 
   // Add a product type
-  productTypeRouter.post("/");
+  productTypeRouter.post("/", postProductType);
 
   // Update a product type
   productTypeRouter.put("/");

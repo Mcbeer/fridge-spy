@@ -1,3 +1,4 @@
+import { IDBBrand } from "@fridgespy/types";
 import { database } from "../database";
 import { DatabaseTables } from "../dbTables";
 
@@ -6,7 +7,7 @@ interface InsertBrandArgs {
   name: string;
 }
 
-export const insertBrand = (newBrand: InsertBrandArgs) => {
+export const insertBrand = (newBrand: InsertBrandArgs): Promise<IDBBrand> => {
   return database(DatabaseTables.BRAND)
     .insert(newBrand)
     .returning("*")

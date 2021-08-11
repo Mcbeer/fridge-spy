@@ -1,4 +1,4 @@
-import { IBrand, IDBBrand } from "../../models/IBrand";
+import { IBrand, IDBBrand } from "@fridgespy/types";
 
 export const formatDBBrandToBrand = (dbBrand: IDBBrand): IBrand => {
   return {

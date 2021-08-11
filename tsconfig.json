@@ -46,6 +46,12 @@
     },
     {
       "path": "./libs/types/tsconfig.json"
+    },
+    {
+      "path": "./libs/expressHelpers/tsconfig.json"
+    },
+    {
+      "path": "./libs/perhaps/tsconfig.json"
     }
   ]
 }
