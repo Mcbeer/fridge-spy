@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  user_service:
+    depends_on:
+      - user_db
+    build:
+      context: .
+    volumes:
+      - .:/
+    ports:
+      - '8001:8001'
+    environment:
+      DATABASE_URL: redis://user_db
+      API_VERSION: 1
+
+  user_db:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_REPLICATION_MODE=master

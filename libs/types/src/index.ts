@@ -7,3 +7,4 @@ export * from "./IProductType";
 export * from "./ITimestamps";
 export * from "./IUser";
 export * from "./UserRoles";
+export * from "./IToken";

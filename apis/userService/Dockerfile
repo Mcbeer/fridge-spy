@@ -5,12 +5,11 @@ WORKDIR /src
 
 # Copy the package json into the app directory
 COPY package*.json ./
-COPY yarn.lock ./
 
 ENV NODE_ENV=development
-RUN yarn global add pm2
-RUN yarn install
+RUN npm i -g pnpm
+RUN pnpm install
 COPY . /
-ENV PORT=8000
-EXPOSE 8000
-CMD [ "yarn" "dev" ]
+ENV PORT=8001
+EXPOSE 8001
+CMD [ "pnpm" "run" "dev" ]

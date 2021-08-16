@@ -1,9 +1,8 @@
-import { Request, Response } from "express";
-import { queryUserById } from "../../database/user/queryUserById";
-import { getRequestParams } from "../../utils/getRequestParams";
-import { perhaps } from "../../utils/perhaps";
-import { respond } from "../../utils/respond";
-import { convertDBUserToUser } from "./convertUser";
+import { Request, Response } from 'express';
+import { getRequestParams, respond } from '@fridgespy/express-helpers';
+import { perhaps } from '@fridgespy/perhaps';
+import { queryUserById } from '../../database/user/queryUserById';
+import { logger } from '@fridgespy/logging';
 
 export const getUserById = async (
   req: Request,
@@ -11,22 +10,20 @@ export const getUserById = async (
 ): Promise<void> => {
   const { id } = getRequestParams<{ id: string }>(req);
 
-  const [queryError, user] = await perhaps(queryUserById(id));
+  const [queryUserError, user] = await perhaps(queryUserById(id));
 
-  if (queryError) {
-    // Respond with error...
-    respond(res).error(queryError);
+  if (queryUserError) {
+    logger.error(queryUserError);
+    respond(res).error(queryUserError);
     return;
   }
 
   if (!user) {
-    // respond with error-like
-    respond(res).error(new Error("No user found at this moment"));
+    const noUserError = new Error('No user with that id exists');
+    logger.error(noUserError);
+    respond(res).error(noUserError);
     return;
   }
 
-  const formattedUser = convertDBUserToUser(user);
-
-  // Respond success
-  respond(res).success(formattedUser);
+  respond(res).success(user);
 };

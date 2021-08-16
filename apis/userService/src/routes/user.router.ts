@@ -1,14 +1,21 @@
-import { Router } from "express";
+import { Router } from 'express';
+import {
+  deleteUser,
+  getUserById,
+  getUserSelf,
+  postUser,
+  putUser,
+} from '../lib/user';
 
 export const userRouter = (): Router => {
   const userRouter = Router();
 
-  userRouter.get("/me");
-  userRouter.get("/:id");
+  userRouter.get('/me', getUserSelf);
+  userRouter.get('/:id', getUserById);
 
-  userRouter.post("/");
-  userRouter.put("/");
-  userRouter.delete("/:id");
+  userRouter.post('/', postUser);
+  userRouter.put('/', putUser);
+  userRouter.delete('/:id', deleteUser);
 
   return userRouter;
 };

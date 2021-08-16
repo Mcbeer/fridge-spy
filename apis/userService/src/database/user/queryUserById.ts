@@ -1,7 +1,6 @@
-import { IDBUser } from "../../models/IUser";
-import { database } from "../database";
-import { DatabaseTables } from "../dbTables";
+import { IUser } from '@fridgespy/types';
+import { User } from './schema';
 
-export const queryUserById = (id: string): Promise<IDBUser> => {
-  return database(DatabaseTables.USER).where({ id }).first();
+export const queryUserById = async (id: string): Promise<IUser> => {
+  return (await User.findById(id)) as unknown as IUser;
 };

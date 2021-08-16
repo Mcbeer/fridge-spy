@@ -1,19 +1,56 @@
-import { Request, Response } from "express";
+import { perhaps } from "@fridgespy/perhaps";
+import { IUser } from "@fridgespy/types";
+import { NextFunction, Request, Response } from "express";
+import fetch from "node-fetch";
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      user: IUser;
+    }
+  }
+}
+
+/**
+ * Returns the body of the request
+ * @param req
+ * @returns
+ */
 export const getRequestBody = <T>(req: Request): T => {
   return req.body;
 };
 
+/**
+ * Returns the request parameters of the request
+ * @param req
+ * @returns
+ */
 export const getRequestParams = <T>(req: Request): T => {
   return req.params as unknown as T;
 };
 
+/**
+ * Return any queryparams in the request
+ * @param req
+ * @returns
+ */
 export const getRequestQueryParams = <T>(req: Request): T => {
   return req.query as unknown as T;
 };
 
-export const getRequestToken = (req: Request): string | undefined => {
-  return req.headers.authorization;
+/**
+ * Retrieves the tokens from cookies
+ * @param req
+ * @returns
+ */
+export const getRequestToken = (
+  req: Request
+): { accessToken: string; refreshToken: string } => {
+  return {
+    accessToken: req.cookies.access_token,
+    refreshToken: req.cookies.refresh_token,
+  };
 };
 
 /**
@@ -39,4 +76,56 @@ export const respond = <T>(res: Response): RespondReturnValues<T> => {
     success,
     error,
   };
+};
+
+export const authMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const tokens = getRequestToken(req);
+
+  const [validateUserError, authorizedUser] = await perhaps(
+    validateUser(tokens)
+  );
+
+  if (validateUserError) {
+    console.log(validateUserError);
+    respond(res).error(validateUserError);
+    return;
+  }
+
+  if (!authorizedUser) {
+    respond(res).error(new Error("User cannot be authorized at this time..."));
+    return;
+  }
+
+  if (authorizedUser.tokens) {
+    res.cookie("access_token", authorizedUser.tokens.accessToken);
+    res.cookie("refresh_token", authorizedUser.tokens.refreshToken);
+  }
+
+  // We are now authorized - set the user object on
+  req.user = authorizedUser.user;
+
+  next();
+};
+
+const validateUser = async (tokens: {
+  accessToken: string;
+  refreshToken: string;
+}): Promise<{
+  user: IUser;
+  tokens: { accessToken: string; refreshToken: string };
+}> => {
+  return fetch(`http://localhost:8001/api/v1/auth/validate`, {
+    method: "POST",
+    body: JSON.stringify(tokens),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  }).then((response) => {
+    return response.json();
+  });
 };
