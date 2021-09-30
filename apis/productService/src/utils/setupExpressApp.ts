@@ -1,4 +1,5 @@
 // import { authMiddleware } from "../middleware/auth.middleware";
+import { authMiddleware } from "@fridgespy/express-helpers";
 import { IUser } from "@fridgespy/types";
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
@@ -31,7 +32,7 @@ export const setupExpressApp = (): Express => {
   app.use(json());
   app.use(urlencoded({ extended: true }));
 
-  // app.use(authMiddleware);
+  app.use(authMiddleware);
 
   app.use(basePath, baseRouter);
 

@@ -11,6 +11,8 @@ exports.up = async function (knex) {
     betterTimestamps(table);
   });
 
+  await knex("brand").insert(basicGenericBrands);
+
   await knex.schema.createTable("product_type", (table) => {
     table.uuid("id").primary();
     table.string("name", 255).notNullable();
@@ -25,9 +27,9 @@ exports.up = async function (knex) {
     table.uuid("product_type_id").references("product_type.id").notNullable();
     table.string("name", 255).notNullable();
     table.uuid("brand_id").references("brand.id").notNullable();
-    table.string("barcode", 255).notNullable();
+    table.string("barcode", 255);
     table.text("image_url");
-    table.uuid("added_by").notNullable();
+    table.string("added_by", 100).notNullable();
     betterTimestamps(table);
   });
 
@@ -40,6 +42,45 @@ exports.down = async function (knex) {
   await knex.schema.dropTableIfExists("brand");
   return;
 };
+
+const basicGenericBrands = [
+  {
+    id: "b2fae36c-1fa9-427d-bc57-4db78a36fb1e",
+    name: "Coca Cola",
+  },
+  {
+    id: "55e462dc-02d3-4a28-8cce-d113596f8801",
+    name: "Pepsi",
+  },
+  {
+    id: "51b912a3-5580-44d4-a766-e9743a1396f3",
+    name: "Doritos",
+  },
+  {
+    id: "380097c3-9ab7-41ec-bb7e-951659640d65",
+    name: "Rema1000",
+  },
+  {
+    id: "ed5e4cf1-ec54-4c53-96b7-4a5d18035686",
+    name: "First Price",
+  },
+  {
+    id: "8392fd86-0c48-437c-a183-f3e1b913995b",
+    name: "Cocio",
+  },
+  {
+    id: "1c2d59e7-3d26-43ea-9371-b83d05a89e18",
+    name: "Stryhns",
+  },
+  {
+    id: "5eec4ccf-cdfd-409d-a8a2-3412da5301e1",
+    name: "Glyngøre",
+  },
+  {
+    id: "0104c8af-7219-4b49-8efe-09df0b4e8a46",
+    name: "Chiquita",
+  },
+];
 
 const basicGenericProducts = [
   {

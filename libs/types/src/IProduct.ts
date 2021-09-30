@@ -5,9 +5,20 @@ export interface IProduct extends ITimestamps {
   name: string;
   barcode: string;
   imageUrl: string;
-  addedBy: string; // Fetch the user, and replace the ID with users name
-  productType: string; // Replace ID with product type name
-  brand: string; // Replace ID with brand name
+  addedBy: {
+    id: string;
+    name: string;
+    email: string;
+  }; // Fetch the user, and replace the ID with users name
+  productType?: {
+    id: string;
+    name: string;
+    description: string;
+  }; // Replace ID with product type name
+  brand?: {
+    id: string;
+    name: string;
+  }; // Replace ID with brand name
 }
 
 export interface IDBProduct extends IDBTimestamps {

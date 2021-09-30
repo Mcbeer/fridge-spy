@@ -14,11 +14,11 @@ const runServer = async (): Promise<void> => {
   const db = mongoose.connection;
 
   db.on('error', (err) => {
-    console.log('Error connecting to DB');
-    console.error(err);
+    logger.info('Error connecting to DB');
+    logger.error(err);
   });
   db.once('open', () => {
-    console.log('Database connection is open');
+    logger.info('Database connection is open');
   });
 
   logger.info('Starting express on port 8001');

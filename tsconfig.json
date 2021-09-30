@@ -52,6 +52,9 @@
     },
     {
       "path": "./libs/perhaps/tsconfig.json"
+    },
+    {
+      "path": "./libs/validation/tsconfig.json"
     }
   ]
 }

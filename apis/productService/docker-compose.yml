@@ -1,0 +1,25 @@
+# I AM VERY BROKEN DUE TO CHANGES TO STRUCTURE
+
+version: "3.8"
+services:
+  product_service:
+    restart: on-failure
+    depends_on:
+      - product_db
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://user:pass@product_db:5432/product_service
+      API_VERSION: 1
+
+  product_db:
+    image: postgres:12.7
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: product_service
+    volumes:
+      - ./postgres-data/product:/var/lib/postgresql/data

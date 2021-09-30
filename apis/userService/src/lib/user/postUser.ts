@@ -28,7 +28,5 @@ export const postUser = async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  console.log(savedUser);
-
   respond(res).success(savedUser);
 };

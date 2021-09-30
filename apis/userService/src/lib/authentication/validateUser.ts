@@ -1,15 +1,10 @@
-import {
-  getRequestBody,
-  getRequestToken,
-  respond,
-} from '@fridgespy/express-helpers';
+import { getRequestBody, respond } from '@fridgespy/express-helpers';
 import { logger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/perhaps';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { queryUserById } from '../../database/user/queryUserById';
 import { refreshAccessToken } from '../../utils/refreshAccessToken';
-import { setTokens } from '../../utils/setTokens';
 
 export const validateUser = async (
   req: Request,
@@ -28,12 +23,27 @@ export const validateUser = async (
     return;
   }
 
-  const validAccessToken = jwt.verify(
-    tokens.accessToken,
-    process.env.JWT_SECRET
-  );
+  try {
+    const validAccessToken = jwt.verify(
+      tokens.accessToken,
+      process.env.JWT_SECRET
+    );
 
-  if (!validAccessToken) {
+    const [userError, user] = await perhaps(
+      queryUserById(validAccessToken.userId)
+    );
+
+    if (userError) {
+      respond(res).error(new Error('Cannot query user for validation'));
+      return;
+    }
+
+    if (!user) {
+      respond(res).error(new Error('User not available...'));
+    }
+    respond(res).success({ user, tokens: null });
+    return;
+  } catch (err) {
     const newValidTokens = refreshAccessToken(
       tokens.accessToken,
       tokens.refreshToken
@@ -48,7 +58,10 @@ export const validateUser = async (
 
       return;
     } else {
-      // setTokens(res, newValidTokens);
+      const validAccessToken = jwt.verify(
+        newValidTokens.accessToken,
+        process.env.JWT_SECRET
+      );
 
       const [userError, user] = await perhaps(
         queryUserById(validAccessToken.userId)
@@ -66,20 +79,5 @@ export const validateUser = async (
       respond(res).success({ user, tokens: newValidTokens });
       return;
     }
-  } else {
-    const [userError, user] = await perhaps(
-      queryUserById(validAccessToken.userId)
-    );
-
-    if (userError) {
-      respond(res).error(new Error('Cannot query user for validation'));
-      return;
-    }
-
-    if (!user) {
-      respond(res).error(new Error('User not available...'));
-    }
-    respond(res).success({ user, tokens: null });
-    return;
   }
 };

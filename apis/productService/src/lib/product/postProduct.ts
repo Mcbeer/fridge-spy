@@ -73,12 +73,12 @@ export const postProduct = async (
   }
 
   // Format the product
-  const formattedProduct = formatDBProductToProduct(insertedProduct);
+  // const formattedProduct = formatDBProductToProduct(insertedProduct);
 
   // Publish the result
 
   // Return the new product
-  respond(res).success(formattedProduct);
+  respond(res).success(insertedProduct);
 };
 
 const postProductSchema = yup.object({

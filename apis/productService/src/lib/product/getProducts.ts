@@ -24,9 +24,9 @@ export const getProducts = async (
       return;
     }
 
-    const formattedProducts = allProducts.map(formatDBProductToProduct);
+    // const formattedProducts = allProducts.map(formatDBProductToProduct);
 
-    respond(res).success(formattedProducts);
+    respond(res).success(allProducts);
   } else {
     const productIds = products.split(",");
 
@@ -44,8 +44,8 @@ export const getProducts = async (
       return;
     }
 
-    const formattedProducts = queriedProducts.map(formatDBProductToProduct);
+    // const formattedProducts = queriedProducts.map(formatDBProductToProduct);
 
-    respond(res).success(formattedProducts);
+    respond(res).success(queriedProducts);
   }
 };
