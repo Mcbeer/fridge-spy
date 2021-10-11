@@ -16,8 +16,6 @@
   },
   "private": true,
   "dependencies": {
-    "@fridgespy/perhaps": "workspace:*",
-    "@fridgespy/types": "workspace:*",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1"
   }

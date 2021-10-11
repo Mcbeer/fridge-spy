@@ -7,7 +7,8 @@ export async function perhaps<T>(
   try {
     const result = await promise;
     return [null, result];
-  } catch (error) {
-    return [error, null];
+  } catch (error: unknown) {
+    // This is a stupid rule, i just want to say that
+    return [error as Error, null];
   }
 }

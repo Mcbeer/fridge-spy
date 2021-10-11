@@ -1,11 +1,11 @@
 {
-  "name": "fridge-spy-location-service",
+  "name": "fridge-spy-user-service",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development ts-node src/index.ts",
+    "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "test": "npm run lint && npm run prettier && npm run jest",
     "jest": "jest",
     "jest:watch": "jest --watch",
@@ -13,11 +13,11 @@
     "prettier": "prettier --check 'src/**/*.ts'"
   },
   "devDependencies": {
-    "@fridgespy/types": "workspace:*",
-    "@fridgespy/logging": "workspace:*",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/ioredis": "^4.26.7",
     "@types/jest": "^26.0.24",
+    "@types/lodash": "^4.14.172",
     "@types/node": "^16.3.0",
     "@types/uuid": "^8.3.1",
     "@types/yup": "^0.29.13",
@@ -27,16 +27,19 @@
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
-    "ts-node": "^10.2.0",
+    "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "knex": "^0.95.6",
-    "pg": "^8.6.0",
-    "uuid": "^8.3.2",
-    "yup": "^0.32.9"
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.13.7",
+    "ts-node-dev": "^1.1.8",
+    "uuid": "^8.3.2"
   }
 }

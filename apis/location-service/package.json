@@ -1,11 +1,11 @@
 {
-  "name": "fridge-spy-product-service",
+  "name": "fridge-spy-location-service",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development ts-node-dev src/index.ts",
+    "dev": "NODE_ENV=development ts-node src/index.ts",
     "test": "npm run lint && npm run prettier && npm run jest",
     "jest": "jest",
     "jest:watch": "jest --watch",
@@ -13,11 +13,6 @@
     "prettier": "prettier --check 'src/**/*.ts'"
   },
   "devDependencies": {
-    "@fridgespy/logging": "workspace:*",
-    "@fridgespy/types": "workspace:*",
-    "@fridgespy/express-helpers": "workspace:*",
-    "@fridgespy/perhaps": "workspace:*",
-    "@fridgespy/validation": "workspace:*",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^26.0.24",
@@ -30,8 +25,7 @@
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
-    "ts-node": "^10.0.0",
-    "ts-node-dev": "^1.1.8",
+    "ts-node": "^10.2.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {

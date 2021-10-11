@@ -30,13 +30,13 @@
   ],
   "references": [
     {
-      "path": "./apis/locationService"
+      "path": "./apis/location-service"
     },
     {
-      "path": "./apis/productService"
+      "path": "./apis/product-service"
     },
     {
-      "path": "./apis/userService"
+      "path": "./apis/user-service"
     },
     {
       "path": "./apps/web"

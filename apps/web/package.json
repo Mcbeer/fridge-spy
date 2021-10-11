@@ -6,7 +6,6 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@fridgespy/types": "workspace:*",
     "@reduxjs/toolkit": "^1.6.0",
     "polished": "^4.1.3",
     "react": "^17.0.0",

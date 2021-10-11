@@ -17,7 +17,16 @@
     "url": "https://github.com/Mcbeer/fridge-spy/issues"
   },
   "homepage": "https://github.com/Mcbeer/fridge-spy#readme",
-  "devDependencies": {
-    "pnpm": "^6.12.1"
-  }
+  "workspaces": [
+    "apis/location-service",
+    "apis/product-service",
+    "apis/user-service",
+    "apps/web",
+    "libs/dates",
+    "libs/express-helpers",
+    "libs/logging",
+    "libs/utils",
+    "libs/types",
+    "libs/validation"
+  ]
 }
