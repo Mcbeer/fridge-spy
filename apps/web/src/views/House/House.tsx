@@ -1,12 +1,10 @@
-import React from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { LocationEntry } from "../../components/LocationEntry/LocationEntry";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { HouseSection, HouseLocationList } from "./House.styles";
 
 export const House = () => {
-  const { id } = useParams<{ id: string }>();
+  // const { id } = useParams<{ id: string }>();
   const [expandedLocation, setExpandedLocation] = useState<string>(
     "386cce06-dafb-47d0-b029-d74ca195470b"
   );
