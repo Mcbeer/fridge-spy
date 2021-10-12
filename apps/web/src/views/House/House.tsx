@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LocationEntry } from "../../components/LocationEntry/LocationEntry";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
-import { HouseSection, HouseLocationList } from "./House.styles";
+import "./House.scss";
 
 export const House = () => {
   // const { id } = useParams<{ id: string }>();
@@ -19,9 +19,9 @@ export const House = () => {
   // Each list is collapsible (With beautiful animation, IMPORTANT)
 
   return (
-    <HouseSection>
+    <section>
       <PageTitle>{house.name}</PageTitle>
-      <HouseLocationList>
+      <ul className="House__location-list">
         {locations.map((location) => (
           <LocationEntry
             {...location}
@@ -30,8 +30,8 @@ export const House = () => {
             key={location.id}
           />
         ))}
-      </HouseLocationList>
-    </HouseSection>
+      </ul>
+    </section>
   );
 };
 

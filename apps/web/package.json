@@ -14,8 +14,8 @@
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
-    "react-spring": "^9.3.0",
     "react-use-measure": "^2.0.4",
+    "sass": "^1.42.1",
     "styled-components": "^5.3.1"
   },
   "devDependencies": {
