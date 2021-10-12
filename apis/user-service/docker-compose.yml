@@ -1,21 +1,24 @@
 version: '3.8'
 services:
   user_service:
+    restart: on-failure
     depends_on:
       - user_db
-    build:
-      context: .
-    volumes:
-      - .:/
+    build: .
     ports:
       - '8001:8001'
     environment:
-      DATABASE_URL: redis://user_db
+      DATABASE_URL: postgres://user:pass@product_db:5432/product_service
       API_VERSION: 1
 
   user_db:
-    image: redis:latest
+    image: postgres:latest
     ports:
-      - '6379:6379'
+      - '5433:5432'
     environment:
-      - REDIS_REPLICATION_MODE=master
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: user_service
+    restart: unless-stopped
+    volumes:
+      - ./postgres-data/user:/var/lib/postgresql/data

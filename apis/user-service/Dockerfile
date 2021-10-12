@@ -1,15 +1,14 @@
 FROM node:14-alpine
 
 # Create app directory
-WORKDIR /src
+WORKDIR /
 
 # Copy the package json into the app directory
 COPY package*.json ./
 
 ENV NODE_ENV=development
-RUN npm i -g pnpm
-RUN pnpm install
+RUN npm i
 COPY . /
 ENV PORT=8001
 EXPOSE 8001
-CMD [ "pnpm" "run" "dev" ]
+CMD ["npm", "run", "dev"]

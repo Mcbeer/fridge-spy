@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
 import { getRequestParams, respond } from '@fridgespy/express-helpers';
-import { perhaps } from '@fridgespy/perhaps';
-import { queryUserById } from '../../database/user/queryUserById';
 import { logger } from '@fridgespy/logging';
+import { perhaps } from '@fridgespy/utils';
+import { Request, Response } from 'express';
+import { queryUserById } from '../../database/user/queryUserById';
 
 export const getUserById = async (
   req: Request,

@@ -21,7 +21,7 @@
       "path": "../../libs/validation/tsconfig.json"
     },
     {
-      "path": "../../libs/perhaps/tsconfig.json"
+      "path": "../../libs/utils/tsconfig.json"
     },
     {
       "path": "../../libs/dates/tsconfig.json"

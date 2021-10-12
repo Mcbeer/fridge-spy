@@ -1,8 +1,8 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
+import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { insertUser } from '../../database/user/insertUser';
 import { hashPassword } from '../../utils/hashPassword';
-import { perhaps } from '@fridgespy/perhaps';
 
 interface PostUserArgs {
   name: string;

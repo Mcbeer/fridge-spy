@@ -1,6 +1,6 @@
 import { getRequestParams, respond } from '@fridgespy/express-helpers';
 import { logger } from '@fridgespy/logging';
-import { perhaps } from '@fridgespy/perhaps';
+import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { removeUser } from '../../database/user/removeUser';
 

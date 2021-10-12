@@ -1,4 +1,4 @@
-import { darken, lighten } from "polished";
+import { lighten } from "polished";
 import styled from "styled-components";
 
 export const LayoutMain = styled.main`
@@ -10,12 +10,12 @@ export const LayoutMain = styled.main`
   overflow: hidden;
 `;
 export const LayoutNav = styled.div`
-  margin: 1rem;
+  padding: 1rem;
   grid-column-start: 1;
 `;
 
 export const LayoutContent = styled.div`
-  margin: 1rem;
+  padding: 1rem;
   grid-column-start: 2;
   overflow-y: auto;
 `;

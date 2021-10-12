@@ -8,9 +8,8 @@ WORKDIR /product_service
 COPY package*.json /product_service
 
 ENV NODE_ENV=development
-RUN npm i -g pnpm
-RUN pnpm install
+RUN npm i
 COPY . .
 ENV PORT=8000
 EXPOSE 8000
-CMD [ "pnpm", "run", "dev" ]
+CMD [ "npm", "run", "dev" ]

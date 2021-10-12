@@ -1,5 +1,3 @@
-# I AM VERY BROKEN DUE TO CHANGES TO STRUCTURE
-
 version: "3.8"
 services:
   product_service:

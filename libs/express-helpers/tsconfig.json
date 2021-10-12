@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../../libs/perhaps/tsconfig.json"
+      "path": "../../libs/utils/tsconfig.json"
     },
     {
       "path": "../../libs/types/tsconfig.json"

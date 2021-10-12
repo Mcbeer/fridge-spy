@@ -5,8 +5,6 @@ export const getUserByEmail = async (email: string): Promise<IUser> => {
   return await User.findOne({ email })
     .exec()
     .then((user) => {
-      console.log({ password: user.password });
-
       return {
         id: user._id,
         name: user.name,

@@ -1,6 +1,6 @@
 import { getRequestToken, respond } from '@fridgespy/express-helpers';
 import { logger } from '@fridgespy/logging';
-import { perhaps } from '@fridgespy/perhaps';
+import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { queryUserById } from '../../database/user/queryUserById';
 import { decodeToken } from '../../utils/decodeToken';
