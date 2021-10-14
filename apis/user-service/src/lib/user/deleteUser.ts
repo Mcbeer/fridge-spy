@@ -7,7 +7,7 @@ import { removeUser } from '../../database/user/removeUser';
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = getRequestParams<{ id: string }>(req);
 
-  const [deleteUserError, deletedUser] = await perhaps(removeUser({ _id: id }));
+  const [deleteUserError, deletedUser] = await perhaps(removeUser(id));
 
   if (deleteUserError) {
     logger.error(deleteUserError);

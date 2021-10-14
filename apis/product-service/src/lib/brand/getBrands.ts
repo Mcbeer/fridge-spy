@@ -1,5 +1,5 @@
 import { respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/perhaps";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
 import { queryAllBrands } from "../../database/brand/queryAllBrands";
 import { formatDBBrandToBrand } from "./formatBrand";

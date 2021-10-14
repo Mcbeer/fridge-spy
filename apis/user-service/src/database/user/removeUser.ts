@@ -1,8 +1,12 @@
 import { IUser } from '@fridgespy/types';
-import { User } from './schema';
+import { head } from 'lodash';
+import { database } from '../database';
+import { DatabaseTables } from '../dbTables';
 
-export const removeUser = async <T>(filter: {
-  _id: string;
-}): Promise<IUser> => {
-  return await User.findOneAndDelete(filter).exec();
+export const removeUser = async (id: string): Promise<IUser> => {
+  return database(DatabaseTables.USER)
+    .where({ id })
+    .del()
+    .returning('*')
+    .then(head);
 };

@@ -1,18 +1,7 @@
 import { IUser } from '@fridgespy/types';
-import { User } from './schema';
+import { database } from '../database';
+import { DatabaseTables } from '../dbTables';
 
 export const getUserByEmail = async (email: string): Promise<IUser> => {
-  return await User.findOne({ email })
-    .exec()
-    .then((user) => {
-      return {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        avatarUrl: user.avatarUrl,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-    });
+  return database(DatabaseTables.USER).where({ email }).first();
 };

@@ -1,5 +1,5 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/perhaps";
+import { perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
 import { updateBrand } from "../../database/brand/updateBrand";

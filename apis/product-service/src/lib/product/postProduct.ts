@@ -1,11 +1,10 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/perhaps";
 import { IDBProduct } from "@fridgespy/types";
+import { perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
 import { insertProduct } from "../../database/product/insertProduct";
 import { getUuid } from "../../utils/getUuid";
-import { formatDBProductToProduct } from "./formatProduct";
 
 interface AddProductArgs {
   name: string;

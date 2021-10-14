@@ -1,14 +1,16 @@
-import { IUser } from '@fridgespy/types';
-import { getTimeNow } from '../../utils/getTimeNow';
-import { User } from './schema';
+import { IUpdateDBUser, IUser } from '@fridgespy/types';
+import { head } from 'lodash';
+import { database } from '../database';
+import { DatabaseTables } from '../dbTables';
 
-export const updateUser = async <T>(
-  filter: { _id: string },
-  update: T
+export const updateUser = async (
+  id: string,
+  updateData: IUpdateDBUser
 ): Promise<IUser> => {
-  return await User.findOneAndUpdate(
-    filter,
-    { ...update, updatedAt: getTimeNow() },
-    { new: true }
-  ).exec();
+  // TODO: Add updated_at to be now
+  return database(DatabaseTables.USER)
+    .where({ id })
+    .update({ ...updateData })
+    .returning('*')
+    .then(head);
 };

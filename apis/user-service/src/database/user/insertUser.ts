@@ -1,27 +1,29 @@
-import { IUser } from '@fridgespy/types';
-import { getTimeNow } from '../../utils/getTimeNow';
-import { User } from './schema';
+import { IDBUser, IUser } from '@fridgespy/types';
+import { head } from 'lodash';
+import { getUuid } from '../../utils/getUuid';
+import { database } from '../database';
+import { DatabaseTables } from '../dbTables';
 
-interface InsertUserArgs {
+export interface InsertUserArgs {
   name: string;
   email: string;
-  avatarUrl: string;
+  avatarUrl?: string;
+  displayName?: string;
+  metaData?: Record<string, unknown>;
 }
 
 export const insertUser = async (
   user: InsertUserArgs,
   password: string
 ): Promise<IUser> => {
-  const newUser = new User({
+  const dbUser: IDBUser = {
+    id: getUuid(),
     name: user.name,
+    avatar_url: user.avatarUrl,
+    display_name: user.displayName,
     email: user.email,
-    password: password,
-    avatarUrl: user.avatarUrl,
-    createdAt: getTimeNow(),
-    updatedAt: null,
-  });
-
-  const savedUser = await newUser.save();
-
-  return savedUser as unknown as IUser;
+    password,
+    meta_data: user.metaData,
+  };
+  return database(DatabaseTables.USER).insert(dbUser).returning('*').then(head);
 };

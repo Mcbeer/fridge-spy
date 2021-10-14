@@ -54,8 +54,8 @@ export const validateUser = async (
         'Cant make new tokens for you, please sign in again'
       );
       logger.error(noValidTokens);
-      respond(res).error(noValidTokens);
 
+      respond(res).error(noValidTokens);
       return;
     } else {
       const validAccessToken = jwt.verify(

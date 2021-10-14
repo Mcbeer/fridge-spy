@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { knex } from 'knex';
+import knexFile from '../../knexfile.js';
 
-export const setupDatabase = () => {
-  mongoose.connect(process.env.MONGO_DB_URL || '', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: true,
-  });
-};
+const knexConfig = knexFile[process.env.NODE_ENV];
+
+export const database = knex(knexConfig);

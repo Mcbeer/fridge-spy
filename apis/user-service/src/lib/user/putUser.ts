@@ -29,7 +29,7 @@ export const putUser = async (req: Request, res: Response): Promise<void> => {
   >(requestBody);
 
   const [updateError, updatedUser] = await perhaps(
-    updateUser({ _id: requestBody.id }, updateObject)
+    updateUser(requestBody.id, updateObject)
   );
 
   if (updateError) {

@@ -1,6 +1,6 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/perhaps";
 import { IUser } from "@fridgespy/types";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { queryProductById } from "../../database/product/queryProductById";
@@ -69,13 +69,7 @@ export const getProductById = async (
 };
 
 const getUserById = async (id: string): Promise<IUser> => {
-  return {
-    id: id,
-    name: "Tester McTesterson",
-    email: "test@fridgespy.com",
-    avatarUrl: "",
-    password: "",
-    createdAt: "",
-    updatedAt: "",
-  };
+  return fetch(`${process.env.USER_SERVICE_ENDPOINT}/user/${id}`).then(
+    (response) => response.json()
+  );
 };
