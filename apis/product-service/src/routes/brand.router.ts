@@ -1,3 +1,4 @@
+import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
 import { addBrand } from "../lib/brand/addBrand";
 import { getBrandById } from "../lib/brand/getBrandById";
@@ -7,6 +8,8 @@ import { removeBrand } from "../lib/brand/removeBrand";
 
 export const brandRouter = (): Router => {
   const brandRouter = Router();
+
+  brandRouter.use(authMiddleware);
 
   // Get a specific brand
   brandRouter.get("/:id", getBrandById);

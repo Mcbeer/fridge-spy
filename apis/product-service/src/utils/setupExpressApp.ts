@@ -1,6 +1,6 @@
 // import { authMiddleware } from "../middleware/auth.middleware";
-import { authMiddleware } from "@fridgespy/express-helpers";
 import { IUser } from "@fridgespy/types";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
 import { brandRouter } from "../routes/brand.router";
@@ -31,15 +31,14 @@ export const setupExpressApp = (): Express => {
   app.use(cors());
   app.use(json());
   app.use(urlencoded({ extended: true }));
-
-  app.use(authMiddleware);
+  app.use(cookieParser());
 
   app.use(basePath, baseRouter);
 
   // Setup the sub routes
-  baseRouter.use(brandBasePath, brandRouter());
-  baseRouter.use(productBasePath, productRouter());
-  baseRouter.use(productTypeBasePath, productTypeRouter());
+  baseRouter.use(brandBasePath, brandRouter);
+  baseRouter.use(productBasePath, productRouter);
+  baseRouter.use(productTypeBasePath, productTypeRouter);
 
   return app;
 };

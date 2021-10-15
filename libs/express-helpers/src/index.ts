@@ -1,7 +1,7 @@
 import { IUser } from "@fridgespy/types";
 import { perhaps } from "@fridgespy/utils";
+import fetch from "cross-fetch";
 import { NextFunction, Request, Response } from "express";
-import fetch from "node-fetch";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -48,8 +48,8 @@ export const getRequestToken = (
   req: Request
 ): { accessToken: string; refreshToken: string } => {
   return {
-    accessToken: req.cookies.access_token,
-    refreshToken: req.cookies.refresh_token,
+    accessToken: req?.cookies?.access_token,
+    refreshToken: req?.cookies?.refresh_token,
   };
 };
 
@@ -83,6 +83,7 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  console.log("Accessing authMiddleware");
   const tokens = getRequestToken(req);
 
   const [validateUserError, authorizedUser] = await perhaps(
@@ -90,7 +91,6 @@ export const authMiddleware = async (
   );
 
   if (validateUserError) {
-    console.log(validateUserError);
     respond(res).error(validateUserError);
     return;
   }
@@ -100,7 +100,9 @@ export const authMiddleware = async (
     return;
   }
 
-  if (authorizedUser.tokens) {
+  console.log({ authorizedUser });
+
+  if (authorizedUser && authorizedUser.tokens) {
     res.cookie("access_token", authorizedUser.tokens.accessToken);
     res.cookie("refresh_token", authorizedUser.tokens.refreshToken);
   }
@@ -125,7 +127,5 @@ const validateUser = async (tokens: {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-  }).then((response) => {
-    return response.json();
-  });
+  }).then((response) => response.json());
 };

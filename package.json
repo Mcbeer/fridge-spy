@@ -28,5 +28,8 @@
     "libs/utils",
     "libs/types",
     "libs/validation"
-  ]
+  ],
+  "dependencies": {
+    "pm2": "^5.1.2"
+  }
 }

@@ -1,8 +1,11 @@
+import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
 import { postProductType } from "../lib/productType/postProductType";
 
 export const productTypeRouter = (): Router => {
   const productTypeRouter = Router();
+
+  productTypeRouter.use(authMiddleware);
 
   // Get a specific product type
   productTypeRouter.get("/:id");
