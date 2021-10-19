@@ -10,6 +10,8 @@ export const setupExpressApp = (): Express => {
   const basePath = `/api/${apiVersion}`;
   const baseRouter = Router();
 
+  console.log(basePath);
+
   // Base routes declaration
   const userBasePath = '/user';
   const authBasePath = '/auth';

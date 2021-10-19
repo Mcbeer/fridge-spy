@@ -1,5 +1,5 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { getUserByEmail } from '../../database/user/getUserByEmail';
@@ -14,10 +14,12 @@ export const authorizeUser = async (
   const { email, password } =
     getRequestBody<{ email: string; password: string }>(req);
 
+  console.log('Authorizing user', email);
+
   const [queryUserError, user] = await perhaps(getUserByEmail(email));
 
   if (queryUserError) {
-    logger.error(queryUserError);
+    userLogger.error(queryUserError);
     respond(res).error(queryUserError);
 
     return;
@@ -25,7 +27,7 @@ export const authorizeUser = async (
 
   if (!user) {
     const noUserError = new Error('No user found with that email');
-    logger.error(noUserError);
+    userLogger.error(noUserError);
     respond(res).error(noUserError);
 
     return;
@@ -35,7 +37,7 @@ export const authorizeUser = async (
 
   if (!validPassword) {
     const invalidPasswordError = new Error('Password invalid');
-    logger.error(invalidPasswordError);
+    userLogger.error(invalidPasswordError);
     respond(res).error(invalidPasswordError);
 
     return;

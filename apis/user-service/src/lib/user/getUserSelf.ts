@@ -1,5 +1,5 @@
 import { getRequestToken, respond } from '@fridgespy/express-helpers';
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { queryUserById } from '../../database/user/queryUserById';
@@ -12,7 +12,7 @@ export const getUserSelf = async (req: Request, res: Response) => {
     const noTokenError = new Error(
       'No request token found, how did you get through auth??'
     );
-    logger.error(noTokenError);
+    userLogger.error(noTokenError);
     respond(res).error(noTokenError);
 
     return;
@@ -25,7 +25,7 @@ export const getUserSelf = async (req: Request, res: Response) => {
   );
 
   if (queryUserError) {
-    logger.error(queryUserError);
+    userLogger.error(queryUserError);
     respond(res).error(queryUserError);
 
     return;
@@ -33,7 +33,7 @@ export const getUserSelf = async (req: Request, res: Response) => {
 
   if (!user) {
     const noUserError = new Error('No user found with that id');
-    logger.error(noUserError);
+    userLogger.error(noUserError);
     respond(res).error(noUserError);
 
     return;

@@ -1,5 +1,5 @@
 import { getRequestParams, respond } from '@fridgespy/express-helpers';
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { removeUser } from '../../database/user/removeUser';
@@ -10,7 +10,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   const [deleteUserError, deletedUser] = await perhaps(removeUser(id));
 
   if (deleteUserError) {
-    logger.error(deleteUserError);
+    userLogger.error(deleteUserError);
     respond(res).error(deleteUserError);
 
     return;
@@ -20,7 +20,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const noDeletedUser = new Error(
       'No user deleted in request, unknown error occured'
     );
-    logger.error(noDeletedUser);
+    userLogger.error(noDeletedUser);
     respond(res).error(noDeletedUser);
     return;
   }

@@ -1,4 +1,4 @@
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import * as dotenv from 'dotenv';
 import { database } from './database/database';
@@ -10,21 +10,23 @@ dotenv.config();
 export const expressApp = setupExpressApp();
 
 const runServer = async (): Promise<void> => {
-  logger.info('Migrating tables...');
+  userLogger.info('Migrating tables...');
   await database.migrate.latest();
-  logger.info('Migration successfull');
+  userLogger.info('Migration successfull');
 
-  logger.info('Upserting root account');
+  userLogger.info('Upserting root account');
   const [upsertRootUserError] = await perhaps(upsertRootUser());
 
   if (upsertRootUserError) {
-    logger.info('Root user already exists');
+    userLogger.info('Root user already exists');
   } else {
-    logger.info('Root user upserted');
+    userLogger.info('Root user upserted');
   }
 
-  logger.info('Starting express on port 8001');
-  expressApp.listen(8001);
+  userLogger.info('Starting express on port 8001');
+  expressApp.listen(8001, () => {
+    userLogger.info(`User service running on http://localhost:8001`);
+  });
 };
 
 // Runs the server

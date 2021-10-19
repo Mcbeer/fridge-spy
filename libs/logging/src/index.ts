@@ -1,11 +1,16 @@
-import winston from "winston";
+import { createLogger, format, Logger, transports } from "winston";
 
-export const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.Console({
-      format: winston.format.simple(),
-    }),
-  ],
-});
+export const composeLogger = (): Logger =>
+  createLogger({
+    level: "info",
+    format: format.json(),
+    transports: [
+      new transports.Console({
+        format: format.simple(),
+      }),
+    ],
+  });
+
+export const userLogger = composeLogger();
+export const productLogger = composeLogger();
+export const locationLogger = composeLogger();

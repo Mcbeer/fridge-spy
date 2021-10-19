@@ -1,5 +1,5 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
@@ -55,7 +55,7 @@ export const validateUser = async (
       const noValidTokens = new Error(
         'Cant make new tokens for you, please sign in again'
       );
-      logger.error(noValidTokens);
+      userLogger.error(noValidTokens);
 
       respond(res).error(noValidTokens);
       return;

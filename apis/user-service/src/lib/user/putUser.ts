@@ -1,5 +1,5 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { updateUser } from '../../database/user/updateUser';
@@ -33,7 +33,7 @@ export const putUser = async (req: Request, res: Response): Promise<void> => {
   );
 
   if (updateError) {
-    logger.error(updateError);
+    userLogger.error(updateError);
     respond(res).error(updateError);
 
     return;

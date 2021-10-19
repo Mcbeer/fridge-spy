@@ -1,5 +1,5 @@
 import { getRequestParams, respond } from '@fridgespy/express-helpers';
-import { logger } from '@fridgespy/logging';
+import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { queryUserById } from '../../database/user/queryUserById';
@@ -14,14 +14,14 @@ export const getUserById = async (
   const [queryUserError, user] = await perhaps(queryUserById(id));
 
   if (queryUserError) {
-    logger.error(queryUserError);
+    userLogger.error(queryUserError);
     respond(res).error(queryUserError);
     return;
   }
 
   if (!user) {
     const noUserError = new Error('No user with that id exists');
-    logger.error(noUserError);
+    userLogger.error(noUserError);
     respond(res).error(noUserError);
     return;
   }
