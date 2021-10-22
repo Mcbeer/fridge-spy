@@ -83,7 +83,6 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log("Accessing authMiddleware");
   const tokens = getRequestToken(req);
 
   const [validateUserError, authorizedUser] = await perhaps(
@@ -99,8 +98,6 @@ export const authMiddleware = async (
     respond(res).error(new Error("User cannot be authorized at this time..."));
     return;
   }
-
-  console.log({ authorizedUser });
 
   if (authorizedUser && authorizedUser.tokens) {
     res.cookie("access_token", authorizedUser.tokens.accessToken);
@@ -122,10 +119,12 @@ const validateUser = async (tokens: {
 }> => {
   return fetch(`http://localhost:8001/api/v1/auth/validate`, {
     method: "POST",
+    credentials: "include",
     body: JSON.stringify(tokens),
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      "Access-Control-Allow-Origin": "localhost",
     },
   }).then((response) => response.json());
 };

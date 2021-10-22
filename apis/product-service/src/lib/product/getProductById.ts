@@ -13,7 +13,6 @@ export const getProductById = async (
   res: Response
 ): Promise<void> => {
   const { id } = getRequestParams<{ id: string }>(req);
-  console.log("Requesting product by id", id);
 
   const [queryError, product] = await perhaps(queryProductById(id));
 

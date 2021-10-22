@@ -1,3 +1,4 @@
+import { authMiddleware } from '@fridgespy/express-helpers';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express, json, Router, urlencoded } from 'express';
@@ -25,8 +26,8 @@ export const setupExpressApp = (): Express => {
   app.use(basePath, baseRouter);
 
   // Setup the sub routes
-  baseRouter.use(userBasePath, userRouter);
   baseRouter.use(authBasePath, authRouter);
+  baseRouter.use(userBasePath, authMiddleware, userRouter);
 
   return app;
 };

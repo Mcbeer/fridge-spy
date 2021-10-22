@@ -14,8 +14,6 @@ export const authorizeUser = async (
   const { email, password } =
     getRequestBody<{ email: string; password: string }>(req);
 
-  console.log('Authorizing user', email);
-
   const [queryUserError, user] = await perhaps(getUserByEmail(email));
 
   if (queryUserError) {

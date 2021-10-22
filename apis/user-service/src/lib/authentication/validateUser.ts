@@ -10,7 +10,6 @@ export const validateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log('Validating user...');
   const tokens =
     getRequestBody<{ accessToken: string; refreshToken: string }>(req);
 

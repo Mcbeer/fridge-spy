@@ -6,25 +6,23 @@ import { getBrands } from "../lib/brand/getBrands";
 import { putBrand } from "../lib/brand/putBrand";
 import { removeBrand } from "../lib/brand/removeBrand";
 
-export const brandRouter = (): Router => {
-  const brandRouter = Router();
+const router = Router();
 
-  brandRouter.use(authMiddleware);
+router.use(authMiddleware);
 
-  // Get a specific brand
-  brandRouter.get("/:id", getBrandById);
+// Get a specific brand
+router.get("/:id", getBrandById);
 
-  // Get aall brand
-  brandRouter.get("/", getBrands);
+// Get aall brand
+router.get("/", getBrands);
 
-  // Add a brand
-  brandRouter.post("/", addBrand);
+// Add a brand
+router.post("/", addBrand);
 
-  // Update a brand
-  brandRouter.put("/", putBrand);
+// Update a brand
+router.put("/", putBrand);
 
-  // Delete a brand
-  brandRouter.delete("/:id", removeBrand);
+// Delete a brand
+router.delete("/:id", removeBrand);
 
-  return brandRouter;
-};
+export { router as brandRouter };

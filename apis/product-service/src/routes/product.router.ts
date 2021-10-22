@@ -4,25 +4,23 @@ import { getProductById } from "../lib/product/getProductById";
 import { getProducts } from "../lib/product/getProducts";
 import { postProduct } from "../lib/product/postProduct";
 
-export const productRouter = (): Router => {
-  const productRouter = Router();
+const router = Router();
 
-  productRouter.use(authMiddleware);
+router.use(authMiddleware);
 
-  // Get a specific product
-  productRouter.get("/:id", getProductById);
+// Get a specific product
+router.get("/:id", getProductById);
 
-  // Get products (Query params will define an array of ids)
-  productRouter.get("/", getProducts);
+// Get products (Query params will define an array of ids)
+router.get("/", getProducts);
 
-  // Add a new product
-  productRouter.post("/", postProduct);
+// Add a new product
+router.post("/", postProduct);
 
-  // Update a product
-  productRouter.put("/");
+// Update a product
+router.put("/");
 
-  // Delete a product
-  productRouter.delete("/:id");
+// Delete a product
+router.delete("/:id");
 
-  return productRouter;
-};
+export { router as productRouter };

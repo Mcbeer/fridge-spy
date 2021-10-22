@@ -1,4 +1,3 @@
-import { authMiddleware } from '@fridgespy/express-helpers';
 import { Router } from 'express';
 import {
   deleteUser,
@@ -8,17 +7,13 @@ import {
   putUser,
 } from '../lib/user';
 
-export const userRouter = (req, res, next): Router => {
-  const userRouter = Router();
+const router = Router();
 
-  userRouter.use(authMiddleware);
+router.get('/me', getUserSelf);
+router.get('/:id', getUserById);
 
-  userRouter.get('/me', getUserSelf);
-  userRouter.get('/:id', getUserById);
+router.post('/', postUser);
+router.put('/', putUser);
+router.delete('/:id', deleteUser);
 
-  userRouter.post('/', postUser);
-  userRouter.put('/', putUser);
-  userRouter.delete('/:id', deleteUser);
-
-  return userRouter;
-};
+export { router as userRouter };

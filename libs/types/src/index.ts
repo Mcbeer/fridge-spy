@@ -5,6 +5,6 @@ export * from "./ILocation";
 export * from "./IProduct";
 export * from "./IProductType";
 export * from "./ITimestamps";
+export * from "./IToken";
 export * from "./IUser";
 export * from "./UserRoles";
-export * from "./IToken";

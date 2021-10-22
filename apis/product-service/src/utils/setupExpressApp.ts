@@ -28,10 +28,10 @@ export const setupExpressApp = (): Express => {
   const productTypeBasePath = "/producttype";
 
   // We setup middlewares here...
+  app.use(cookieParser());
   app.use(cors());
   app.use(json());
   app.use(urlencoded({ extended: true }));
-  app.use(cookieParser());
 
   app.use(basePath, baseRouter);
 
