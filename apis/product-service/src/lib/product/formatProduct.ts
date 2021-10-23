@@ -37,7 +37,7 @@ export const formatDBProductToProduct = ({
       ? {
           id: productType.id,
           name: productType.name,
-          description: productType.description,
+          description: productType.description || "",
         }
       : undefined,
     createdAt: dbProduct.created_at || "",

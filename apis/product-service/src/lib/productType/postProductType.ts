@@ -1,7 +1,18 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/utils";
+import { productLogger } from "@fridgespy/logging";
+import { IProductType, ProductTypeChannels } from "@fridgespy/types";
+import { appEvents, cache, perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
+import { redisClient, redisPublisher } from "../..";
+import { insertProductType } from "../../database/product_type/insertProductType";
+import { getUuid } from "../../utils/getUuid";
+import { formatDBProductTypeToProductType } from "./formatProductType";
+
+export interface IPostProductTypeArgs {
+  name: string;
+  description?: string;
+}
 
 // This should be seen as a "helper" functionality.
 // A user can add a new product type via this endpoint
@@ -11,7 +22,7 @@ export const postProductType = async (
   res: Response
 ): Promise<void> => {
   // Extract body from request
-  const body = getRequestBody(req);
+  const body = getRequestBody<IPostProductTypeArgs>(req);
 
   // Validate the body
   const [inputValidationError, inputValidity] = await perhaps(
@@ -29,12 +40,54 @@ export const postProductType = async (
   }
 
   // Generate uuid for the product type
+  const productTypeId = getUuid();
 
   // Insert the new product type
+  const [insertProductTypeError, insertedProductType] = await perhaps(
+    insertProductType({
+      id: productTypeId,
+      name: body.name,
+      description: body.description,
+    })
+  );
+
+  if (insertProductTypeError) {
+    productLogger.error(insertProductTypeError);
+    respond(res).error(
+      new Error("Could not add the product type at this time")
+    );
+    return;
+  }
+
+  if (!insertedProductType) {
+    productLogger.error("No product type inserted");
+    respond(res).error(
+      new Error(
+        "Product type could not be added at this time, please try again"
+      )
+    );
+    return;
+  }
+
+  // Format product type
+  const formattedProductType =
+    formatDBProductTypeToProductType(insertedProductType);
+
+  // Cache the result
+  cache(redisClient).set<IProductType>(
+    `productType#${productTypeId}`,
+    formattedProductType
+  );
 
   // Publish the result
+  appEvents(redisPublisher).publish(
+    ProductTypeChannels.PRODUCT_TYPE_CREATED,
+    formattedProductType
+  );
 
   // Return the new product type
+  respond(res).success(formattedProductType);
+  return;
 };
 
 const postProductTypeSchema = yup.object({
