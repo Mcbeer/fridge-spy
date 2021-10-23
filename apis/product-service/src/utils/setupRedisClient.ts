@@ -1,31 +1,25 @@
 import IORedis from "ioredis";
 
-const subscriber = new IORedis({
-  port: 6379,
-  host: "127.0.0.1",
-  password: "bacon123",
-});
-
-const publisher = new IORedis({
-  port: 6379,
-  host: "127.0.0.1",
-  password: "bacon123",
-});
-
-const client = new IORedis({
-  port: 6379,
-  host: "127.0.0.1",
-  password: "bacon123",
-});
-
 export const setupRedisSubscriber = () => {
-  return subscriber;
+  return new IORedis({
+    port: 6379,
+    host: "127.0.0.1",
+    password: "bacon123",
+  });
 };
 
 export const setupRedisPublisher = () => {
-  return publisher;
+  return new IORedis({
+    port: 6379,
+    host: "127.0.0.1",
+    password: "bacon123",
+  });
 };
 
 export const setupRedisClient = () => {
-  return client;
+  return new IORedis({
+    port: 6379,
+    host: "127.0.0.1",
+    password: "bacon123",
+  });
 };

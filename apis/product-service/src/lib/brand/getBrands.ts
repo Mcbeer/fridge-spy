@@ -4,7 +4,10 @@ import { Request, Response } from "express";
 import { queryAllBrands } from "../../database/brand/queryAllBrands";
 import { formatDBBrandToBrand } from "./formatBrand";
 
-export const getBrands = async (req: Request, res: Response): Promise<void> => {
+export const getBrands = async (
+  _req: Request,
+  res: Response
+): Promise<void> => {
   const [queryBrandsError, brands] = await perhaps(queryAllBrands());
 
   if (queryBrandsError) {

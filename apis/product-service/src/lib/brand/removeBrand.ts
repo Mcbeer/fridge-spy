@@ -1,6 +1,8 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/utils";
+import { BrandChannels, IBrand } from "@fridgespy/types";
+import { appEvents, cache, perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
+import { redisClient, redisPublisher } from "../..";
 import { deleteBrand } from "../../database/brand/deleteBrand";
 import { formatDBBrandToBrand } from "./formatBrand";
 
@@ -30,6 +32,13 @@ export const removeBrand = async (
   }
 
   const formattedBrand = formatDBBrandToBrand(deletedBrand);
+
+  cache(redisClient).del(`brand#${id}`);
+
+  appEvents(redisPublisher).publish<IBrand>(
+    BrandChannels.BRAND_DELETED,
+    formattedBrand
+  );
 
   respond(res).success(formattedBrand);
 };

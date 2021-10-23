@@ -1,7 +1,9 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
-import { perhaps } from "@fridgespy/utils";
+import { BrandChannels, IBrand } from "@fridgespy/types";
+import { appEvents, cache, perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
+import { redisClient, redisPublisher } from "../..";
 import { insertBrand } from "../../database/brand/insertBrand";
 import { getUuid } from "../../utils/getUuid";
 import { formatDBBrandToBrand } from "./formatBrand";
@@ -50,11 +52,17 @@ export const addBrand = async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  // Publish the result
-  // TODO : Push the result to redis, the  let the handler take care of everything else.
-
   // Format the brand to camelCase
   const formattedBrand = formatDBBrandToBrand(insertedItem);
+
+  // Publish the result
+  // TODO : Push the result to redis, the  let the handler take care of everything else.
+  cache(redisClient).set<IBrand>(`brand#${brandId}`, formattedBrand);
+
+  appEvents(redisPublisher).publish<IBrand>(
+    BrandChannels.BRAND_CREATED,
+    formattedBrand
+  );
 
   // Return the new Brand
   respond(res).success(formattedBrand);

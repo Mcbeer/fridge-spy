@@ -48,7 +48,7 @@
       "path": "./libs/types/tsconfig.json"
     },
     {
-      "path": "./libs/expressHelpers/tsconfig.json"
+      "path": "./libs/express-helpers/tsconfig.json"
     },
     {
       "path": "./libs/utils/tsconfig.json"

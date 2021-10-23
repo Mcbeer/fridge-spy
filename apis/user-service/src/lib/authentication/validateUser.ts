@@ -1,7 +1,7 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
 import { userLogger } from '@fridgespy/logging';
-import { AuthChannels } from '@fridgespy/types';
-import { perhaps } from '@fridgespy/utils';
+import { AuthChannels, IUser } from '@fridgespy/types';
+import { cache, perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { redisClient, redisPublisher } from '../..';
@@ -90,7 +90,7 @@ export const validateUser = async (
       setTokens(res, newValidTokens);
 
       const [cacheUserError, cachedUser] = await perhaps(
-        redisClient.get(`user#${validAccessToken.userId}`)
+        cache(redisClient).get<IUser>(`user#${validAccessToken.userId}`)
       );
 
       if (cacheUserError) {
@@ -99,7 +99,7 @@ export const validateUser = async (
 
       if (cachedUser) {
         respond(res).success({
-          user: JSON.parse(cachedUser),
+          user: cachedUser,
           tokens: newValidTokens,
         });
         return;
@@ -119,17 +119,7 @@ export const validateUser = async (
         return;
       }
 
-      redisClient.set(
-        `user#${validAccessToken.userId}`,
-        JSON.stringify(user),
-        'EX',
-        60
-      );
-
-      redisPublisher.publish(
-        AuthChannels.ON_VALIDATE,
-        `${user.name} validated and refreshed!`
-      );
+      cache(redisClient).set<IUser>(`user#${validAccessToken.userId}`, user);
       respond(res).success({ user, tokens: newValidTokens });
       return;
     }

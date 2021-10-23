@@ -2,7 +2,7 @@ import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import * as dotenv from 'dotenv';
 import { database } from './database/database';
-import { setupAuthEventHandlers } from './events/authEvents';
+import { setupAuthEventHandlers } from './events/auth.events';
 import { setupExpressApp } from './utils/setupExpressApp';
 import {
   setupRedisClient,
