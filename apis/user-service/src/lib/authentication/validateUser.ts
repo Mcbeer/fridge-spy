@@ -1,10 +1,13 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
 import { userLogger } from '@fridgespy/logging';
+import { AuthChannels } from '@fridgespy/types';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { redisClient, redisPublisher } from '../..';
 import { queryUserById } from '../../database/user/queryUserById';
 import { refreshAccessToken } from '../../utils/refreshAccessToken';
+import { setTokens } from '../../utils/setTokens';
 
 export const validateUser = async (
   req: Request,
@@ -29,6 +32,19 @@ export const validateUser = async (
       process.env.JWT_SECRET
     );
 
+    const [cacheUserError, cachedUser] = await perhaps(
+      redisClient.get(`user#${validAccessToken.userId}`)
+    );
+
+    if (cacheUserError) {
+      userLogger.info(cacheUserError);
+    }
+
+    if (cachedUser) {
+      respond(res).success({ user: JSON.parse(cachedUser), tokens: null });
+      return;
+    }
+
     const [userError, user] = await perhaps(
       queryUserById(validAccessToken.userId)
     );
@@ -42,6 +58,13 @@ export const validateUser = async (
       respond(res).error(new Error('User not available...'));
       return;
     }
+    redisClient.set(
+      `user#${validAccessToken.userId}`,
+      JSON.stringify(user),
+      'EX',
+      60
+    );
+    redisPublisher.publish(AuthChannels.ON_VALIDATE, `${user.name} validated!`);
     respond(res).success({ user, tokens: null });
     return;
   } catch (err) {
@@ -64,6 +87,24 @@ export const validateUser = async (
         process.env.JWT_SECRET
       );
 
+      setTokens(res, newValidTokens);
+
+      const [cacheUserError, cachedUser] = await perhaps(
+        redisClient.get(`user#${validAccessToken.userId}`)
+      );
+
+      if (cacheUserError) {
+        userLogger.info(cacheUserError);
+      }
+
+      if (cachedUser) {
+        respond(res).success({
+          user: JSON.parse(cachedUser),
+          tokens: newValidTokens,
+        });
+        return;
+      }
+
       const [userError, user] = await perhaps(
         queryUserById(validAccessToken.userId)
       );
@@ -78,6 +119,17 @@ export const validateUser = async (
         return;
       }
 
+      redisClient.set(
+        `user#${validAccessToken.userId}`,
+        JSON.stringify(user),
+        'EX',
+        60
+      );
+
+      redisPublisher.publish(
+        AuthChannels.ON_VALIDATE,
+        `${user.name} validated and refreshed!`
+      );
       respond(res).success({ user, tokens: newValidTokens });
       return;
     }

@@ -13,7 +13,7 @@ const runServer = async (): Promise<void> => {
   // logger.info("Done migrating tables");
 
   logger.info("Starting express on port 8000");
-  expressApp.listen(8000);
+  // expressApp.listen(8000);
 };
 
 // Runs the server

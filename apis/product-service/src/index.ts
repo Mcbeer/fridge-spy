@@ -2,8 +2,17 @@ import { productLogger } from "@fridgespy/logging";
 import * as dotenv from "dotenv";
 import { database } from "./database/database";
 import { setupExpressApp } from "./utils/setupExpressApp";
+import {
+  setupRedisClient,
+  setupRedisPublisher,
+  setupRedisSubscriber,
+} from "./utils/setupRedisClient";
 
 dotenv.config();
+
+export const redisPublisher = setupRedisPublisher();
+export const redisSubscriber = setupRedisSubscriber();
+export const redisClient = setupRedisClient();
 
 const expressApp = setupExpressApp();
 

@@ -83,6 +83,11 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  if (req.headers["x-api-key"] === process.env.API_KEY) {
+    next();
+    return;
+  }
+
   const tokens = getRequestToken(req);
 
   const [validateUserError, authorizedUser] = await perhaps(
@@ -124,7 +129,6 @@ const validateUser = async (tokens: {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Access-Control-Allow-Origin": "localhost",
     },
   }).then((response) => response.json());
 };

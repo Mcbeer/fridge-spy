@@ -17,13 +17,25 @@ export const setupExpressApp = (): Express => {
   const userBasePath = '/user';
   const authBasePath = '/auth';
 
+  const whiteList = ['http://localhost:8000', 'http://localhost:8001'];
+
   // We setup middlewares here...
-  app.use(cors());
+  app.use(cookieParser());
+  app.use(
+    cors({
+      origin: (_origin, callback) => callback(null, true),
+      credentials: true,
+    })
+  );
   app.use(json());
   app.use(urlencoded({ extended: true }));
-  app.use(cookieParser());
 
   app.use(basePath, baseRouter);
+
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Headers', 'x-api-key');
+    next();
+  });
 
   // Setup the sub routes
   baseRouter.use(authBasePath, authRouter);

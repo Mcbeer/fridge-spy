@@ -1,4 +1,3 @@
-// import { authMiddleware } from "../middleware/auth.middleware";
 import { IUser } from "@fridgespy/types";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -27,9 +26,16 @@ export const setupExpressApp = (): Express => {
   const productBasePath = "/product";
   const productTypeBasePath = "/producttype";
 
+  const whiteList = ["http://localhost:8000", "http://localhost:8001"];
+
   // We setup middlewares here...
   app.use(cookieParser());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: (_origin, callback) => callback(null, true),
+      credentials: true,
+    })
+  );
   app.use(json());
   app.use(urlencoded({ extended: true }));
 

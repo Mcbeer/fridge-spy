@@ -8,7 +8,6 @@ export const getUserById = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log('User in Req:', req.user);
   const { id } = getRequestParams<{ id: string }>(req);
 
   const [queryUserError, user] = await perhaps(queryUserById(id));

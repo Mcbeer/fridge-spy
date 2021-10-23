@@ -1,8 +1,10 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
-import { IUser } from "@fridgespy/types";
+import { productLogger } from "@fridgespy/logging";
+import { IProduct, IUser } from "@fridgespy/types";
 import { perhaps } from "@fridgespy/utils";
 import fetch from "cross-fetch";
 import { Request, Response } from "express";
+import { redisClient } from "../..";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { queryProductById } from "../../database/product/queryProductById";
 import { queryProductTypeById } from "../../database/product_type/queryProductTypeById";
@@ -14,15 +16,27 @@ export const getProductById = async (
 ): Promise<void> => {
   const { id } = getRequestParams<{ id: string }>(req);
 
+  const [cacheProductError, cacheProduct] = await perhaps(
+    redisClient.get(`product#${id}`)
+  );
+  if (cacheProductError) {
+    productLogger.error(cacheProductError);
+  }
+
+  if (cacheProduct) {
+    respond<IProduct>(res).success(JSON.parse(cacheProduct));
+    return;
+  }
+
   const [queryError, product] = await perhaps(queryProductById(id));
 
   if (queryError) {
-    respond(res).error(queryError);
+    respond<Error>(res).error(queryError);
     return;
   }
 
   if (!product) {
-    respond(res).error(new Error("No product with that id..."));
+    respond<Error>(res).error(new Error("No product with that id..."));
     return;
   }
 
@@ -31,7 +45,7 @@ export const getProductById = async (
   );
 
   if (queryBrandError) {
-    respond(res).error(queryBrandError);
+    respond<Error>(res).error(queryBrandError);
     return;
   }
 
@@ -40,7 +54,7 @@ export const getProductById = async (
   );
 
   if (queryProductTypeError) {
-    respond(res).error(queryProductTypeError);
+    respond<Error>(res).error(queryProductTypeError);
     return;
   }
 
@@ -49,12 +63,12 @@ export const getProductById = async (
   );
 
   if (queryAddedByUserError) {
-    respond(res).error(queryAddedByUserError);
+    respond<Error>(res).error(queryAddedByUserError);
     return;
   }
 
   if (!addedByUser) {
-    respond(res).error(new Error("Could not fetch user..."));
+    respond<Error>(res).error(new Error("Could not fetch user..."));
     return;
   }
 
@@ -65,12 +79,27 @@ export const getProductById = async (
     addedByUser,
   });
 
-  respond(res).success(formattedProduct);
+  if (!cacheProduct) {
+    productLogger.info("Product not in cache...");
+    redisClient.set(
+      `product#${id}`,
+      JSON.stringify(formattedProduct),
+      "EX",
+      10
+    );
+  }
+
+  respond<IProduct>(res).success(formattedProduct);
   return;
 };
 
 const getUserById = async (id: string): Promise<IUser> => {
-  return fetch(`${process.env.USER_SERVICE_ENDPOINT}/user/${id}`).then(
-    (response) => response.json() as unknown as IUser
-  );
+  console.log("Getting user with id", id);
+  return fetch(`${process.env.USER_SERVICE_ENDPOINT}/user/${id}`, {
+    // @ts-ignore
+    headers: {
+      "Access-Control-Allow-Headers": "x-api-key",
+      "x-api-key": process.env.API_KEY,
+    },
+  }).then((response) => response.json() as unknown as IUser);
 };
