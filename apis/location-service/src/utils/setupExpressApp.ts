@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
+import { setupSSE } from "../events/setupSSE";
 
 export const setupExpressApp = (): Express => {
   const app = express();
@@ -18,6 +19,8 @@ export const setupExpressApp = (): Express => {
   app.use(urlencoded({ extended: true }));
 
   app.use(basePath, baseRouter);
+
+  baseRouter.get("/events", setupSSE);
 
   return app;
 };

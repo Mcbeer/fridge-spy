@@ -13,7 +13,7 @@ router.use(authMiddleware);
 // Get a specific brand
 router.get("/:id", getBrandById);
 
-// Get aall brand
+// Get all brand
 router.get("/", getBrands);
 
 // Add a brand
