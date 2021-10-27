@@ -30,3 +30,12 @@ export interface IDBProduct extends IDBTimestamps {
   added_by: string;
   image_url: string;
 }
+
+export interface IDBUpdateProduct extends IDBTimestamps {
+  id: string;
+  name?: string;
+  barcode?: string;
+  product_type_id?: string;
+  brand_id?: string;
+  image_url?: string;
+}

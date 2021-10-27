@@ -3,6 +3,8 @@ import { Router } from "express";
 import { getProductById } from "../lib/product/getProductById";
 import { getProducts } from "../lib/product/getProducts";
 import { postProduct } from "../lib/product/postProduct";
+import { removeProduct } from "../lib/product/removeProduct";
+import { updateProduct } from "../lib/product/updateProduct";
 
 const router = Router();
 
@@ -18,9 +20,9 @@ router.get("/", getProducts);
 router.post("/", postProduct);
 
 // Update a product
-router.put("/");
+router.put("/", updateProduct);
 
 // Delete a product
-router.delete("/:id");
+router.delete("/:id", removeProduct);
 
 export { router as productRouter };

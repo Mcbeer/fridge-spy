@@ -12,8 +12,7 @@ export const updateBrand = ({
   id,
   name,
 }: UpdateBrandArgs): Promise<IDBBrand> => {
-  const updateTime = getTimeNow();
   return database(DatabaseTables.BRAND)
     .where({ id })
-    .update({ name, updated_at: updateTime });
+    .update({ name, updated_at: getTimeNow() });
 };

@@ -1,13 +1,13 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
 import { productLogger } from "@fridgespy/logging";
-import { IProduct, IUser } from "@fridgespy/types";
+import { IProduct } from "@fridgespy/types";
 import { perhaps } from "@fridgespy/utils";
-import fetch from "cross-fetch";
 import { Request, Response } from "express";
 import { redisClient } from "../..";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { queryProductById } from "../../database/product/queryProductById";
 import { queryProductTypeById } from "../../database/product_type/queryProductTypeById";
+import { getUserById } from "../../utils/getUserById";
 import { formatDBProductToProduct } from "./formatProduct";
 
 export const getProductById = async (
@@ -19,7 +19,9 @@ export const getProductById = async (
   const [cacheProductError, cacheProduct] = await perhaps(
     redisClient.get(`product#${id}`)
   );
+
   if (cacheProductError) {
+    // ! Do not exit here, just continue and get the item from DB
     productLogger.error(cacheProductError);
   }
 
@@ -91,15 +93,4 @@ export const getProductById = async (
 
   respond<IProduct>(res).success(formattedProduct);
   return;
-};
-
-const getUserById = async (id: string): Promise<IUser> => {
-  console.log("Getting user with id", id);
-  return fetch(`${process.env.USER_SERVICE_ENDPOINT}/user/${id}`, {
-    // @ts-ignore
-    headers: {
-      "Access-Control-Allow-Headers": "x-api-key",
-      "x-api-key": process.env.API_KEY,
-    },
-  }).then((response) => response.json() as unknown as IUser);
 };

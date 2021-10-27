@@ -1,5 +1,6 @@
 import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
+import { getProductTypes } from "../lib/productType/getProductTypes";
 import { postProductType } from "../lib/productType/postProductType";
 
 const router = Router();
@@ -9,8 +10,8 @@ router.use(authMiddleware);
 // Get a specific product type
 router.get("/:id");
 
-// Get a specific product type (Query params can be an array of ids)
-router.get("/");
+// Get all product types
+router.get("/", getProductTypes);
 
 // Add a product type
 router.post("/", postProductType);

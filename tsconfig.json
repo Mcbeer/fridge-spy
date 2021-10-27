@@ -28,6 +28,7 @@
   "exclude": [
     "node_modules"
   ],
+  "include": ["**/*.ts"],
   "references": [
     {
       "path": "./apis/location-service"
