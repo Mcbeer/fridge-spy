@@ -5,10 +5,8 @@ export interface SSEClient {
   id: string;
   res: Response;
 }
-
+let subscribers: SSEClient[] = [];
 const clients = () => {
-  let subscribers: SSEClient[] = [];
-
   const add = (client: SSEClient): void => {
     subscribers.push(client);
   };
@@ -18,7 +16,8 @@ const clients = () => {
   };
 
   const getById = (id: string): SSEClient[] => {
-    return subscribers.filter((sub) => sub.id === id);
+    const clients = subscribers.filter((sub) => sub.id.includes(id));
+    return clients;
   };
 
   const getAll = (): SSEClient[] => {

@@ -11,11 +11,13 @@ export const Layout = ({ children }: LayoutInterface) => {
 
   useEffect(() => {
     if (!listening) {
-      const events = new EventSource("http://localhost:8002/api/v1/events");
+      const events = new EventSource("http://localhost:8002/api/v1/events", {
+        withCredentials: true,
+      });
 
       events.onmessage = (event) => {
         const parsedData = JSON.parse(event.data);
-        console.log({ parsedData });
+        console.log(parsedData);
       };
 
       setListening(true);
