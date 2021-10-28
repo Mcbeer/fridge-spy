@@ -1,12 +1,14 @@
 import { lighten } from "polished";
-import styled from "styled-components";
+import styled, { ITheme } from "styled-components";
 
 export const LayoutMain = styled.main`
   position: absolute;
   inset: 0;
   display: grid;
   grid-template-columns: minmax(0, 8rem) 1fr;
-  background-color: ${({ theme }) => lighten(0.4, theme.primary)};
+  background-color: ${({ theme }: { theme: ITheme }) => {
+    return lighten(0.4, theme.primary);
+  }};
   overflow: hidden;
 `;
 export const LayoutNav = styled.div`

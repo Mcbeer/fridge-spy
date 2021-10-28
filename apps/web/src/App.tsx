@@ -1,29 +1,38 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Layout } from "./views/Layout/Layout";
-import { Home } from "./views/Home/Home";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./theme/theme";
-import { House } from "./views/House/House";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ITheme, ThemeProvider } from "styled-components";
 import { store } from "./store/store";
+import { Home } from "./views/Home/Home";
+import { House } from "./views/House/House";
+import { Layout } from "./views/Layout/Layout";
+import { Login } from "./views/Login/Login";
+
+export const theme: ITheme = {
+  primary: "#3075d7",
+  secondary: "#00909a",
+  warning: "#bd5b00",
+  shadow: "0 0 10px 4px rgba(0, 0, 0, 0.2);",
+};
 
 export const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <Router>
-        <Route exact path="/login" />
-        <Layout>
-          <Switch>
-            <Route path="/house/:id" component={House} />
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Layout>
+            <Switch>
+              <Route path="/house/:id" component={House} />
 
-            <Route path="/overview" />
+              <Route path="/overview" />
 
-            <Route path="/shopping" />
+              <Route path="/shopping" />
 
-            <Route exact path="/" component={Home} />
-          </Switch>
-        </Layout>
+              <Route exact path="/" component={Home} />
+            </Switch>
+          </Layout>
+        </Switch>
       </Router>
     </ThemeProvider>
   </Provider>

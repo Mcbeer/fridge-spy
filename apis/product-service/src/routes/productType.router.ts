@@ -7,8 +7,9 @@ const router = Router();
 
 router.use(authMiddleware);
 
-// Get a specific product type
-router.get("/:id");
+// Will be implemented if needed
+// // Get a specific product type
+// router.get("/:id");
 
 // Get all product types
 router.get("/", getProductTypes);

@@ -1,0 +1,7 @@
+.Login {
+  &__form {
+    display: grid;
+    grid-template-rows: 4fr 1fr 1fr 1fr;
+    width: 100%;
+  }
+}
