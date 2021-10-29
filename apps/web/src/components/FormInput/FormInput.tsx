@@ -1,6 +1,9 @@
 import { FieldHookConfig, useField } from "formik";
 import React from "react";
+import { RiErrorWarningLine } from "react-icons/ri";
+import ReactTooltip from "react-tooltip";
 import {
+  FormInputError,
   FormInputInput,
   FormInputLabel,
   FormInputWrapper,
@@ -24,6 +27,14 @@ export const FormInput = ({
         touched={meta.touched}
         error={meta.error}
       />
+      {meta.touched && meta.error && (
+        <>
+          <FormInputError>
+            <RiErrorWarningLine size="1.5rem" data-tip={meta.error} />
+          </FormInputError>
+          <ReactTooltip effect="solid" type="error" />
+        </>
+      )}
     </FormInputWrapper>
   );
 };

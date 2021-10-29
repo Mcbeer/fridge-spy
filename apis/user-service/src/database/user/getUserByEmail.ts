@@ -1,7 +1,7 @@
-import { IUser } from '@fridgespy/types';
+import { IDBUser } from '@fridgespy/types';
 import { database } from '../database';
 import { DatabaseTables } from '../dbTables';
 
-export const getUserByEmail = async (email: string): Promise<IUser> => {
+export const getUserByEmail = async (email: string): Promise<IDBUser> => {
   return database(DatabaseTables.USER).where({ email }).first();
 };

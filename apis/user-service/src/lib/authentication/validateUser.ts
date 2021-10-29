@@ -6,6 +6,7 @@ import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { redisClient, redisPublisher } from '../..';
 import { queryUserById } from '../../database/user/queryUserById';
+import { formatDBUserToUser } from '../../utils/formatUser';
 import { refreshAccessToken } from '../../utils/refreshAccessToken';
 import { setTokens } from '../../utils/setTokens';
 
@@ -118,9 +119,13 @@ export const validateUser = async (
         respond(res).error(new Error('User not available...'));
         return;
       }
+      const formattedUser = formatDBUserToUser(user);
 
-      cache(redisClient).set<IUser>(`user#${validAccessToken.userId}`, user);
-      respond(res).success({ user, tokens: newValidTokens });
+      cache(redisClient).set<IUser>(
+        `user#${validAccessToken.userId}`,
+        formattedUser
+      );
+      respond(res).success({ user: formattedUser, tokens: newValidTokens });
       return;
     }
   }

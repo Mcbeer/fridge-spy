@@ -18,15 +18,8 @@
   },
   "homepage": "https://github.com/Mcbeer/fridge-spy#readme",
   "workspaces": [
-    "apis/location-service",
-    "apis/product-service",
-    "apis/user-service",
-    "apps/web",
-    "libs/dates",
-    "libs/express-helpers",
-    "libs/logging",
-    "libs/utils",
-    "libs/types",
-    "libs/validation"
+    "apis/*",
+    "apps/*",
+    "libs/*"
   ]
 }

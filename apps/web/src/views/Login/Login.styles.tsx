@@ -13,14 +13,11 @@ export const LoginMain = styled.main`
 
 export const LoginBox = styled.section`
   background-color: #fff;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 500px;
+  height: 60vh;
+  width: 40vw;
   display: flex;
   flex-direction: column;
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadow};
 `;
@@ -32,7 +29,7 @@ export const LoginBoxTopDecorator = styled.span`
     rgba(48, 117, 215, 1) 35%,
     rgba(0, 144, 154, 1) 100%
   );
-  height: 0.6rem;
+  height: 1rem;
   width: 100%;
 `;
 

@@ -3,6 +3,7 @@ import { userLogger } from '@fridgespy/logging';
 import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import { getUserByEmail } from '../../database/user/getUserByEmail';
+import { formatDBUserToUser } from '../../utils/formatUser';
 import { generateTokens } from '../../utils/generateTokens';
 import { setTokens } from '../../utils/setTokens';
 import { validatePassword } from '../../utils/validatePassword';
@@ -41,9 +42,11 @@ export const authorizeUser = async (
     return;
   }
 
+  const formattedUser = formatDBUserToUser(user);
+
   const tokens = generateTokens(user.id);
 
   setTokens(res, tokens);
 
-  respond(res).success(true);
+  respond(res).success({ user: formattedUser });
 };
