@@ -13,7 +13,5 @@ export const locationApi = createApi({
     // Get location by it's id
 
     // Get Houses
-
-    //
   }),
 });

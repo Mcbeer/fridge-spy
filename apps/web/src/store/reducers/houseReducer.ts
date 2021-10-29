@@ -11,11 +11,16 @@ const houseReducer = createSlice({
   name: "house",
   initialState,
   reducers: {
-    addHouse: (state: HouseState, action: PayloadAction<IHouse>) => {
+    add: (state: HouseState, action: PayloadAction<IHouse>) => {
       state[action.payload.id] = action.payload;
+    },
+    remove: (state: HouseState, action: PayloadAction<IHouse>) => {
+      delete state[action.payload.id];
     },
   },
 });
+
+export const houseActions = houseReducer.actions;
 
 const reducer = houseReducer.reducer;
 

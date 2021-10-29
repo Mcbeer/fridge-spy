@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fridgespy/validation": "*",
+    "@fridgespy/types": "*",
     "@reduxjs/toolkit": "^1.6.2",
     "formik": "^2.2.9",
     "polished": "^4.1.3",
