@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
 import { eventsRouter } from "../routes/events.router";
+import { houseRouter } from "../routes/house.router";
 
 export const setupExpressApp = (): Express => {
   const app = express();
@@ -11,7 +12,7 @@ export const setupExpressApp = (): Express => {
 
   // Base routes declaration
   const eventsBasePath = "/events";
-  // const productBasePath = "/product";
+  const houseBasePath = "/house";
   // const productTypeBasePath = "/producttype";
 
   // We setup middlewares here...
@@ -35,6 +36,7 @@ export const setupExpressApp = (): Express => {
   app.use(basePath, baseRouter);
 
   baseRouter.use(eventsBasePath, eventsRouter);
+  baseRouter.use(houseBasePath, houseRouter);
 
   return app;
 };

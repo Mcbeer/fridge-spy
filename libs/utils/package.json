@@ -10,6 +10,7 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
+    "@fridgespy/types": "*",
     "@types/node": "^16.11.1",
     "typescript": "^4.4.4"
   },

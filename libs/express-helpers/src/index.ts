@@ -69,7 +69,7 @@ export const respond = <T>(res: Response): RespondReturnValues<T> => {
   const error = (responseError: Error, code?: number) => {
     const formattedMessage =
       responseError.message || JSON.stringify(responseError);
-    res.status(code || 500).send(formattedMessage);
+    res.status(code || 500).json({ code, message: formattedMessage });
   };
 
   return {

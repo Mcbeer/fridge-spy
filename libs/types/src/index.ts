@@ -9,3 +9,7 @@ export * from "./IToken";
 export * from "./IUser";
 export * from "./RedisChannels";
 export * from "./UserRoles";
+
+export interface IObjectList<T> {
+  [key: string]: T;
+}

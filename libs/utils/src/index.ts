@@ -13,4 +13,5 @@ export const perhaps = async <T>(
   }
 };
 
+export * from "./formatArrayToObject";
 export * from "./redisHelpers";
