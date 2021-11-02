@@ -26,13 +26,6 @@ export const setupExpressApp = (): Express => {
   app.use(cookieParser());
   app.use(urlencoded({ extended: true }));
 
-  app.all("*", (req, res, next) => {
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
-
-    next();
-  });
-
   app.use(basePath, baseRouter);
 
   baseRouter.use(eventsBasePath, eventsRouter);

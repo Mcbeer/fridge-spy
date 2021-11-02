@@ -30,3 +30,9 @@ export enum ProductTypeChannels {
 export enum LocationChannels {
   LOCATION_PRODUCT_UPDATED = "LOCATION_PRODUCT_UPDATED",
 }
+
+export enum HouseChannels {
+  HOUSE_DELETE = "HOUSE_DELETED",
+  HOUSE_UPDATED = "HOUSE_UPDATED",
+  HOUSE_ADDED = "HOUSE_ADDED",
+}
