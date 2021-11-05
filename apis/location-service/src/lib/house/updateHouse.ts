@@ -1,9 +1,9 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
 import { locationLogger } from "@fridgespy/logging";
 import { HouseChannels } from "@fridgespy/types";
-import { appEvents, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisPublisher } from "../..";
+import { appEvents } from "../..";
 import { updateHouseById } from "../../database/house/updateHouseById";
 
 interface IUpdateHouseArgs {
@@ -43,10 +43,7 @@ export const updateHouse = async (
     updatedAt: updatedHouse.updated_at,
   };
 
-  appEvents(redisPublisher).publish(
-    HouseChannels.HOUSE_UPDATED,
-    formattedHouse
-  );
+  appEvents.publish(HouseChannels.HOUSE_UPDATED, formattedHouse);
 
   // return the updated house
   respond(res).success(formattedHouse);

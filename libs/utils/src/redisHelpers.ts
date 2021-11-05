@@ -1,24 +1,3 @@
-export const cache = (redisInstance) => {
-  const set = async <T>(
-    key: string,
-    data: T,
-    ttl: number = 60
-  ): Promise<void> => {
-    return redisInstance.set(key, JSON.stringify(data), "EX", ttl);
-  };
-
-  const get = async <T>(key: string): Promise<T> => {
-    return redisInstance.get(key).then((data) => JSON.parse(data));
-  };
-
-  const del = async (key: string): Promise<void> => {
-    redisInstance.del(key);
-    return;
-  };
-
-  return { get, set, del };
-};
-
 export class AppCache<T> {
   instance;
   constructor(instance: T) {
@@ -39,10 +18,23 @@ export class AppCache<T> {
   }
 }
 
-export const appEvents = (redisInstance) => {
-  const publish = async <T>(channel: string, data: T): Promise<void> => {
-    return redisInstance.publish(channel, JSON.stringify(data));
-  };
+export class AppEvents<T> {
+  private publisher;
+  private subscriber;
+  constructor(publisher: T, subscriber: T) {
+    this.publisher = publisher;
+    this.subscriber = subscriber;
+  }
 
-  return { publish };
-};
+  publish<G>(channel: string, data: G) {
+    return this.publisher.publish(channel, JSON.stringify(data));
+  }
+
+  subscribe(channels: string[]) {
+    return this.subscriber.subscribe(...channels);
+  }
+
+  onMessage(callback: (channel: string, message: string) => void) {
+    return this.subscriber.on("message", callback);
+  }
+}

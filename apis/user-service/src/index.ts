@@ -1,5 +1,5 @@
 import { userLogger } from '@fridgespy/logging';
-import { perhaps } from '@fridgespy/utils';
+import { AppCache, AppEvents, perhaps } from '@fridgespy/utils';
 import * as dotenv from 'dotenv';
 import { database } from './database/database';
 import { setupAuthEventHandlers } from './events/auth.events';
@@ -13,9 +13,12 @@ import { upsertRootUser } from './utils/upsertRootUser';
 
 dotenv.config();
 
-export const redisSubscriber = setupRedisSubscriber();
-export const redisPublisher = setupRedisPublisher();
-export const redisClient = setupRedisClient();
+export const appEvents = new AppEvents(
+  setupRedisPublisher(),
+  setupRedisSubscriber()
+);
+
+export const appCache = new AppCache(setupRedisClient());
 
 const expressApp = setupExpressApp();
 

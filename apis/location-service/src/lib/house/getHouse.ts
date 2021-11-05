@@ -1,8 +1,8 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
 import { locationLogger } from "@fridgespy/logging";
-import { cache, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisClient } from "../..";
+import { appCache } from "../..";
 import { queryHouseById } from "../../database/house/queryHouseById";
 import { formatDBHouseToHouse } from "./formatHouses";
 
@@ -14,7 +14,7 @@ export const getHouse = async (req: Request, res: Response): Promise<void> => {
 
   // Check cache for house
   const [queryCachedHouseError, cachedHouse] = await perhaps(
-    cache(redisClient).get(`house#${id}-${requesterId}`)
+    appCache.get(`house#${id}-${requesterId}`)
   );
 
   if (queryCachedHouseError) {
@@ -53,7 +53,7 @@ export const getHouse = async (req: Request, res: Response): Promise<void> => {
   const formattedHouse = formatDBHouseToHouse(house);
 
   // set the house in cache
-  cache(redisClient).set(`house#${id}-${requesterId}`, formattedHouse);
+  appCache.set(`house#${id}-${requesterId}`, formattedHouse);
 
   // return the house
   respond(res).success(formattedHouse);

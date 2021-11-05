@@ -1,9 +1,9 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
 import { locationLogger } from "@fridgespy/logging";
 import { HouseChannels } from "@fridgespy/types";
-import { appEvents, cache, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisClient, redisPublisher } from "../..";
+import { appCache, appEvents } from "../..";
 import { deleteHouseById } from "../../database/house/deleteHouseById";
 
 export const removeHouse = async (
@@ -12,7 +12,7 @@ export const removeHouse = async (
 ): Promise<void> => {
   const { id } = getRequestParams<{ id: string }>(req);
 
-  cache(redisClient).del(`house#${id}`);
+  appCache.del(`house#${id}`);
 
   const [deleteHouseError, deletedHouse] = await perhaps(deleteHouseById(id));
 
@@ -37,7 +37,7 @@ export const removeHouse = async (
   }
 
   // Publish the event that a house is deleted
-  appEvents(redisPublisher).publish(HouseChannels.HOUSE_DELETE, { id });
+  appEvents.publish(HouseChannels.HOUSE_DELETE, { id });
 
   respond(res).success({ id });
 

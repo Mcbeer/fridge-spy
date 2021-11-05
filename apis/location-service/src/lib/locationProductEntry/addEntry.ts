@@ -5,10 +5,10 @@ import {
   LocationChannels,
   LocationProductEntryInputAction,
 } from "@fridgespy/types";
-import { appEvents, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
 import { times } from "lodash";
-import { redisPublisher } from "../..";
+import { appEvents } from "../..";
 import { queryLocationProduct } from "../../database/locationProduct/queryLocationProduct";
 import { insertProductEntries } from "../../database/locationProductEntry/insertProductEntries";
 import { getUuid } from "../../utils/getUuid";
@@ -70,10 +70,7 @@ export const addEntry = async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  appEvents(redisPublisher).publish(
-    LocationChannels.LOCATION_PRODUCT_UPDATED,
-    locationProduct
-  );
+  appEvents.publish(LocationChannels.LOCATION_PRODUCT_UPDATED, locationProduct);
 
   respond(res).success(locationProduct);
   return;

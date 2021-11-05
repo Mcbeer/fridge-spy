@@ -1,10 +1,10 @@
 import { AuthChannels } from '@fridgespy/types';
-import { redisSubscriber } from '..';
+import { appEvents } from '..';
 
 export const setupAuthEventHandlers = () => {
-  redisSubscriber.subscribe(AuthChannels.ON_AUTH, AuthChannels.ON_VALIDATE);
+  appEvents.subscribe([AuthChannels.ON_AUTH, AuthChannels.ON_VALIDATE]);
 
-  redisSubscriber.on('message', (channel, message) => {
+  appEvents.onMessage((channel, message) => {
     console.log(`Received ${message} from ${channel}`);
   });
 };

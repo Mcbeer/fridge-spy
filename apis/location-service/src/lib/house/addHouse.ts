@@ -1,9 +1,9 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
 import { locationLogger } from "@fridgespy/logging";
 import { UserRoles } from "@fridgespy/types";
-import { cache, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisClient } from "../..";
+import { appCache } from "../..";
 import { deleteHouseById } from "../../database/house/deleteHouseById";
 import { insertHouse } from "../../database/house/insertHouse";
 import { insertUserHouse } from "../../database/userHouse/insertUserHouse";
@@ -95,10 +95,7 @@ export const addHouse = async (req: Request, res: Response): Promise<void> => {
   });
 
   // Set the new house in the cache
-  cache(redisClient).set(
-    `house#${formattedHouse.id}-${requesterId}`,
-    formattedHouse
-  );
+  appCache.set(`house#${formattedHouse.id}-${requesterId}`, formattedHouse);
 
   // Return the new house
   respond(res).success(formattedHouse);

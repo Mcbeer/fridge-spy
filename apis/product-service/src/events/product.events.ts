@@ -1,14 +1,14 @@
 import { ProductChannels } from "@fridgespy/types";
-import { redisSubscriber } from "..";
+import { appEvents } from "..";
 
 export const setupProductEventHandler = () => {
-  redisSubscriber.subscribe(
+  appEvents.subscribe([
     ProductChannels.PRODUCT_CREATED,
     ProductChannels.PRODUCT_DELETED,
-    ProductChannels.PRODUCT_UPDATED
-  );
+    ProductChannels.PRODUCT_UPDATED,
+  ]);
 
-  redisSubscriber.on("message", (channel, message) => {
+  appEvents.onMessage((channel, message) => {
     switch (channel) {
       case ProductChannels.PRODUCT_CREATED:
         return console.log(

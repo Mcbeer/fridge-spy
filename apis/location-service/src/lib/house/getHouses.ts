@@ -1,9 +1,9 @@
 import { respond } from "@fridgespy/express-helpers";
 import { locationLogger } from "@fridgespy/logging";
 import { IHouse, IObjectList } from "@fridgespy/types";
-import { cache, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisClient } from "../..";
+import { appCache } from "../..";
 import { queryHousesByUserId } from "../../database/house/queryHousesByUserId";
 import { formatDBHouseToHouse, formatHousesForFrontend } from "./formatHouses";
 
@@ -13,7 +13,7 @@ export const getHouses = async (req: Request, res: Response): Promise<void> => {
 
   // Look to see if we have a cached result
   const [cacheError, cachedHouses] = await perhaps(
-    cache(redisClient).get<IObjectList<IHouse>>(`houses#${id}`)
+    appCache.get<IObjectList<IHouse>>(`houses#${id}`)
   );
 
   // If the cache errors out, just continue getting the houses from DB
@@ -51,7 +51,7 @@ export const getHouses = async (req: Request, res: Response): Promise<void> => {
   const formattedHouses = formatHousesForFrontend(convertedHouses);
 
   // Save the houses to redis - key should be 'houses#<user_id>'
-  cache(redisClient).set(`houses#${id}`, formattedHouses);
+  appCache.set(`houses#${id}`, formattedHouses);
 
   // Return the houses to the requester
   respond(res).success(formattedHouses);

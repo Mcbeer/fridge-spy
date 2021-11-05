@@ -1,10 +1,10 @@
 import { getRequestBody, respond } from '@fridgespy/express-helpers';
 import { userLogger } from '@fridgespy/logging';
 import { AuthChannels, IUser } from '@fridgespy/types';
-import { cache, perhaps } from '@fridgespy/utils';
+import { perhaps } from '@fridgespy/utils';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { redisClient, redisPublisher } from '../..';
+import { appCache, appEvents } from '../..';
 import { queryUserById } from '../../database/user/queryUserById';
 import { formatDBUserToUser } from '../../utils/formatUser';
 import { refreshAccessToken } from '../../utils/refreshAccessToken';
@@ -33,8 +33,8 @@ export const validateUser = async (
       process.env.JWT_SECRET
     );
 
-    const [cacheUserError, cachedUser] = await perhaps(
-      redisClient.get(`user#${validAccessToken.userId}`)
+    const [cacheUserError, cachedUser] = await perhaps<IUser>(
+      appCache.get(`user#${validAccessToken.userId}`)
     );
 
     if (cacheUserError) {
@@ -42,7 +42,7 @@ export const validateUser = async (
     }
 
     if (cachedUser) {
-      respond(res).success({ user: JSON.parse(cachedUser), tokens: null });
+      respond(res).success({ user: cachedUser, tokens: null });
       return;
     }
 
@@ -59,13 +59,8 @@ export const validateUser = async (
       respond(res).error(new Error('User not available...'));
       return;
     }
-    redisClient.set(
-      `user#${validAccessToken.userId}`,
-      JSON.stringify(user),
-      'EX',
-      60
-    );
-    redisPublisher.publish(AuthChannels.ON_VALIDATE, `${user.name} validated!`);
+    appCache.set(`user#${validAccessToken.userId}`, user);
+    appEvents.publish(AuthChannels.ON_VALIDATE, `${user.name} validated!`);
     respond(res).success({ user, tokens: null });
     return;
   } catch (err) {
@@ -91,7 +86,7 @@ export const validateUser = async (
       setTokens(res, newValidTokens);
 
       const [cacheUserError, cachedUser] = await perhaps(
-        cache(redisClient).get<IUser>(`user#${validAccessToken.userId}`)
+        appCache.get<IUser>(`user#${validAccessToken.userId}`)
       );
 
       if (cacheUserError) {
@@ -121,10 +116,7 @@ export const validateUser = async (
       }
       const formattedUser = formatDBUserToUser(user);
 
-      cache(redisClient).set<IUser>(
-        `user#${validAccessToken.userId}`,
-        formattedUser
-      );
+      appCache.set<IUser>(`user#${validAccessToken.userId}`, formattedUser);
       respond(res).success({ user: formattedUser, tokens: newValidTokens });
       return;
     }

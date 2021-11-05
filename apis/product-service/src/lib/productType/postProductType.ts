@@ -1,10 +1,10 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
 import { productLogger } from "@fridgespy/logging";
 import { IProductType, ProductTypeChannels } from "@fridgespy/types";
-import { appEvents, perhaps } from "@fridgespy/utils";
+import { perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
-import { appCache, redisPublisher } from "../..";
+import { appCache, appEvents } from "../..";
 import { insertProductType } from "../../database/product_type/insertProductType";
 import { getUuid } from "../../utils/getUuid";
 import { formatDBProductTypeToProductType } from "./formatProductType";
@@ -80,7 +80,7 @@ export const postProductType = async (
   );
 
   // Publish the result
-  appEvents(redisPublisher).publish(
+  appEvents.publish(
     ProductTypeChannels.PRODUCT_TYPE_CREATED,
     formattedProductType
   );
