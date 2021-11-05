@@ -1,9 +1,9 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
 import { IDBUpdateProduct, ProductChannels } from "@fridgespy/types";
-import { appEvents, cache, perhaps } from "@fridgespy/utils";
+import { appEvents, perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
-import { redisClient, redisPublisher } from "../..";
+import { appCache, redisPublisher } from "../..";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { updateProductById } from "../../database/product/updateProductById";
 import { queryProductTypeById } from "../../database/product_type/queryProductTypeById";
@@ -114,7 +114,7 @@ export const updateProduct = async (
   });
 
   // Set the product in the cache
-  cache(redisClient).set(`product#${updatedProduct.id}`, updatedProduct);
+  appCache.set(`product#${updatedProduct.id}`, updatedProduct);
 
   // Publish the result to redis
   appEvents(redisPublisher).publish(

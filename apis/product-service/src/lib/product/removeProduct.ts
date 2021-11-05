@@ -1,8 +1,8 @@
 import { getRequestParams, respond } from "@fridgespy/express-helpers";
 import { ProductChannels } from "@fridgespy/types";
-import { appEvents, cache, perhaps } from "@fridgespy/utils";
+import { appEvents, perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisClient, redisPublisher } from "../..";
+import { appCache, redisPublisher } from "../..";
 import { deleteProductById } from "../../database/product/deleteProductById";
 
 export const removeProduct = async (
@@ -25,7 +25,7 @@ export const removeProduct = async (
   }
 
   // Remove it from the redis cache
-  cache(redisClient).del(`product#${id}`);
+  appCache.del(`product#${id}`);
 
   // Publish the result to redis
   appEvents(redisPublisher).publish(ProductChannels.PRODUCT_DELETED, { id });

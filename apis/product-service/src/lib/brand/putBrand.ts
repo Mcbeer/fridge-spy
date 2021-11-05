@@ -1,9 +1,9 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
 import { BrandChannels, IBrand } from "@fridgespy/types";
-import { appEvents, cache, perhaps } from "@fridgespy/utils";
+import { appEvents, perhaps } from "@fridgespy/utils";
 import { validateSchema, yup } from "@fridgespy/validation";
 import { Request, Response } from "express";
-import { redisClient, redisPublisher } from "../..";
+import { appCache, redisPublisher } from "../..";
 import { updateBrand } from "../../database/brand/updateBrand";
 import { formatDBBrandToBrand } from "./formatBrand";
 
@@ -44,7 +44,7 @@ export const putBrand = async (req: Request, res: Response): Promise<void> => {
 
   const formattedBrand = formatDBBrandToBrand(updatedBrand);
 
-  cache(redisClient).set<IBrand>(`brand#${body.id}`, formattedBrand);
+  appCache.set<IBrand>(`brand#${body.id}`, formattedBrand);
 
   appEvents(redisPublisher).publish<IBrand>(
     BrandChannels.BRAND_UPDATED,

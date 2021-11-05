@@ -1,4 +1,5 @@
 import { productLogger } from "@fridgespy/logging";
+import { AppCache } from "@fridgespy/utils";
 import * as dotenv from "dotenv";
 import { database } from "./database/database";
 import { setupEventHandlers } from "./events";
@@ -13,7 +14,7 @@ dotenv.config();
 
 export const redisPublisher = setupRedisPublisher();
 export const redisSubscriber = setupRedisSubscriber();
-export const redisClient = setupRedisClient();
+export const appCache = new AppCache(setupRedisClient());
 
 const expressApp = setupExpressApp();
 

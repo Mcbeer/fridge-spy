@@ -2,6 +2,8 @@ import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
 import { getProductTypes } from "../lib/productType/getProductTypes";
 import { postProductType } from "../lib/productType/postProductType";
+import { removeProductType } from "../lib/productType/removeProductType";
+import { updateProductType } from "../lib/productType/updateProductType";
 
 const router = Router();
 
@@ -18,9 +20,9 @@ router.get("/", getProductTypes);
 router.post("/", postProductType);
 
 // Update a product type
-router.put("/");
+router.put("/", updateProductType);
 
 // Delete a product type
-router.delete("/:id");
+router.delete("/:id", removeProductType);
 
 export { router as productTypeRouter };

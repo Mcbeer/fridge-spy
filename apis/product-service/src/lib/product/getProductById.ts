@@ -3,7 +3,7 @@ import { productLogger } from "@fridgespy/logging";
 import { IProduct } from "@fridgespy/types";
 import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
-import { redisClient } from "../..";
+import { appCache } from "../..";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { queryProductById } from "../../database/product/queryProductById";
 import { queryProductTypeById } from "../../database/product_type/queryProductTypeById";
@@ -17,7 +17,7 @@ export const getProductById = async (
   const { id } = getRequestParams<{ id: string }>(req);
 
   const [cacheProductError, cacheProduct] = await perhaps(
-    redisClient.get(`product#${id}`)
+    appCache.get<IProduct>(`product#${id}`)
   );
 
   if (cacheProductError) {
@@ -26,7 +26,7 @@ export const getProductById = async (
   }
 
   if (cacheProduct) {
-    respond<IProduct>(res).success(JSON.parse(cacheProduct));
+    respond<IProduct>(res).success(cacheProduct);
     return;
   }
 
@@ -83,12 +83,7 @@ export const getProductById = async (
 
   if (!cacheProduct) {
     productLogger.info("Product not in cache...");
-    redisClient.set(
-      `product#${id}`,
-      JSON.stringify(formattedProduct),
-      "EX",
-      10
-    );
+    appCache.set(`product#${id}`, JSON.stringify(formattedProduct));
   }
 
   respond<IProduct>(res).success(formattedProduct);
