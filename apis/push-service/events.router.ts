@@ -1,6 +1,6 @@
 import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
-import { setupSSE } from "../events/setupSSE";
+import { setupSSE } from "./setupSSE";
 
 const router = Router();
 

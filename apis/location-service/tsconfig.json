@@ -6,7 +6,7 @@
   },
   "include": [
     "./src"
-  ],
+, "../push-service/events.router.ts", "../push-service/setupSSE.ts"  ],
   "references": [
     {
       "path": "../../libs/logging/tsconfig.json",
