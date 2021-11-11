@@ -7,7 +7,7 @@ import { setupExpressApp } from "./utils/setupExpressApp";
 import {
   setupRedisClient,
   setupRedisPublisher,
-  setupRedisSubscriber,
+  setupRedisSubscriber
 } from "./utils/setupRedisClient";
 
 dotenv.config();
