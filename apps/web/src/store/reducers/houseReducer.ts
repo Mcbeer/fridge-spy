@@ -8,11 +8,14 @@ export interface HouseState {
 const initialState: HouseState = {};
 
 const houseReducer = createSlice({
-  name: "location",
+  name: "house",
   initialState,
   reducers: {
     add: (state: HouseState, action: PayloadAction<IHouse>) => {
       state[action.payload.id] = action.payload;
+    },
+    hydrate: (state: HouseState, action: PayloadAction<HouseState>) => {
+      state = action.payload;
     },
     remove: (state: HouseState, action: PayloadAction<IHouse>) => {
       delete state[action.payload.id];

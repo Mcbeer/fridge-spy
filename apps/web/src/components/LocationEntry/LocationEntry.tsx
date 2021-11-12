@@ -1,77 +1,56 @@
-import React, { useState } from "react";
+import { ILocationProduct } from "@fridgespy/types";
+import React from "react";
+import { useParams } from "react-router";
 import { Card } from "../Card/Card";
 import {
-  LocationEntryContent,
-  LocationEntryItemList,
+  LocationEntryElement,
+  LocationEntryList,
   LocationEntryTitle,
 } from "./LocationEntry.styles";
-import { useEffect } from "react";
-import AnimateHeight from "react-animate-height";
-import { ILocationProduct } from "@fridgespy/types";
 import { LocationEntryItem } from "./LocationEntryItem/LocationEntryItem";
 
 interface LocationEntryProps {
-  id: string;
-  name: string;
-  description: string;
-  expanded: boolean;
-  setExpanded: () => void;
+  locationName: string;
 }
 
-export const LocationEntry = ({
-  id,
-  name,
-  description,
-  expanded,
-  setExpanded,
-}: LocationEntryProps) => {
-  const [height, setHeight] = useState<any>(0);
-
-  useEffect(() => {
-    setHeight(expanded ? "auto" : 0);
-  }, [expanded]);
-
+export const LocationEntry = ({ locationName }: LocationEntryProps) => {
   return (
-    <LocationEntryContent>
-      <Card onClick={() => setExpanded()}>
-        <LocationEntryTitle>
-          {name} {description}
-        </LocationEntryTitle>
-        <AnimateHeight duration={300} height={height}>
-          <LocationEntryItemList>
-            {locationEntriesDummy.map((item) => (
-              <LocationEntryItem key={item.id} {...item} />
-            ))}
-          </LocationEntryItemList>
-        </AnimateHeight>
+    <LocationEntryElement>
+      <Card>
+        <LocationEntryTitle>{locationName}</LocationEntryTitle>
+        <LocationEntryList>
+          {Object.keys(locationProducts).map((key) => {
+            return <LocationEntryItem key={key} {...locationProducts[key]} />;
+          })}
+        </LocationEntryList>
       </Card>
-    </LocationEntryContent>
+    </LocationEntryElement>
   );
 };
 
-const locationEntriesDummy: ILocationProduct[] = [
-  {
-    id: 'abcdefg',
+const locationProducts: { [key: string]: ILocationProduct } = {
+  abcdefg: {
+    id: "abcdefg",
     product: {
-      id: 'product',
-      name: 'Nutella'
+      id: "product",
+      name: "Nutella",
     },
-    amount: 9,
+    amount: 4,
     maximumAmount: 10,
     minimumAmount: 0,
-    createdAt: '',
-    updatedAt: '',
+    createdAt: "",
+    updatedAt: "",
   },
-  {
-    id: '1234567',
+  "1234567": {
+    id: "1234567",
     productType: {
-      id: 'productType',
-      name: 'Dåse cola'
+      id: "productType",
+      name: "Dåse cola",
     },
     amount: 24,
     maximumAmount: 250,
     minimumAmount: 12,
-    createdAt: '',
-    updatedAt: '',
-  }
-];
+    createdAt: "",
+    updatedAt: "",
+  },
+};

@@ -1,9 +1,8 @@
 import React from "react";
-import { AiOutlineCaretRight, AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../Card/Card";
 import {
-  HomeEntryCallToAction,
   HomeEntryContent,
   HomeEntryHomeIcon,
   HomeEntryListElement,
@@ -34,15 +33,12 @@ export const HomeEntry = ({ id, name }: HomeEntryProps) => {
       <Card>
         <HomeEntryContent>
           <HomeEntryHomeIcon>
-            <AiOutlineHome size="1.5rem" />
+            <AiOutlineHome size="6rem" />
           </HomeEntryHomeIcon>
           <HomeEntryText>{name}</HomeEntryText>
           <HomeEntryText>
             {locations} {locations > 1 ? "Locations" : "Location"}
           </HomeEntryText>
-          <HomeEntryCallToAction>
-            <AiOutlineCaretRight size="1.5rem" />
-          </HomeEntryCallToAction>
         </HomeEntryContent>
       </Card>
     </HomeEntryListElement>

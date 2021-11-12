@@ -1,11 +1,11 @@
 .LocationEntryStatus {
-    width: 4rem;
-    height: .5rem;
-    border-radius: .25rem;
-    overflow: hidden;
-    background-color: darkgray;
+  width: 4rem;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  background-color: rgb(48, 117, 215, 0.2);
 
-    &__bar {
-        height: 100%;
-    }
+  &__bar {
+    height: 100%;
+  }
 }

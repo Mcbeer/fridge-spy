@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router";
-import { LocationEntry } from "../../components/LocationEntry/LocationEntry";
+import { Card } from "../../components/Card/Card";
+import { LocationCard } from "../../components/LocationCard/LocationCard";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import "./House.scss";
 
-export const House = () => <Outlet />;
-
-export const HouseEntry = () => {
+export const House = () => {
   // const { id } = useParams<{ id: string }>();
   const [expandedLocation, setExpandedLocation] = useState<string>(
     "386cce06-dafb-47d0-b029-d74ca195470b"
@@ -24,9 +22,14 @@ export const HouseEntry = () => {
   return (
     <section>
       <PageTitle>{house.name}</PageTitle>
+      <ul className="House__almost-expired-items">
+        <Card>
+          <h3>Almost expired items</h3>
+        </Card>
+      </ul>
       <ul className="House__location-list">
         {locations.map((location) => (
-          <LocationEntry
+          <LocationCard
             {...location}
             expanded={expandedLocation === location.id}
             setExpanded={() => setExpandedLocation(location.id)}

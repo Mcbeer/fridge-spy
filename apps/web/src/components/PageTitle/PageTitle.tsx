@@ -5,4 +5,5 @@ export const PageTitle = styled.h1`
   color: #000;
   font-weight: 700;
   padding-bottom: 1rem;
+  display: flex;
 `;

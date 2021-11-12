@@ -1,34 +1,44 @@
-import { ILocationProduct } from '@fridgespy/types';
-import { clamp } from 'lodash';
-import React, { useMemo } from 'react';
-import './LocationEntryStatus.scss'
+import { ILocationProduct } from "@fridgespy/types";
+import { clamp } from "lodash";
+import React, { useMemo } from "react";
+import "./LocationEntryStatus.scss";
 
-export const LocationEntryStatus = ({ amount, maximumAmount, minimumAmount }: Pick<ILocationProduct, 'amount' | 'maximumAmount' | 'minimumAmount'>) => {
-    const getStatusProgress = () => {
-        return clamp((100 / maximumAmount) * amount, 0, 100);
-    }
-    
-    const getStatusColor = () => {
-        if(statusProgress > 75) {
-            return 'green'
-        }
+export const LocationEntryStatus = ({
+  amount,
+  maximumAmount,
+  minimumAmount,
+}: Pick<ILocationProduct, "amount" | "maximumAmount" | "minimumAmount">) => {
+  const getStatusProgress = () => {
+    return clamp((100 / maximumAmount) * amount, 0, 100);
+  };
 
-        if(statusProgress > 25) {
-            return 'yellow'
-        }
-
-        return 'red'
+  const getStatusColor = () => {
+    if (statusProgress > 75) {
+      return "#3075d7";
     }
 
-    const statusProgress = useMemo(() => getStatusProgress(), [amount, maximumAmount]);
-    const statusColor = useMemo(() => getStatusColor(), [amount, maximumAmount, minimumAmount]);
+    if (statusProgress > 25) {
+      return "#00909a";
+    }
 
-    console.log(statusProgress, statusColor)
+    return "#bd5b00";
+  };
 
+  const statusProgress = useMemo(
+    () => getStatusProgress(),
+    [amount, maximumAmount]
+  );
+  const statusColor = useMemo(
+    () => getStatusColor(),
+    [amount, maximumAmount, minimumAmount]
+  );
 
-    return (
-        <div className="LocationEntryStatus">
-            <div className="LocationEntryStatus__bar" style={{ width: `${statusProgress}%`, backgroundColor: statusColor }} />
-        </div>
-    )
-}
+  return (
+    <div className="LocationEntryStatus">
+      <div
+        className="LocationEntryStatus__bar"
+        style={{ width: `${statusProgress}%`, backgroundColor: statusColor }}
+      />
+    </div>
+  );
+};
