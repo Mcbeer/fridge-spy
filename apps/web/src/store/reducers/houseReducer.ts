@@ -8,7 +8,7 @@ export interface HouseState {
 const initialState: HouseState = {};
 
 const houseReducer = createSlice({
-  name: "house",
+  name: "location",
   initialState,
   reducers: {
     add: (state: HouseState, action: PayloadAction<IHouse>) => {
@@ -17,6 +17,9 @@ const houseReducer = createSlice({
     remove: (state: HouseState, action: PayloadAction<IHouse>) => {
       delete state[action.payload.id];
     },
+    update: (state: HouseState, action: PayloadAction<IHouse>) => {
+      state[action.payload.id] = action.payload;
+    }
   },
 });
 

@@ -7,6 +7,8 @@ import {
 } from "./LocationEntry.styles";
 import { useEffect } from "react";
 import AnimateHeight from "react-animate-height";
+import { ILocationProduct } from "@fridgespy/types";
+import { LocationEntryItem } from "./LocationEntryItem/LocationEntryItem";
 
 interface LocationEntryProps {
   id: string;
@@ -37,8 +39,8 @@ export const LocationEntry = ({
         </LocationEntryTitle>
         <AnimateHeight duration={300} height={height}>
           <LocationEntryItemList>
-            {locationEntriesDummy.map((l, index) => (
-              <li key={index + 1}>{l}</li>
+            {locationEntriesDummy.map((item) => (
+              <LocationEntryItem key={item.id} {...item} />
             ))}
           </LocationEntryItemList>
         </AnimateHeight>
@@ -47,16 +49,29 @@ export const LocationEntry = ({
   );
 };
 
-const locationEntriesDummy = [
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
-  "Location entry",
+const locationEntriesDummy: ILocationProduct[] = [
+  {
+    id: 'abcdefg',
+    product: {
+      id: 'product',
+      name: 'Nutella'
+    },
+    amount: 9,
+    maximumAmount: 10,
+    minimumAmount: 0,
+    createdAt: '',
+    updatedAt: '',
+  },
+  {
+    id: '1234567',
+    productType: {
+      id: 'productType',
+      name: 'Dåse cola'
+    },
+    amount: 24,
+    maximumAmount: 250,
+    minimumAmount: 12,
+    createdAt: '',
+    updatedAt: '',
+  }
 ];

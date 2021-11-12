@@ -20,6 +20,9 @@ const userReducer = createSlice({
     remove: (state: IUser) => {
       state = initialState;
     },
+    update: (state: IUser, action: PayloadAction<IUser>) => {
+      state = {...state, ...action.payload}
+    }
   },
 });
 

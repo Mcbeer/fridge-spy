@@ -5,13 +5,20 @@ export const locationApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8002/api/v1/" }),
   tagTypes: [],
   endpoints: (builder) => ({
-    // Get locations in a house
+    // Query
     getLocationsByHouseId: builder.query({
       query: (houseId: string) => `location/${houseId}`,
     }),
+    getUserHouses: builder.query({
+      query: () => `house`
+    }),
+    getHouseById: builder.query({
+      query: (houseId: string) => `house/${houseId}`
+    })
+    // Posts
 
-    // Get location by it's id
+    // Updates
 
-    // Get Houses
+    // Deletes
   }),
 });

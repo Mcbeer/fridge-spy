@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { Outlet } from "react-router";
 import { LocationEntry } from "../../components/LocationEntry/LocationEntry";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import "./House.scss";
 
-export const House = () => {
+export const House = () => <Outlet />;
+
+export const HouseEntry = () => {
   // const { id } = useParams<{ id: string }>();
   const [expandedLocation, setExpandedLocation] = useState<string>(
     "386cce06-dafb-47d0-b029-d74ca195470b"

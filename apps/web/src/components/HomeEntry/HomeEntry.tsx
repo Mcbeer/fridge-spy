@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineCaretRight, AiOutlineHome } from "react-icons/ai";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card } from "../Card/Card";
 import {
   HomeEntryCallToAction,
@@ -19,14 +19,14 @@ interface HomeEntryProps {
 // A location could be a fridge, a freezer, or a pantry, or even a drawer...
 
 export const HomeEntry = ({ id, name }: HomeEntryProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   // Get the locations for this home - Render it async
   const locations = 2;
   // Get the members on this home - Render it async
   // Always render the data we already have - ie. name and country...
 
   const handleElementClick = (): void => {
-    history.push("/house/" + id);
+    navigate("/house/" + id);
   };
 
   return (
