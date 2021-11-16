@@ -11,13 +11,12 @@ export const setupExpressApp = (): Express => {
   const basePath = `/api/${apiVersion}`;
   const baseRouter = Router();
 
-  console.log(basePath);
-
   // Base routes declaration
   const userBasePath = '/user';
   const authBasePath = '/auth';
 
-  const whiteList = ['http://localhost:8000', 'http://localhost:8001'];
+  // TODO Implement CORS whitelist later
+  // const whiteList = ['http://localhost:8000', 'http://localhost:8001'];
 
   // We setup middlewares here...
   app.use(cookieParser());

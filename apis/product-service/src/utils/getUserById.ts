@@ -1,7 +1,7 @@
 import { IUser } from "@fridgespy/types";
+import fetch from 'cross-fetch';
 
 export const getUserById = async (id: string): Promise<IUser> => {
-  console.log("Getting user with id", id);
   return fetch(`${process.env.USER_SERVICE_ENDPOINT}/user/${id}`, {
     // @ts-ignore
     headers: {
