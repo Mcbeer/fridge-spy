@@ -1,4 +1,3 @@
-import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 export const LocationCardListElement = styled.section`
@@ -26,6 +25,9 @@ export const LocationCardDescription = styled.p`
   font-size: 1.1rem;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const LocationCardIcon = styled.div`

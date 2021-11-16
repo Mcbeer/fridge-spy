@@ -7,7 +7,7 @@ export const LocationEntryItemProductDisplay = styled.div`
 `
 export const LocationEntryItemElement = styled.li`
     display: grid;
-    grid-template-columns: 1rem 1fr 4rem 12rem;
+    grid-template-columns: 1.5rem 1fr 4rem 12rem;
     position: relative;
     align-items: center;
     height: 2rem;

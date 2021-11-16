@@ -6,6 +6,7 @@ import {
   Routes,
   useRoutes,
 } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 import { ITheme, ThemeProvider } from "styled-components";
 import { store } from "./store/store";
 import { appTheme } from "./theme/theme";
@@ -32,6 +33,7 @@ export const App = () => {
               <Route path="shopping" element={<ShoppingList />} />
             </Routes>
           </Layout>
+          <ReactTooltip html={true} />
         </Router>
       </ThemeProvider>
     </Provider>

@@ -17,7 +17,7 @@ export const LocationEntry = ({ locationName }: LocationEntryProps) => {
   return (
     <LocationEntryElement>
       <Card>
-        <LocationEntryTitle>{locationName}</LocationEntryTitle>
+        <LocationEntryTitle>{locationName ?? "Test Location"}</LocationEntryTitle>
         <LocationEntryList>
           {Object.keys(locationProducts).map((key) => {
             return <LocationEntryItem key={key} {...locationProducts[key]} />;
