@@ -5,8 +5,9 @@
     "outDir": "./dist"
   },
   "include": [
-    "./src"
-, "../push-service/events.router.ts", "../push-service/setupSSE.ts"  ],
+    "./src", 
+    "./knexfile.ts"
+  ],
   "references": [
     {
       "path": "../../libs/logging/tsconfig.json",

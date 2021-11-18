@@ -1,6 +1,8 @@
+import { Knex } from "knex";
+
 require("dotenv").config();
 
-module.exports = {
+export default {
   development: {
     client: "pg",
     connection: {
@@ -43,4 +45,4 @@ module.exports = {
       tableName: "knex_migrations",
     },
   },
-};
+} as {[key: string]: Knex.Config};

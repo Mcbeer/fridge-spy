@@ -10,7 +10,8 @@
     "jest": "jest",
     "jest:watch": "jest --watch",
     "lint": "eslint",
-    "prettier": "prettier --check 'src/**/*.ts'"
+    "prettier": "prettier --check 'src/**/*.ts'",
+    "build": "tsc"
   },
   "devDependencies": {
     "@fridgespy/types": "*",

@@ -11,7 +11,7 @@ export const getProductTypes = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const [queryCacheError, cachedProductTypes] = await perhaps<IProductType[]>(
+  const [queryCacheError, cachedProductTypes] = await perhaps<IProductType[] | null>(
     appCache.get(`productTypes#all`)
   );
 
