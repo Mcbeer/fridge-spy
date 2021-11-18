@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "target": "ESNext",
     "sourceMap": true,
-    "module": "es2015",
+    "module": "commonjs",
     "jsx": "preserve",
     "strict": true,
     "moduleResolution": "node",
