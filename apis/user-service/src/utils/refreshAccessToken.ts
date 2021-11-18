@@ -5,9 +5,9 @@ export const refreshAccessToken = (
   accessToken: string,
   refreshToken: string
 ): { accessToken: string; refreshToken: string } | null => {
-  const validRefreshToken = jwt.verify(refreshToken, process.env.JWT_SECRET);
+  const validRefreshToken = jwt.verify(refreshToken, process.env.JWT_SECRET ?? '');
 
-  if (!validRefreshToken) {
+  if (!validRefreshToken ||typeof validRefreshToken !== 'object') {
     return null;
   }
 

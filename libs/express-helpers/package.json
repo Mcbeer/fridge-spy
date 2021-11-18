@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "author": "Nicolai H. Nielsen",
   "scripts": {
-    "compile": "tsc"
+    "build": "tsc"
   },
   "keywords": [],
   "license": "ISC",

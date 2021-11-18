@@ -1,7 +1,9 @@
 import { IObjectList } from "@fridgespy/types";
 
-export const formatArrayToObject = <T, R>(
-  key: string,
+type KeyType = string | number | symbol;
+
+export const formatArrayToObject = <T extends { [key: KeyType]: any }, R>(
+  key: KeyType,
   list: T[]
 ): IObjectList<R> =>
   list.reduce((cummulative, item) => {

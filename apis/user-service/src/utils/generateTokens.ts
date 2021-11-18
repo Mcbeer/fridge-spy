@@ -7,13 +7,13 @@ export const generateTokens = (
   const accessTokenId = getUuid();
   const accessToken = jwt.sign(
     { userId, tokenId: accessTokenId },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET!,
     { expiresIn: '1h' }
   );
 
   const refreshToken = jwt.sign(
     { userId, accessTokenId: accessTokenId, refreshId: getUuid() },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET!,
     { expiresIn: '14d' }
   );
 

@@ -30,10 +30,15 @@ export const validateUser = async (
   try {
     const validAccessToken = jwt.verify(
       tokens.accessToken,
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET!
     );
 
-    const [cacheUserError, cachedUser] = await perhaps<IUser>(
+    if(!validAccessToken || typeof validAccessToken !== 'object') {
+      respond(res).error(new Error('Invalid access token'));
+      return;
+    }
+
+    const [cacheUserError, cachedUser] = await perhaps<IUser | null>(
       appCache.get(`user#${validAccessToken.userId}`)
     );
 
@@ -80,8 +85,12 @@ export const validateUser = async (
     } else {
       const validAccessToken = jwt.verify(
         newValidTokens.accessToken,
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET!
       );
+      if(!validAccessToken || typeof validAccessToken !== 'object') {
+        respond(res).error(new Error('Cannot validate your access at this time, please try again'));
+        return;
+      }
 
       setTokens(res, newValidTokens);
 

@@ -14,5 +14,8 @@
   },
   "dependencies": {
     "yup": "^0.32.9"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

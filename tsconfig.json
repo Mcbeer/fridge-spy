@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "removeComments": true,
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "ESNext",
     "sourceMap": true,
-    "module": "commonjs",
+    "module": "es2015",
     "jsx": "preserve",
     "strict": true,
     "moduleResolution": "node",
@@ -26,6 +26,7 @@
     "isolatedModules": true
   },
   "include": ["**/*"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"],
   "references": [
     {
       "path": "./apis/location-service"
