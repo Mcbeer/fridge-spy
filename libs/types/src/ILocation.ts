@@ -4,7 +4,7 @@ export interface ILocation extends ITimestamps {
   id: string;
   name: string;
   description: string;
-  products: ILocationProduct[];
+  products: {[key: string]: ILocationProduct};
 }
 
 export interface IDBLocation extends IDBTimestamps {
@@ -23,6 +23,7 @@ export interface ILocationProduct extends ITimestamps {
   minimumAmount: number;
   maximumAmount: number;
   amount: number;
+  locationId?: string;
 }
 
 export interface IDBLocationProduct extends IDBTimestamps {

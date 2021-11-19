@@ -1,9 +1,9 @@
 import { ILocationProduct } from "@fridgespy/types";
 import { clamp } from "lodash";
 import React, { useMemo } from "react";
-import "./LocationEntryStatus.scss";
+import "./LocationItemStatus.scss";
 
-export const LocationEntryStatus = ({
+export const LocationItemStatus = ({
   amount,
   maximumAmount,
   minimumAmount,
@@ -14,11 +14,11 @@ export const LocationEntryStatus = ({
 
   const getStatusColor = () => {
     if (statusProgress > 75) {
-      return "#3075d7";
+      return "#00909a";
     }
 
     if (statusProgress > 25) {
-      return "#00909a";
+      return "#3075d7";
     }
 
     return "#bd5b00";
@@ -34,9 +34,9 @@ export const LocationEntryStatus = ({
   );
 
   return (
-    <div className="LocationEntryStatus">
+    <div className="LocationItemStatus">
       <div
-        className="LocationEntryStatus__bar"
+        className="LocationItemStatus__bar"
         style={{ width: `${statusProgress}%`, backgroundColor: statusColor }}
       />
     </div>
