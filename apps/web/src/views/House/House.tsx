@@ -47,7 +47,7 @@ const house = {
 
 const locations = [
   {
-    id: "583d9533-216d-4329-8d7a-f77c49b8e06a",
+    id: "7051bd78-bb58-43a0-ad15-dc0e995971fb",
     name: "Køleskab",
     description: "Køleskab i køkkenet",
   },

@@ -10,6 +10,10 @@ export const FormInputWrapper = styled.div`
 export const FormInputLabel = styled.label`
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 10ch;
 `;
 
 interface FormInputInputProps {

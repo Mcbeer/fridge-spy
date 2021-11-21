@@ -2,8 +2,7 @@ import { linearGradient, transparentize } from "polished";
 import styled from "styled-components";
 
 export const LocationItemProductDisplay = styled.div`
-  font-size: 1.3rem;
-  line-height: 1.5rem;
+  font-size: 1.1rem;
 `;
 export const LocationItemElement = styled.li`
   display: grid;

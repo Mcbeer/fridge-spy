@@ -27,8 +27,6 @@ export const LocationItems = ({ locationName }: LocationItemsProps) => {
     )
   );
 
-  console.log(products);
-
   return (
     <LocationItemsElement>
       <LocationItemsTitle>{locationName ?? "Test Location"}</LocationItemsTitle>

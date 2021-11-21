@@ -1,4 +1,4 @@
-import { ILocation } from "@fridgespy/types";
+import { ILocation, ILocationProduct } from "@fridgespy/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface LocationState {
@@ -71,6 +71,7 @@ export const selectLocation = (state: LocationState, id: string): ILocation => s
 export const selectLocations = (state: LocationState) => Object.values(state);
 
 export const selectLocationProducts = (state: LocationState, id: string) => state[id].products;
+export const selectLocationProduct = (state: LocationState, locationId: string, productId: string): ILocationProduct => state[locationId]?.products[productId] || {};
 
 const reducer = locationSlice.reducer;
 
