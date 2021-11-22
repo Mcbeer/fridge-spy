@@ -23,7 +23,7 @@ export const EditLocationItem = () => {
     <>
       <EditLocationItemBlurrer onClick={() => navigate(-1)} />
       <motion.div
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
         initial={{ x: 600 }}
         animate={{ x: 0 }}
         exit={{ x: 600 }}

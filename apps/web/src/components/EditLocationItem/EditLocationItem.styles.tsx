@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const EditLocationItemBlurrer = styled.div`
-  backdrop-filter: blur(5px);
   position: fixed;
   inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 export const EditLocationItemTitle = styled.h1`
