@@ -1,17 +1,16 @@
-import { ILocationProduct } from "@fridgespy/types";
 import React from "react";
-import { useSelector } from "react-redux";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-  LocationState,
-  selectLocationProducts,
-} from "../../store/reducers/locationReducer";
+import { selectLocationProducts } from "../../store/reducers/locationReducer";
+import { Button } from "../Button/Button";
 import { Card } from "../Card/Card";
 import { LocationItem } from "../LocationItem/LocationItem";
 import {
+  LocationItemsActions,
   LocationItemsElement,
   LocationItemsList,
   LocationItemsTitle,
+  LocationItemsTop,
 } from "./LocationItems.styles";
 
 interface LocationItemsProps {
@@ -29,7 +28,19 @@ export const LocationItems = ({ locationName }: LocationItemsProps) => {
 
   return (
     <LocationItemsElement>
-      <LocationItemsTitle>{locationName ?? "Test Location"}</LocationItemsTitle>
+      <LocationItemsTop>
+        <LocationItemsTitle>
+          {locationName ?? "Test Location"}
+        </LocationItemsTitle>
+        <LocationItemsActions>
+          <Button
+            onClick={() => {}}
+            label="Add new item"
+            icon={<AiOutlinePlus size={14} />}
+            iconPosition="left"
+          />
+        </LocationItemsActions>
+      </LocationItemsTop>
       <Card>
         <LocationItemsList>
           {Object.keys(products).map((key) => {
@@ -46,30 +57,3 @@ export const LocationItems = ({ locationName }: LocationItemsProps) => {
     </LocationItemsElement>
   );
 };
-
-// const locationProducts: { [key: string]: ILocationProduct } = {
-//   abcdefg: {
-//     id: "abcdefg",
-//     product: {
-//       id: "product",
-//       name: "Nutella",
-//     },
-//     amount: 4,
-//     maximumAmount: 10,
-//     minimumAmount: 0,
-//     createdAt: "",
-//     updatedAt: "",
-//   },
-//   "1234567": {
-//     id: "1234567",
-//     productType: {
-//       id: "productType",
-//       name: "Dåse cola",
-//     },
-//     amount: 24,
-//     maximumAmount: 24,
-//     minimumAmount: 12,
-//     createdAt: "",
-//     updatedAt: "",
-//   },
-// };
