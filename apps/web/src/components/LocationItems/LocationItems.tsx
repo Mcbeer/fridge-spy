@@ -1,10 +1,7 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { selectLocationProducts } from "../../store/reducers/locationReducer";
 import { Button } from "../Button/Button";
 import { Card } from "../Card/Card";
-import { LocationItem } from "../LocationItem/LocationItem";
 import {
   LocationItemsActions,
   LocationItemsElement,
@@ -18,14 +15,6 @@ interface LocationItemsProps {
 }
 
 export const LocationItems = ({ locationName }: LocationItemsProps) => {
-  const dispatch = useAppDispatch();
-  const products = useAppSelector((state) =>
-    selectLocationProducts(
-      state.location,
-      "7051bd78-bb58-43a0-ad15-dc0e995971fb"
-    )
-  );
-
   return (
     <LocationItemsElement>
       <LocationItemsTop>
@@ -43,13 +32,14 @@ export const LocationItems = ({ locationName }: LocationItemsProps) => {
       </LocationItemsTop>
       <Card>
         <LocationItemsList>
-          {Object.keys(products).map((key) => {
+          {Object.keys([]).map((key) => {
             return (
-              <LocationItem
-                key={key}
-                {...products[key]}
-                locationId="7051bd78-bb58-43a0-ad15-dc0e995971fb"
-              />
+              // <LocationItem
+              //   key={key}
+              //   {...products[key]}
+              //   locationId="7051bd78-bb58-43a0-ad15-dc0e995971fb"
+              // />
+              null
             );
           })}
         </LocationItemsList>

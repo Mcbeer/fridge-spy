@@ -15,6 +15,7 @@ export const setupExpressApp = (): Express => {
   // const productTypeBasePath = "/producttype";
 
   // We setup middlewares here...
+  app.use(cookieParser());
   app.use(
     cors({
       origin: (_origin, callback) => callback(null, true),
@@ -22,11 +23,11 @@ export const setupExpressApp = (): Express => {
     })
   );
   app.use(json());
-  app.use(cookieParser());
   app.use(urlencoded({ extended: true }));
 
   app.use(basePath, baseRouter);
 
+  // We setup routes here...
   baseRouter.use(houseBasePath, houseRouter);
 
   return app;

@@ -1,23 +1,13 @@
-import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormInput } from "../../components/FormInput/FormInput";
-import { useAppSelector } from "../../store/hooks";
-import { selectLocationProduct } from "../../store/reducers/locationReducer";
 import "./EditLocationItem.scss";
-import {
-  EditLocationItemBlurrer,
-  EditLocationItemTitle,
-} from "./EditLocationItem.styles";
+import { EditLocationItemBlurrer } from "./EditLocationItem.styles";
 
 export const EditLocationItem = () => {
   const { id, productId } = useParams<string>();
   const navigate = useNavigate();
   console.log({ id, productId });
-  const product = useAppSelector((state) =>
-    selectLocationProduct(state.location, id!, productId!)
-  );
 
   return (
     <>
@@ -29,7 +19,7 @@ export const EditLocationItem = () => {
         exit={{ opacity: 0, x: 600 }}
         className="EditLocationItem"
       >
-        <EditLocationItemTitle>
+        {/* <EditLocationItemTitle>
           {product.product?.name || product.productType?.name || "New product"}
         </EditLocationItemTitle>
         <Formik
@@ -57,7 +47,7 @@ export const EditLocationItem = () => {
 
             <FormInput name="amount" label="Amount" />
           </Form>
-        </Formik>
+        </Formik> */}
       </motion.div>
     </>
   );

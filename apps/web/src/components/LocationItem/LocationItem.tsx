@@ -1,7 +1,5 @@
 import { ILocationProduct } from "@fridgespy/types";
-import React, { useCallback } from "react";
-import { useAppDispatch } from "../../store/hooks";
-import { locationActions } from "../../store/reducers/locationReducer";
+import React from "react";
 import { ImageTooltip } from "../ImageTooltip/ImageTooltip";
 import {
   LocationItemElement,
@@ -17,19 +15,6 @@ export const LocationItem = ({
   amount,
   locationId,
 }: ILocationProduct) => {
-  const dispatch = useAppDispatch();
-
-  const handleSetAmount = useCallback((newAmount: number) => {
-    if (locationId)
-      dispatch(
-        locationActions.setProductAmount({
-          locationId,
-          productId: id,
-          amount: newAmount,
-        })
-      );
-  }, []);
-
   return (
     <LocationItemElement>
       <ImageTooltip imageUrl="https://m.media-amazon.com/images/M/MV5BNzg0MWEyZjItOTZlMi00YmRjLWEyYzctODIwMDU0OThiMzNkXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_.jpg" />
@@ -39,7 +24,7 @@ export const LocationItem = ({
           {productType && productType.name}
         </>
       </LocationItemProductDisplay>
-      <LocationItemAmount amount={amount} setAmount={handleSetAmount} />
+      <LocationItemAmount amount={amount} setAmount={() => {}} />
       <LocationItemActions productId={id} />
     </LocationItemElement>
   );

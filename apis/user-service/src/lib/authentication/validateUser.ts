@@ -33,7 +33,7 @@ export const validateUser = async (
       process.env.JWT_SECRET!
     );
 
-    if(!validAccessToken || typeof validAccessToken !== 'object') {
+    if (!validAccessToken || typeof validAccessToken !== 'object') {
       respond(res).error(new Error('Invalid access token'));
       return;
     }
@@ -64,9 +64,15 @@ export const validateUser = async (
       respond(res).error(new Error('User not available...'));
       return;
     }
-    appCache.set(`user#${validAccessToken.userId}`, user);
-    appEvents.publish(AuthChannels.ON_VALIDATE, `${user.name} validated!`);
-    respond(res).success({ user, tokens: null });
+
+    const formattedUser = formatDBUserToUser(user);
+
+    appCache.set(`user#${validAccessToken.userId}`, formattedUser);
+    appEvents.publish(
+      AuthChannels.ON_VALIDATE,
+      `${formattedUser.name} validated!`
+    );
+    respond(res).success({ user: formattedUser, tokens: null });
     return;
   } catch (err) {
     const newValidTokens = refreshAccessToken(
@@ -87,8 +93,12 @@ export const validateUser = async (
         newValidTokens.accessToken,
         process.env.JWT_SECRET!
       );
-      if(!validAccessToken || typeof validAccessToken !== 'object') {
-        respond(res).error(new Error('Cannot validate your access at this time, please try again'));
+      if (!validAccessToken || typeof validAccessToken !== 'object') {
+        respond(res).error(
+          new Error(
+            'Cannot validate your access at this time, please try again'
+          )
+        );
         return;
       }
 

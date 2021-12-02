@@ -13,5 +13,18 @@ export const perhaps = async <T>(
   }
 };
 
+export const authorizedFetch = (
+  path: string,
+  options: RequestInit | undefined
+) =>
+  fetch(path, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    credentials: "include",
+    ...options,
+  });
+
 export * from "./formatArrayToObject";
 export * from "./redisHelpers";

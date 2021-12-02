@@ -4,7 +4,6 @@ export interface ILocation extends ITimestamps {
   id: string;
   name: string;
   description: string;
-  products: {[key: string]: ILocationProduct};
 }
 
 export interface IDBLocation extends IDBTimestamps {

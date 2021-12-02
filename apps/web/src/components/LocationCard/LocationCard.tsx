@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { AiOutlineCamera } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { Card } from "../Card/Card";
 import {
   LocationCardContent,
@@ -7,10 +9,6 @@ import {
   LocationCardListElement,
   LocationCardTitle,
 } from "./LocationCard.styles";
-import { useEffect } from "react";
-import { ILocationProduct } from "@fridgespy/types";
-import { AiOutlineCamera } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
 interface LocationCardProps {
   id: string;

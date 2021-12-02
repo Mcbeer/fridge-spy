@@ -47,6 +47,10 @@ export const getRequestQueryParams = <T>(req: Request): T => {
 export const getRequestToken = (
   req: Request
 ): { accessToken: string; refreshToken: string } => {
+  console.log({
+    accessToken: req?.cookies?.access_token,
+    refreshToken: req?.cookies?.refresh_token,
+  });
   return {
     accessToken: req?.cookies?.access_token,
     refreshToken: req?.cookies?.refresh_token,

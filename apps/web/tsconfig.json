@@ -23,6 +23,9 @@
     },
     {
       "path": "../../libs/validation/tsconfig.json"
+    },
+    {
+      "path": "../../libs/utils/tsconfig.json"
     }
   ]
 }

@@ -7,7 +7,7 @@ import { setupExpressApp } from "./utils/setupExpressApp";
 import {
   setupRedisClient,
   setupRedisPublisher,
-  setupRedisSubscriber
+  setupRedisSubscriber,
 } from "./utils/setupRedisClient";
 
 declare global {
@@ -37,17 +37,6 @@ const runServer = async (): Promise<void> => {
   locationLogger.info("Subscribing to channels");
   appEvents.subscribe([LocationChannels.LOCATION_PRODUCT_UPDATED]);
   locationLogger.info("Subscribed");
-
-  appEvents.onMessage((channel, message) => {
-    console.log(`Received message: ${message} on channel: ${channel}`);
-  });
-
-  setTimeout(() => {
-    locationLogger.info("Publishing test event");
-    appEvents.publish(LocationChannels.LOCATION_PRODUCT_UPDATED, {
-      hello: "world!",
-    });
-  }, 2000);
 
   locationLogger.info("Starting express on port 8002");
   expressApp.listen(8002);

@@ -5,9 +5,14 @@ import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
 import { appCache } from "../..";
 import { queryHousesByUserId } from "../../database/house/queryHousesByUserId";
-import { formatDBHouseToHouse, formatHousesForFrontend } from "./formatHouses";
+import { formatDBHouseToHouse } from "./formatHouses";
 
 export const getHouses = async (req: Request, res: Response): Promise<void> => {
+  if (!req.user) {
+    respond(res).error(new Error("User not found, are you logged in?"));
+    return;
+  }
+
   // Extract the user from the request
   const { id } = req.user;
 
@@ -47,12 +52,9 @@ export const getHouses = async (req: Request, res: Response): Promise<void> => {
   // Format houses as IHouse
   const convertedHouses = houses.map(formatDBHouseToHouse);
 
-  // Format the house objects to be a single object, where id is key
-  const formattedHouses = formatHousesForFrontend(convertedHouses);
-
   // Save the houses to redis - key should be 'houses#<user_id>'
-  appCache.set(`houses#${id}`, formattedHouses);
+  appCache.set(`houses#${id}`, convertedHouses);
 
   // Return the houses to the requester
-  respond(res).success(formattedHouses);
+  respond(res).success(convertedHouses);
 };

@@ -20,4 +20,6 @@ export const LayoutContent = styled.div`
   padding: 1rem;
   grid-column-start: 2;
   overflow-y: auto;
+  height: 100%;
+  overflow: hidden;
 `;
