@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Card } from "../../components/Card/Card";
 import { LocationCard } from "../../components/LocationCard/LocationCard";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
-import "./House.scss";
 
 export const House = () => {
   // const { id } = useParams<{ id: string }>();
@@ -22,12 +21,12 @@ export const House = () => {
   return (
     <section>
       <PageTitle>{house.name}</PageTitle>
-      <ul className="House__almost-expired-items">
+      <ul className="flex flex-col gap-4 pb-8">
         <Card>
           <h3>Almost expired items</h3>
         </Card>
       </ul>
-      <ul className="House__location-list">
+      <ul className="grid grid-rows-3 grid-cols-3 gap-4">
         {locations.map((location) => (
           <LocationCard
             {...location}

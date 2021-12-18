@@ -2,12 +2,6 @@ import React from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../Card/Card";
-import {
-  HomeEntryContent,
-  HomeEntryHomeIcon,
-  HomeEntryListElement,
-  HomeEntryText,
-} from "./HomeEntry.styles";
 
 interface HomeEntryProps {
   id: string;
@@ -29,18 +23,21 @@ export const HomeEntry = ({ id, name }: HomeEntryProps) => {
   };
 
   return (
-    <HomeEntryListElement onClick={handleElementClick}>
+    <li
+      className="cursor-pointer hover:scale-105 transition-all"
+      onClick={handleElementClick}
+    >
       <Card>
-        <HomeEntryContent>
-          <HomeEntryHomeIcon>
+        <div className="grid items-center grid-rows-[_12rem_1fr_1fr_10%]">
+          <span className="flex justify-center items-center">
             <AiOutlineHome size="6rem" />
-          </HomeEntryHomeIcon>
-          <HomeEntryText>{name}</HomeEntryText>
-          <HomeEntryText>
+          </span>
+          <p className="flex h-full items-center cursor-pointer">{name}</p>
+          <p className="flex h-full items-center cursor-pointer">
             {locations} {locations > 1 ? "Locations" : "Location"}
-          </HomeEntryText>
-        </HomeEntryContent>
+          </p>
+        </div>
       </Card>
-    </HomeEntryListElement>
+    </li>
   );
 };

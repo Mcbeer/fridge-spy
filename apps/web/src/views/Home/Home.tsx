@@ -3,12 +3,6 @@ import React, { useContext, useEffect } from "react";
 import { HomeEntry } from "../../components/HomeEntry/HomeEntry";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { fetchHouses, HouseContext } from "../../context/HouseContext";
-import {
-  HomeList,
-  HomeNoHouses,
-  HomeNoHousesText,
-  HomeSection,
-} from "./Home.styles";
 
 export const Home = () => {
   const { houses$, housesStatus$ } = useContext(HouseContext);
@@ -26,21 +20,21 @@ export const Home = () => {
   }, []);
 
   return (
-    <HomeSection>
+    <section className="h-full relative grid grid-rows-[3rem_1fr]">
       <PageTitle>Home</PageTitle>
       {!housesStatus.loading && houses.length > 0 && (
-        <HomeList>
+        <ul className="list-none grid grid-cols-3 grid-rows-3 gap-4">
           {houses.map((home) => (
             <HomeEntry key={home.id} {...home} />
           ))}
-        </HomeList>
+        </ul>
       )}
       {housesStatus.loading && <div>I am loading your houses...</div>}
       {houses.length === 0 && (
-        <HomeNoHouses>
-          <HomeNoHousesText>No houses found, add one now!</HomeNoHousesText>
-        </HomeNoHouses>
+        <div className="flex justify-center items-center">
+          <h2 className="text-xl opacity-70">No houses found, add one now!</h2>
+        </div>
       )}
-    </HomeSection>
+    </section>
   );
 };

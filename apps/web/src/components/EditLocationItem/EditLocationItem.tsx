@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditLocationItem.scss";
-import { EditLocationItemBlurrer } from "./EditLocationItem.styles";
 
 export const EditLocationItem = () => {
   const { id, productId } = useParams<string>();
@@ -11,7 +9,7 @@ export const EditLocationItem = () => {
 
   return (
     <>
-      <EditLocationItemBlurrer onClick={() => navigate(-1)} />
+      <div className="" onClick={() => navigate(-1)} />
       <motion.div
         transition={{ duration: 0.3 }}
         initial={{ opacity: 0, x: 600 }}

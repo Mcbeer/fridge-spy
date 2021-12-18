@@ -1,18 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { FunctionComponent } from "react";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { LayoutContent, LayoutMain, LayoutNav } from "./Layout.styles";
 
-interface LayoutInterface {
-  children: ReactNode;
-}
-
-export const Layout = ({ children }: LayoutInterface) => {
+export const Layout: FunctionComponent = ({ children }) => {
   return (
-    <LayoutMain>
-      <LayoutNav>
-        <Navbar />
-      </LayoutNav>
-      <LayoutContent>{children}</LayoutContent>
-    </LayoutMain>
+    <main className="absolute inset-0 grid grid-cols-[8rem_1fr] bg-teal-100, overflow-hidden">
+      <Navbar />
+      <div className="p-4 overflow-hidden h-full">{children}</div>
+    </main>
   );
 };

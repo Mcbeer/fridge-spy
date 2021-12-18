@@ -18,12 +18,12 @@ export const LocationItemAmountButton = styled.button`
   border: none;
   height: 100%;
   color: #fff;
-  background-color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => "#000"};
   cursor: pointer;
   padding: 0 0.3rem;
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.primary, 0.7)};
+    background-color: ${({ theme }) => rgba("#000", 0.7)};
   }
 `;
 
@@ -32,5 +32,5 @@ export const LocationItemAmountInput = styled.input`
   outline: none;
   text-align: center;
   color: #fff;
-  background-color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => "#000"};
 `;

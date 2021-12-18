@@ -1,11 +1,7 @@
-import styled from "styled-components";
+import React, { FunctionComponent } from "react";
 
-export const PageTitle = styled.h1`
-  font-size: 1.6rem;
-  color: #000;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
-  position: relative;
-`;
+export const PageTitle: FunctionComponent = ({ children }) => (
+  <h1 className="text-2xl text-teal-900 font-bold items-center border-slate-500 border-b-1 relative border-solid">
+    {children}
+  </h1>
+);

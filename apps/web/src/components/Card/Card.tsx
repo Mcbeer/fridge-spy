@@ -1,8 +1,5 @@
-import styled from "styled-components";
+import React, { FunctionComponent } from "react";
 
-export const Card = styled.div`
-  border-radius: 0.8em;
-  background-color: #fff;
-  box-shadow: ${({ theme }) => theme.shadow};
-  padding: 1em;
-`;
+export const Card: FunctionComponent = ({ children }) => (
+  <div className="rounded-xl bg-white shadow-md p-4">{children}</div>
+);

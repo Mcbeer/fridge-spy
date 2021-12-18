@@ -21,6 +21,6 @@ export const LocationItemActionsButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.primary, 0.5)};
+    background-color: ${({ theme }) => rgba("#000", 0.5)};
   }
 `;

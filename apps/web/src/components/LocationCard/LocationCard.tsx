@@ -2,13 +2,6 @@ import React from "react";
 import { AiOutlineCamera } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Card } from "../Card/Card";
-import {
-  LocationCardContent,
-  LocationCardDescription,
-  LocationCardIcon,
-  LocationCardListElement,
-  LocationCardTitle,
-} from "./LocationCard.styles";
 
 interface LocationCardProps {
   id: string;
@@ -27,17 +20,21 @@ export const LocationCard = ({
 }: LocationCardProps) => {
   return (
     <Link to={`/location/${id}`}>
-      <LocationCardListElement>
+      <section className="transition-all hover:scale-105">
         <Card>
-          <LocationCardContent>
-            <LocationCardIcon>
+          <div className="grid grid-rows-[12rem_2rem_1.5rem]">
+            <div className="flex items-center justify-center">
               <AiOutlineCamera size="4rem" />
-            </LocationCardIcon>
-            <LocationCardTitle>{name}</LocationCardTitle>
-            <LocationCardDescription>{description}</LocationCardDescription>
-          </LocationCardContent>
+            </div>
+            <h2 className="flex h-full items-center justify-center text-lg font-bold">
+              {name}
+            </h2>
+            <p className="text-lg flex justify-center whitespace-nowrap overflow-hidden text-ellipsis">
+              {description}
+            </p>
+          </div>
         </Card>
-      </LocationCardListElement>
+      </section>
     </Link>
   );
 };

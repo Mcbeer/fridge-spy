@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { StyledButton, StyledButtonLabel } from "./Button.styles";
 
 interface ButtonProps {
   onClick: (response?: any) => void;
@@ -18,11 +17,17 @@ export const Button = ({
   iconPosition = "right",
   type = "button",
 }: ButtonProps) => {
+  const themeClasses = [""];
+
   return (
-    <StyledButton onClick={onClick} buttonTheme={buttonTheme} type={type}>
+    <button
+      className="flex justify-center items-center px-3 py-1 bg-teal-700 text-teal-100 outline-none rounded-md border-1 border-teal-700 border-solid font-bold transition-colors hover:bg-teal-600 active:bg-teal-500"
+      onClick={onClick}
+      type={type}
+    >
       {iconPosition === "left" && icon}
-      <StyledButtonLabel>{label}</StyledButtonLabel>
+      <label className={icon ? "ml-2 text-sm" : "text-sm"}>{label}</label>
       {iconPosition === "right" && icon}
-    </StyledButton>
+    </button>
   );
 };

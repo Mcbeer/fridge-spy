@@ -23,9 +23,9 @@ const homes: IHouse[] = [
 export const fetchHouses = async () => {
   housesStatus$.next({ loading: true, error: null });
   const [housesError, houses] = await perhaps(
-    authorizedFetch(`http://localhost:8002/api/v1/house`, {}).then(
-      (response) => response.json() as unknown as IHouse[]
-    )
+    authorizedFetch(`http://localhost:8002/api/v1/house`, {
+      credentials: "include",
+    }).then((response) => response.json() as unknown as IHouse[])
   );
   if (housesError) {
     housesStatus$.next({ loading: false, error: housesError });

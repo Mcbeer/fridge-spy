@@ -6,12 +6,10 @@ import { PageTitle } from "../../components/PageTitle/PageTitle";
 export const Location = () => {
   const { id } = useParams<string>();
 
-  console.log(id);
-
   return (
-    <section className="Location">
+    <section>
       <PageTitle>Location</PageTitle>
-      <LocationItems locationName={"Test"} />
+      <LocationItems />
     </section>
   );
 };
