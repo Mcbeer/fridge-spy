@@ -1,4 +1,5 @@
 import { IUser } from "@fridgespy/types";
+import { authorizedFetch } from "@fridgespy/utils";
 
 interface UserSigninArgs {
   email: string;
@@ -9,7 +10,7 @@ export const signInUser = ({
   email,
   password,
 }: UserSigninArgs): Promise<IUser> => {
-  return fetch("http://fridgespy.local:8001/api/v1/auth/authorize", {
+  return authorizedFetch("http://fridgespy.local:8001/api/v1/auth/authorize", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +19,5 @@ export const signInUser = ({
       email,
       password,
     }),
-  })
-    .then((response) => response.json())
-    .then((response) => response.user);
+  }).then((response) => response.user);
 };

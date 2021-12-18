@@ -20,7 +20,6 @@ export const Login = () => {
   const [_signInError, setSignInError] = useState<Error | null>(null);
 
   const doLogin = async (values: SignInProps) => {
-    console.log("Logging in with", values);
     const [signInError, user] = await perhaps(signInUser(values));
 
     if (signInError) {
@@ -29,7 +28,6 @@ export const Login = () => {
     }
 
     if (user) {
-      console.log("Logged in as", user);
       user$.next(user);
       authorized$.next(true);
       navigate("/");

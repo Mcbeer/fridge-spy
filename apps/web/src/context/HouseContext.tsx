@@ -22,11 +22,10 @@ const homes: IHouse[] = [
 
 export const fetchHouses = async () => {
   housesStatus$.next({ loading: true, error: null });
-  const [housesError, houses] = await perhaps(
-    authorizedFetch(`http://localhost:8002/api/v1/house`, {
-      credentials: "include",
-    }).then((response) => response.json() as unknown as IHouse[])
+  const [housesError, houses] = await perhaps<IHouse[]>(
+    authorizedFetch(`http://fridgespy.local:8002/api/v1/house`, {})
   );
+
   if (housesError) {
     housesStatus$.next({ loading: false, error: housesError });
     console.error(housesError);
@@ -41,7 +40,6 @@ export const fetchHouses = async () => {
     return;
   }
 
-  console.log("Fetched houses for current user");
   housesStatus$.next({ loading: false, error: null });
   houses$.next(houses);
 };

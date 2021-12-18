@@ -20,6 +20,14 @@ export const getUserSelf = async (req: Request, res: Response) => {
 
   const tokenContent = decodeToken(requestToken.accessToken);
 
+  if (!tokenContent?.userId) {
+    const noUserIdError = new Error('No userId found in token');
+    userLogger.error(noUserIdError);
+    respond(res).error(noUserIdError, 404);
+
+    return;
+  }
+
   const [queryUserError, user] = await perhaps(
     queryUserById(tokenContent.userId)
   );

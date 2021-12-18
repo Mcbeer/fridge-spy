@@ -24,6 +24,14 @@ export const authorizedFetch = (
     },
     credentials: "include",
     ...options,
+  }).then(async (response) => {
+    if (response.status !== 200) {
+      const errorText = await response.json();
+      const errorObject = new Error(errorText.message);
+      throw errorObject;
+    }
+
+    return response.json();
   });
 
 export * from "./formatArrayToObject";

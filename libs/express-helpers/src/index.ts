@@ -47,10 +47,6 @@ export const getRequestQueryParams = <T>(req: Request): T => {
 export const getRequestToken = (
   req: Request
 ): { accessToken: string; refreshToken: string } => {
-  console.log({
-    accessToken: req?.cookies?.access_token,
-    refreshToken: req?.cookies?.refresh_token,
-  });
   return {
     accessToken: req?.cookies?.access_token,
     refreshToken: req?.cookies?.refresh_token,
@@ -162,7 +158,7 @@ const validateUser = async (tokens: {
   user: IUser;
   tokens: { accessToken: string; refreshToken: string };
 }> => {
-  return fetch(`http://localhost:8001/api/v1/auth/validate`, {
+  return fetch(`http://fridgespy.local:8001/api/v1/auth/validate`, {
     method: "POST",
     credentials: "include",
     body: JSON.stringify(tokens),

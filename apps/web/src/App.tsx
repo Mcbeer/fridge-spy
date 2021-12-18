@@ -118,13 +118,11 @@ const AuthorizedRoute: FunctionComponent = ({ children }) => {
   useEffect(() => {
     getUserSelf()
       .then((user) => {
-        console.log("User is logged in...");
         user$.next(user);
         authorized$.next(true);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log("Failed to get self...", err);
+      .catch(() => {
         setLoading(false);
       });
   }, []);

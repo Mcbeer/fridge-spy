@@ -1,4 +1,3 @@
-import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
 import { addHouse } from "../lib/house/addHouse";
 import { getHouse } from "../lib/house/getHouse";
@@ -7,8 +6,6 @@ import { removeHouse } from "../lib/house/removeHouse";
 import { updateHouse } from "../lib/house/updateHouse";
 
 const router = Router();
-
-router.use(authMiddleware);
 
 // Get a specific house
 router.get("/:id", getHouse);
