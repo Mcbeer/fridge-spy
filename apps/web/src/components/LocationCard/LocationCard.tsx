@@ -1,23 +1,10 @@
+import { ILocation } from "@fridgespy/types";
 import React from "react";
 import { AiOutlineCamera } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Card } from "../Card/Card";
 
-interface LocationCardProps {
-  id: string;
-  name: string;
-  description: string;
-  expanded: boolean;
-  setExpanded: () => void;
-}
-
-export const LocationCard = ({
-  id,
-  name,
-  description,
-  expanded,
-  setExpanded,
-}: LocationCardProps) => {
+export const LocationCard = ({ id, name, description }: ILocation) => {
   return (
     <Link to={`/location/${id}`}>
       <section className="transition-all hover:scale-105">

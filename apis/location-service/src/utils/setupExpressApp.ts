@@ -2,7 +2,7 @@ import { authMiddleware } from "@fridgespy/express-helpers";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
-import { houseRouter } from "../routes/house.router";
+import { locationRouter } from "../routes/location.router";
 
 export const setupExpressApp = (): Express => {
   const app = express();
@@ -11,8 +11,8 @@ export const setupExpressApp = (): Express => {
   const baseRouter = Router();
 
   // Base routes declaration
-  const eventsBasePath = "/events";
-  const houseBasePath = "/house";
+  const locationBasePath = "/location";
+  const productBasePath = "/product";
   // const productTypeBasePath = "/producttype";
 
   // We setup middlewares here...
@@ -29,7 +29,7 @@ export const setupExpressApp = (): Express => {
   app.use(basePath, baseRouter);
 
   // We setup routes here...
-  baseRouter.use(houseBasePath, authMiddleware, houseRouter);
+  baseRouter.use(locationBasePath, authMiddleware, locationRouter);
 
   return app;
 };

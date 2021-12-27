@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 interface ButtonProps {
-  onClick: (response?: any) => void;
+  onClick?: (response?: any) => void;
   buttonTheme?: "default" | "login";
   label?: string;
   icon?: ReactNode;
@@ -11,7 +11,7 @@ interface ButtonProps {
 
 export const Button = ({
   buttonTheme = "default",
-  onClick,
+  onClick = () => {},
   label,
   icon,
   iconPosition = "right",
@@ -26,7 +26,15 @@ export const Button = ({
       type={type}
     >
       {iconPosition === "left" && icon}
-      <label className={icon ? "ml-2 text-sm" : "text-sm"}>{label}</label>
+      <label
+        className={
+          icon
+            ? "ml-2 text-sm pointer-events-none"
+            : "text-sm pointer-events-none"
+        }
+      >
+        {label}
+      </label>
       {iconPosition === "right" && icon}
     </button>
   );

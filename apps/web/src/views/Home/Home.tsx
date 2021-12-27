@@ -1,40 +1,48 @@
 import { useObservableGetState, useObservableState } from "observable-hooks";
-import React, { useContext, useEffect } from "react";
-import { HomeEntry } from "../../components/HomeEntry/HomeEntry";
+import React, { useCallback, useContext, useEffect } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { Card } from "../../components/Card/Card";
+import { LocationCard } from "../../components/LocationCard/LocationCard";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
-import { fetchHouses, HouseContext } from "../../context/HouseContext";
+import { LocationContext } from "../../context/LocationContext";
 
 export const Home = () => {
-  const { houses$, housesStatus$ } = useContext(HouseContext);
-  const houses = useObservableState(houses$, []);
-  const housesStatus = useObservableGetState(housesStatus$, {
-    loading: false,
-    error: null,
-  });
+  const navigate = useNavigate();
+  const { locations$ } = useContext(LocationContext);
+  const locations = useObservableGetState(locations$, []);
 
-  useEffect(() => {
-    // Fetch houses, and run a .next on the houses$ observable
-    (async () => {
-      await fetchHouses();
-    })();
+  const handleAddLocation = useCallback(() => {
+    navigate("/location/new");
   }, []);
 
   return (
     <section className="h-full relative grid grid-rows-[3rem_1fr]">
       <PageTitle>Home</PageTitle>
-      {!housesStatus.loading && houses.length > 0 && (
-        <ul className="list-none grid grid-cols-3 grid-rows-3 gap-4">
-          {houses.map((home) => (
-            <HomeEntry key={home.id} {...home} />
-          ))}
-        </ul>
-      )}
-      {housesStatus.loading && <div>I am loading your houses...</div>}
-      {houses.length === 0 && (
-        <div className="flex justify-center items-center">
-          <h2 className="text-xl opacity-70">No houses found, add one now!</h2>
-        </div>
-      )}
+
+      <ul className="list-none grid grid-cols-3 grid-rows-3 gap-4">
+        <li
+          className="cursor-pointer hover:scale-105 transition-all"
+          onClick={handleAddLocation}
+        >
+          <Card>
+            <div className="grid grid-rows-[12rem_2rem_1.5rem]">
+              <div className="flex items-center justify-center">
+                <AiOutlinePlus size="4rem" />
+              </div>
+              <h2 className="flex h-full items-center justify-center text-lg font-bold">
+                Add Location
+              </h2>
+              <p className="text-lg flex justify-center whitespace-nowrap overflow-hidden text-ellipsis">
+                &nbsp;
+              </p>
+            </div>
+          </Card>
+        </li>
+        {locations.map((location) => (
+          <LocationCard {...location} key={location.id} />
+        ))}
+      </ul>
     </section>
   );
 };

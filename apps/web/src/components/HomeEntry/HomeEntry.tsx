@@ -33,9 +33,6 @@ export const HomeEntry = ({ id, name }: HomeEntryProps) => {
             <AiOutlineHome size="6rem" />
           </span>
           <p className="flex h-full items-center cursor-pointer">{name}</p>
-          <p className="flex h-full items-center cursor-pointer">
-            {locations} {locations > 1 ? "Locations" : "Location"}
-          </p>
         </div>
       </Card>
     </li>

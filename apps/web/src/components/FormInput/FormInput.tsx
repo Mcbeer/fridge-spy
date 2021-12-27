@@ -20,7 +20,7 @@ export const FormInput = ({
       </label>
       <input
         {...field}
-        className="border-0 outline-none p-2 text-base focus:border-slate-700"
+        className="border-0 outline-none p-2 text-base focus:border-slate-700 border-b-2"
       />
       {/* {meta.touched && meta.error && (
         <>

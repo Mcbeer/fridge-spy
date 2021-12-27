@@ -1,6 +1,3 @@
-import { IUser } from "@fridgespy/types";
-import { AnimatePresence } from "framer-motion";
-import { useObservableGetState, useObservableState } from "observable-hooks";
 import React, {
   FunctionComponent,
   useContext,
@@ -9,22 +6,19 @@ import React, {
 } from "react";
 import {
   BrowserRouter as Router,
-  IndexRouteProps,
-  LayoutRouteProps,
   Navigate,
-  PathRouteProps,
   Route,
   Routes,
-  useNavigate,
 } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { EditLocationItem } from "./components/EditLocationItem/EditLocationItem";
-import { HouseProvider } from "./context/HouseContext";
+import { LocationEdit } from "./components/LocationEdit/LocationEdit";
+import { SlideIn } from "./components/SlideIn/SlideIn";
 import { LocationProvider } from "./context/LocationContext";
+import { ProductProvider } from "./context/ProductContext";
 import { UserContext, UserProvider } from "./context/UserContext";
 import { getUserSelf } from "./services/user/getUserSelf";
 import { Home } from "./views/Home/Home";
-import { House } from "./views/House/House";
 import { Layout } from "./views/Layout/Layout";
 import { Location } from "./views/Location/Location";
 import { Login } from "./views/Login/Login";
@@ -33,11 +27,14 @@ import { ShoppingList } from "./views/ShoppingList/ShoppingList";
 
 export const App = () => {
   return (
-    <UserProvider>
-      <HouseProvider>
-        <LocationProvider>
-          <Router>
-            <Layout>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="login" element={<Login />} />
+        </Routes>
+        <UserProvider>
+          <ProductProvider>
+            <LocationProvider>
               <Routes>
                 <Route
                   path="/"
@@ -47,12 +44,11 @@ export const App = () => {
                     </AuthorizedRoute>
                   }
                 />
-                <Route path="login" element={<Login />} />
                 <Route
-                  path="house/:id"
+                  path="/location/new"
                   element={
                     <AuthorizedRoute>
-                      <House />
+                      <Home />
                     </AuthorizedRoute>
                   }
                 />
@@ -66,6 +62,14 @@ export const App = () => {
                 >
                   <Route
                     path="edit/:productId"
+                    element={
+                      <AuthorizedRoute>
+                        <Location />
+                      </AuthorizedRoute>
+                    }
+                  />
+                  <Route
+                    path="new"
                     element={
                       <AuthorizedRoute>
                         <Location />
@@ -90,24 +94,44 @@ export const App = () => {
                   }
                 />
               </Routes>
-              <AnimatePresence>
-                <Routes>
-                  <Route
-                    path="location/:id/edit/:productId"
-                    element={
+              <Routes>
+                <Route
+                  path="location/:id/edit/:productId"
+                  element={
+                    <SlideIn>
                       <AuthorizedRoute>
                         <EditLocationItem />
                       </AuthorizedRoute>
-                    }
-                  />
-                </Routes>
-              </AnimatePresence>
-            </Layout>
-            <ReactTooltip html={true} />
-          </Router>
-        </LocationProvider>
-      </HouseProvider>
-    </UserProvider>
+                    </SlideIn>
+                  }
+                />
+                <Route
+                  path="location/:id/edit/new"
+                  element={
+                    <SlideIn>
+                      <AuthorizedRoute>
+                        <EditLocationItem />
+                      </AuthorizedRoute>
+                    </SlideIn>
+                  }
+                />
+                <Route
+                  path="/location/new"
+                  element={
+                    <SlideIn>
+                      <AuthorizedRoute>
+                        <LocationEdit />
+                      </AuthorizedRoute>
+                    </SlideIn>
+                  }
+                />
+              </Routes>
+            </LocationProvider>
+          </ProductProvider>
+        </UserProvider>
+      </Layout>
+      <ReactTooltip html={true} />
+    </Router>
   );
 };
 

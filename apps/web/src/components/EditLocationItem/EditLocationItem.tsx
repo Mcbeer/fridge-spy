@@ -1,52 +1,60 @@
-import { motion } from "framer-motion";
-import React from "react";
+import { ILocationProduct } from "@fridgespy/types";
+import { Form, Formik } from "formik";
+import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ProductContext } from "../../context/ProductContext";
+import { locationProductActions } from "../../services/locationProducts";
+import { Button } from "../Button/Button";
+import { FormInput } from "../FormInput/FormInput";
+import { PageTitle } from "../PageTitle/PageTitle";
+import { Search } from "../Search/Search";
 
 export const EditLocationItem = () => {
+  const { products$ } = useContext(ProductContext);
   const { id, productId } = useParams<string>();
   const navigate = useNavigate();
-  console.log({ id, productId });
+
+  const addLocationItemHandler = (values: Partial<ILocationProduct>) => {
+    locationProductActions.addLocationProduct(values, navigate);
+  };
+
+  const initalItem = {
+    productId: "",
+    productType: {
+      id: "",
+      name: "",
+    },
+    amount: 1,
+    maximumAmount: 10,
+    minimumAmount: 1,
+  };
 
   return (
-    <>
-      <div className="" onClick={() => navigate(-1)} />
-      <motion.div
-        transition={{ duration: 0.3 }}
-        initial={{ opacity: 0, x: 600 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 600 }}
-        className="EditLocationItem"
-      >
-        {/* <EditLocationItemTitle>
-          {product.product?.name || product.productType?.name || "New product"}
-        </EditLocationItemTitle>
-        <Formik
-          onSubmit={(values) => console.log("Submitting:", values)}
-          initialValues={{
-            product: {
-              id: product.product?.id,
-              name: product.product?.name,
-            },
-            productType: {
-              id: product.productType?.id,
-              name: product.productType?.name,
-            },
-            minimumAmount: product.minimumAmount,
-            maximumAmount: product.maximumAmount,
-            amount: product.amount,
-          }}
-        >
-          <Form>
-            <FormInput name="product.name" label="Product name" />
-            <FormInput name="productType.name" label="Product type name" />
+    <div>
+      <PageTitle>{!productId ? "New house" : "Edit House"}</PageTitle>
 
-            <FormInput name="minimumAmount" label="Minimum amount" />
-            <FormInput name="maximumAmount" label="Minimum amount" />
+      <div>
+        <Formik initialValues={initalItem} onSubmit={addLocationItemHandler}>
+          {({ handleSubmit }) => (
+            <Form className="flex flex-col w-full">
+              <Search
+                name="productId"
+                label="Product"
+                searchable={products$}
+                filterKey="name"
+              />
+              <FormInput name="productType.id" label="Product type" />
+              <FormInput name="amount" label="Amount" />
+              <FormInput name="maximumAmount" label="Max" />
+              <FormInput name="minimumAmount" label="Min" />
 
-            <FormInput name="amount" label="Amount" />
-          </Form>
-        </Formik> */}
-      </motion.div>
-    </>
+              <div className="flex items-center justify-end gap-4 pt-4">
+                <Button label="Add" type="submit" onClick={handleSubmit} />
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
   );
 };

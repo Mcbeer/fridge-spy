@@ -15,7 +15,7 @@ export const insertUserHouse = ({
 }): Promise<IDBUserHouse> => {
   const id = getUuid();
   return database(DatabaseTables.USER_HOUSE)
-    .insert({ id, user_id: userId, house_id: houseId, role })
+    .insert({ id, user_id: userId, house_id: houseId, user_role: role })
     .returning("*")
     .then(first);
 };

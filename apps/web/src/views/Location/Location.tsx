@@ -4,8 +4,6 @@ import { LocationItems } from "../../components/LocationItems/LocationItems";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 
 export const Location = () => {
-  const { id } = useParams<string>();
-
   return (
     <section>
       <PageTitle>Location</PageTitle>
