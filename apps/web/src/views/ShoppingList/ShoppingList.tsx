@@ -1,9 +1,10 @@
 import React from "react";
+import { PageTitle } from "../../components/PageTitle/PageTitle";
 
 export const ShoppingList = () => {
   return (
     <div>
-      <h1>Shopping List</h1>
+      <PageTitle>Shopping List</PageTitle>
     </div>
   );
 };

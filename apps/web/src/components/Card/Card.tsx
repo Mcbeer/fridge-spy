@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
+import "./Card.scss";
 
 export const Card: FunctionComponent = ({ children }) => (
-  <div className="rounded-xl bg-white shadow-md p-4">{children}</div>
+  <div className="Card">{children}</div>
 );
