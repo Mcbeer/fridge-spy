@@ -6,6 +6,7 @@ import { Card } from "../../components/Card/Card";
 import { LocationCard } from "../../components/LocationCard/LocationCard";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { LocationContext } from "../../context/LocationContext";
+import "./Home.scss";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -17,25 +18,18 @@ export const Home = () => {
   }, []);
 
   return (
-    <section className="h-full relative grid grid-rows-[3rem_1fr]">
+    <section className="Home">
       <PageTitle>Home</PageTitle>
 
-      <ul className="list-none grid grid-cols-3 grid-rows-3 gap-4">
-        <li
-          className="cursor-pointer hover:scale-105 transition-all"
-          onClick={handleAddLocation}
-        >
+      <ul className="Home__list">
+        <li className="Home__list-item" onClick={handleAddLocation}>
           <Card>
-            <div className="grid grid-rows-[12rem_2rem_1.5rem]">
-              <div className="flex items-center justify-center">
+            <div className="Home__card">
+              <div className="Home__card-icon">
                 <AiOutlinePlus size="4rem" />
               </div>
-              <h2 className="flex h-full items-center justify-center text-lg font-bold">
-                Add Location
-              </h2>
-              <p className="text-lg flex justify-center whitespace-nowrap overflow-hidden text-ellipsis">
-                &nbsp;
-              </p>
+              <h2 className="Home__card-title">Add Location</h2>
+              <p className="Home__card-subtitle">&nbsp;</p>
             </div>
           </Card>
         </li>

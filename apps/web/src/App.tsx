@@ -140,15 +140,20 @@ const AuthorizedRoute: FunctionComponent = ({ children }) => {
   const { authorized$, user$ } = useContext(UserContext);
 
   useEffect(() => {
-    getUserSelf()
-      .then((user) => {
-        user$.next(user);
-        authorized$.next(true);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    console.log("Checking auth state");
+    if (!authorized$.value) {
+      getUserSelf()
+        .then((user) => {
+          user$.next(user);
+          authorized$.next(true);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   if (!authorized$.value && !loading) {

@@ -25,6 +25,7 @@
     "react-tooltip": "^4.2.21",
     "react-use-measure": "^2.0.4",
     "rxjs": "^7.4.0",
+    "sass": "^1.49.7",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

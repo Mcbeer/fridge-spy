@@ -1,7 +1,7 @@
 import React from "react";
-import { useParams } from "react-router";
 import { LocationItems } from "../../components/LocationItems/LocationItems";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import "./Location.scss";
 
 export const Location = () => {
   return (

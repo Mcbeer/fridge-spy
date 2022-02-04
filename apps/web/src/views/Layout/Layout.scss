@@ -1,0 +1,14 @@
+.Layout {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  background-color: var(--slate-100);
+  overflow: hidden;
+
+  &__content {
+    padding: 1rem;
+    overflow: hidden;
+    height: 100%;
+  }
+}
