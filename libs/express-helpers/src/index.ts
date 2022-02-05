@@ -108,11 +108,6 @@ export class Responder<T> {
 
 /**
  * A helper middleware, that can be added to any service, to let it handle auth
- *
- * @param {Request} req
- * @param {Response} res
- * @param {NextFunction} next
- * @return {*}  {Promise<void>}
  */
 export const authMiddleware = async (
   req: Request,
@@ -158,7 +153,7 @@ const validateUser = async (tokens: {
   user: IUser;
   tokens: { accessToken: string; refreshToken: string };
 }> => {
-  return fetch(`http://fridgespy.local:8001/api/v1/auth/validate`, {
+  return fetch(`${process.env.AUTH_URL}/auth/validate`, {
     method: "POST",
     credentials: "include",
     body: JSON.stringify(tokens),

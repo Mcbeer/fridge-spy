@@ -18,7 +18,6 @@ export const addLocation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log("Adding new location");
   const body = getRequestBody<AddLocationArgs>(req);
 
   // Validate the body input here

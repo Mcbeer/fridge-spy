@@ -1,11 +1,8 @@
-import { authMiddleware } from "@fridgespy/express-helpers";
 import { Router } from "express";
 import { addLocation } from "../lib/location/addLocation";
 import { getLocations } from "../lib/location/getLocations";
 
 const router = Router();
-
-router.use(authMiddleware);
 
 // Get all locations for the user
 router.get("/", getLocations);

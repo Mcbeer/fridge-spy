@@ -20,7 +20,6 @@ export const Login = () => {
   const [_signInError, setSignInError] = useState<Error | null>(null);
 
   const doLogin = async (values: SignInProps) => {
-    console.log("Signing in...");
     const [signInError, user] = await perhaps(signInUser(values));
 
     if (signInError) {

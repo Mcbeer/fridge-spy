@@ -140,7 +140,6 @@ const AuthorizedRoute: FunctionComponent = ({ children }) => {
   const { authorized$, user$ } = useContext(UserContext);
 
   useEffect(() => {
-    console.log("Checking auth state");
     if (!authorized$.value) {
       getUserSelf()
         .then((user) => {

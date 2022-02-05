@@ -1,21 +1,23 @@
 import IORedis from 'ioredis';
 
+const port: number = process.env.REDIS_PORT as unknown as number;
+
 const subscriber = new IORedis({
-  port: 6379,
-  host: '127.0.0.1',
-  password: 'bacon123',
+  port,
+  host: process.env.REDIS_HOST,
+  password: process.env.REDIS_PASSWORD,
 });
 
 const publisher = new IORedis({
-  port: 6379,
-  host: '127.0.0.1',
-  password: 'bacon123',
+  port,
+  host: process.env.REDIS_HOST,
+  password: process.env.REDIS_PASSWORD,
 });
 
 const client = new IORedis({
-  port: 6379,
-  host: '127.0.0.1',
-  password: 'bacon123',
+  port,
+  host: process.env.REDIS_HOST,
+  password: process.env.REDIS_PASSWORD,
 });
 
 export const setupRedisSubscriber = () => {
