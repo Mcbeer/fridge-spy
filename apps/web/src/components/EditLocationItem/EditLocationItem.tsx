@@ -8,6 +8,7 @@ import { Button } from "../Button/Button";
 import { FormInput } from "../FormInput/FormInput";
 import { PageTitle } from "../PageTitle/PageTitle";
 import { Search } from "../Search/Search";
+import "./EditLocationItem.scss";
 
 export const EditLocationItem = () => {
   const { products$ } = useContext(ProductContext);
@@ -36,7 +37,7 @@ export const EditLocationItem = () => {
       <div>
         <Formik initialValues={initalItem} onSubmit={addLocationItemHandler}>
           {({ handleSubmit }) => (
-            <Form className="flex flex-col w-full">
+            <Form className="EditLocationItem__form">
               <Search
                 name="productId"
                 label="Product"
@@ -48,7 +49,7 @@ export const EditLocationItem = () => {
               <FormInput name="maximumAmount" label="Max" />
               <FormInput name="minimumAmount" label="Min" />
 
-              <div className="flex items-center justify-end gap-4 pt-4">
+              <div className="EditLocationItem__form-actions">
                 <Button label="Add" type="submit" onClick={handleSubmit} />
               </div>
             </Form>

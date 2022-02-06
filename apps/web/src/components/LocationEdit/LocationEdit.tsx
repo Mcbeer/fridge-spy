@@ -5,6 +5,7 @@ import { Button } from "../Button/Button";
 import { FormInput } from "../FormInput/FormInput";
 import { PageTitle } from "../PageTitle/PageTitle";
 import { addLocation } from "../../context/LocationContext";
+import "./LocationEdit.scss";
 
 export const LocationEdit = () => {
   const navigate = useNavigate();
@@ -40,11 +41,11 @@ export const LocationEdit = () => {
           onSubmit={addLocationHandler}
         >
           {({ handleSubmit }) => (
-            <Form className="flex flex-col w-full">
+            <Form className="LocationEdit__form">
               <FormInput name="name" label="Name" />
               <FormInput name="description" label="Description" />
 
-              <div className="flex items-center justify-end gap-4 pt-4">
+              <div className="LocationEdit__form-actions">
                 <Button label="Add" type="submit" onClick={handleSubmit} />
               </div>
             </Form>

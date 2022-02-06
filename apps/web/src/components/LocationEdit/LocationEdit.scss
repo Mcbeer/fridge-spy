@@ -1,0 +1,15 @@
+.LocationEdit {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1rem;
+    }
+  }
+}

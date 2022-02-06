@@ -4,6 +4,7 @@ import { PageTitle } from "../../components/PageTitle/PageTitle";
 import "./Location.scss";
 
 export const Location = () => {
+  // Possibly add a breadcrumb style navigation in "PageTitle"
   return (
     <section>
       <PageTitle>Location</PageTitle>
