@@ -1,5 +1,6 @@
 import { getRequestBody, respond } from "@fridgespy/express-helpers";
 import { locationLogger } from "@fridgespy/logging";
+import { ILocationAddArgs } from "@fridgespy/types";
 import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
 import { first } from "lodash";
@@ -9,16 +10,11 @@ import { insertLocation } from "../../database/location/insertLocation";
 import { getUuid } from "../../utils/getUuid";
 import { formatLocation } from "./formatLocation";
 
-interface AddLocationArgs {
-  name: string;
-  description: string;
-}
-
 export const addLocation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const body = getRequestBody<AddLocationArgs>(req);
+  const body = getRequestBody<ILocationAddArgs>(req);
 
   // Validate the body input here
 

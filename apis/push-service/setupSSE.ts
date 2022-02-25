@@ -5,6 +5,9 @@ export interface SSEClient {
   id: string;
   res: Response;
 }
+
+// Maybe we should save the subscribers in Redis instead of in memory? (Even though redis is also memory)
+
 let subscribers: SSEClient[] = [];
 const clients = () => {
   const add = (client: SSEClient): void => {
@@ -71,7 +74,7 @@ export const publishClientEvent = async <T>(
   const clientsToPublishTo = clients().getById(customerId);
 
   // Async push the messages to the clients
-  for await (const client of clientsToPublishTo) {
+  for (const client of clientsToPublishTo) {
     // Sending data to all the clients
     try {
       client.res.write(`data: ${JSON.stringify(data)}\n\n`);

@@ -15,6 +15,17 @@ export interface IDBLocation extends IDBTimestamps {
   user_role?: UserRoles;
 }
 
+export interface ILocationAddArgs {
+  name: string;
+  description?: string;
+}
+
+export interface ILocationUpdateArgs {
+  id: string;
+  name?: string;
+  description?: string;
+}
+
 export interface ILocationProduct extends ITimestamps {
   id: string;
   product?: { id: string; name: string };
