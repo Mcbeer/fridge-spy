@@ -1,10 +1,13 @@
 import { FieldHookConfig, useField } from "formik";
 import { useObservableState } from "observable-hooks";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { BehaviorSubject, combineLatestWith, map, Observable } from "rxjs";
+import { useOnClickOutside } from "usehooks-ts";
+import "./Search.scss";
 
 interface FilteredItem {
   id: string;
+  name: string;
   [key: string]: any;
 }
 
@@ -20,21 +23,23 @@ export const Search = ({
   filterKey,
   ...props
 }: SearchProps & FieldHookConfig<string>) => {
+  const clickRef = useRef(null);
   const [field, , helpers] = useField(props);
   const search$ = useMemo(() => new BehaviorSubject(""), []);
   const [hasFocus, setHasFocus] = useState(false);
+  useOnClickOutside(clickRef, () => {
+    setHasFocus(false);
+  });
 
   const [filteredItems] = useObservableState(
     () =>
       search$.pipe(
         combineLatestWith(searchable),
         map(([search, items]) => {
-          console.log({ items, search });
           if (search === "") {
             return items;
           }
           return items.filter((item) => {
-            console.log(item[filterKey]);
             return item[filterKey].toLowerCase().includes(search.toLowerCase());
           });
         })
@@ -42,20 +47,15 @@ export const Search = ({
     []
   );
 
-  const handleBlurOrClick = (itemId: string) => {
-    console.log("click", itemId);
-    helpers.setValue(itemId);
-    search$.next(itemId);
+  const handleBlurOrClick = (itemName: string) => {
+    helpers.setValue(itemName);
+    search$.next(itemName);
+    setHasFocus(false);
   };
 
-  console.log({ filteredItems });
-
   return (
-    <div className="grid grid-cols-[minmax(0,_10ch)_minmax(0,_1fr)] py-2 relative">
-      <label
-        className="flex items-center whitespace-nowrap overflow-hidden overflow-ellipsis w-[10ch]"
-        htmlFor={props.name}
-      >
+    <div className="Search" ref={clickRef}>
+      <label className="Search__label" htmlFor={props.name}>
         {label}
       </label>
       <input
@@ -63,18 +63,17 @@ export const Search = ({
         onChange={(e) => {
           search$.next(e.target.value);
         }}
-        onBlur={() => setHasFocus(false)}
-        onFocus={() => setHasFocus(true)}
+        onClick={() => setHasFocus(true)}
         value={search$.value}
-        className="border-0 outline-none p-2 text-base focus:border-slate-700 border-b-2"
+        className="Search__input"
       />
-      <ul className="absolute top-9 flex flex-col left-0 right-0 ml-[10ch] bg-white rounded-md rounded-t-none z-10 shadow-md overflow-hidden">
+      <ul className="Search__results">
         {hasFocus &&
           filteredItems.map((item) => (
             <li
-              className="p-1 hover:bg-teal-700 hover:text-white transition-colors cursor-pointer"
+              className="Search__results-item"
               key={item.id}
-              onClick={() => handleBlurOrClick(item.id)}
+              onClick={() => handleBlurOrClick(item.name)}
             >
               {item[filterKey]}
             </li>

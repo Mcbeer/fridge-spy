@@ -12,7 +12,7 @@ export const ProductProvider: React.FunctionComponent = ({ children }) => {
     products$.next([
       {
         id: "1",
-        name: "Product 1",
+        name: "Romkugler",
         barcode: "",
         imageUrl: "",
         addedBy: {
@@ -25,7 +25,7 @@ export const ProductProvider: React.FunctionComponent = ({ children }) => {
       },
       {
         id: "2",
-        name: "Product 2",
+        name: "Græsk Yoghurt",
         barcode: "",
         imageUrl: "",
         addedBy: {
@@ -33,6 +33,23 @@ export const ProductProvider: React.FunctionComponent = ({ children }) => {
           name: "User 1",
           email: "something",
         },
+        createdAt: "",
+        updatedAt: "",
+      },
+    ]);
+
+    productTypes$.next([
+      {
+        id: "1",
+        name: "Yoghurt",
+        description: "Alle varianter af yoghurt",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
+        id: "2",
+        name: "Brie",
+        description: "Alle varianter af brie",
         createdAt: "",
         updatedAt: "",
       },

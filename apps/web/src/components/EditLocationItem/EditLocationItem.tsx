@@ -11,7 +11,7 @@ import { Search } from "../Search/Search";
 import "./EditLocationItem.scss";
 
 export const EditLocationItem = () => {
-  const { products$ } = useContext(ProductContext);
+  const { products$, productTypes$ } = useContext(ProductContext);
   const { id, productId } = useParams<string>();
   const navigate = useNavigate();
 
@@ -20,11 +20,8 @@ export const EditLocationItem = () => {
   };
 
   const initalItem = {
-    productId: "",
-    productType: {
-      id: "",
-      name: "",
-    },
+    productName: "",
+    productTypeName: "",
     amount: 1,
     maximumAmount: 10,
     minimumAmount: 1,
@@ -39,12 +36,17 @@ export const EditLocationItem = () => {
           {({ handleSubmit }) => (
             <Form className="EditLocationItem__form">
               <Search
-                name="productId"
+                name="productName"
                 label="Product"
                 searchable={products$}
                 filterKey="name"
               />
-              <FormInput name="productType.id" label="Product type" />
+              <Search
+                name="productTypeName"
+                label="Product type"
+                searchable={productTypes$}
+                filterKey="name"
+              />
               <FormInput name="amount" label="Amount" />
               <FormInput name="maximumAmount" label="Max" />
               <FormInput name="minimumAmount" label="Min" />

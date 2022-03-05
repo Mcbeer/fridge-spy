@@ -10,7 +10,7 @@ export const FormInput = ({
   label,
   ...props
 }: FormInputProps & FieldHookConfig<string>) => {
-  const [field, meta] = useField(props);
+  const [field] = useField(props);
   return (
     <div className="FormInput">
       <label className="FormInput__label" htmlFor={props.name}>

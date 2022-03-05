@@ -32,7 +32,10 @@ export const locationsItems$ = new BehaviorSubject<ILocationProduct[]>([
   },
 ]);
 
-const almostExpiredItems$ = (locationId: string) =>
+/** Returns the first 8 items to expire on the location */
+const almostExpiredItems$ = (
+  locationId: string
+): Observable<ILocationProduct[]> =>
   locationsItems$.pipe(
     map((items) => items.filter((item) => item.locationId === locationId)),
     map((items) => {
@@ -40,9 +43,22 @@ const almostExpiredItems$ = (locationId: string) =>
     })
   );
 
+/** Returns items only on a given location */
+const itemsOnLocation$ = (locationId: string): Observable<ILocationProduct[]> =>
+  locationsItems$.pipe(
+    map((items) => items.filter((item) => item.locationId === locationId))
+  );
+
+const locationById$ = (locationId: string) =>
+  locations$.pipe(
+    map((locations) => locations.find((location) => location.id === locationId))
+  );
+
 export const LocationContext = createContext({
   locations$,
   locationsItems$,
+  locationById$,
+  itemsOnLocation$,
   almostExpiredItems$,
 });
 
@@ -56,6 +72,8 @@ export const LocationProvider: React.FunctionComponent = ({ children }) => {
       value={{
         locations$,
         locationsItems$,
+        locationById$,
+        itemsOnLocation$,
         almostExpiredItems$,
       }}
     >

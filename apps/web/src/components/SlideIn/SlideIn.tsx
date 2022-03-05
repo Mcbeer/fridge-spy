@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { FunctionComponent, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useClickOutside } from "../../hooks/useClickOutside";
+import { useOnClickOutside } from "usehooks-ts";
 
 export const SlideIn: FunctionComponent = ({ children }) => {
   const navigate = useNavigate();
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
 
-  useClickOutside(ref, () => navigate(-1));
+  useOnClickOutside(ref, () => navigate(-1));
 
   return (
     <motion.div
