@@ -11,7 +11,7 @@
     "jest:watch": "jest --watch",
     "lint": "eslint",
     "prettier": "prettier --check 'src/**/*.ts'",
-    "build": "tsc"
+    "build": "tsc -b"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

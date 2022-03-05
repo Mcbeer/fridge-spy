@@ -11,7 +11,7 @@
     "jest:watch": "jest --watch",
     "lint": "eslint",
     "prettier": "prettier --check 'src/**/*.ts'",
-    "build": "tsc"
+    "build": "tsc -b"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
