@@ -1,5 +1,5 @@
-import { v4 as uuid } from "uuid";
+import { randomUUID } from 'crypto';
 
-export const getUuid = (): string => {
-  return uuid();
+export const getUuid = () => {
+  return randomUUID();
 };
