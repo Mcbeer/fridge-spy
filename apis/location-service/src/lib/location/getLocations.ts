@@ -9,7 +9,13 @@ export const getLocations = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const userId = req.user.id;
+  const userId = req?.user?.id;
+
+  if (!userId) {
+    locationLogger.error("No user id provided");
+    respond(res).error(new Error("No user id provided"));
+    return;
+  }
 
   // Fetch locations where the user has access
   const [queryLocationsError, locations] = await perhaps(

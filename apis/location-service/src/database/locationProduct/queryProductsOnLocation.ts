@@ -4,7 +4,7 @@ import { DatabaseTables } from "../dbTables";
 
 export const queryProductsOnLocation = async (
   locationId: string
-): Promise<IDBLocationProduct[]> => {
+): Promise<(IDBLocationProduct & { amount: number })[]> => {
   return database
     .select("LP.*")
     .count(`LPE.id as amount`)

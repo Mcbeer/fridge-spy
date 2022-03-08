@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express, json, Router, urlencoded } from "express";
 import { locationRouter } from "../routes/location.router";
+import { locationProductRouter } from "../routes/locationProducts.router";
 
 export const setupExpressApp = (): Express => {
   const app = express();
@@ -12,8 +13,7 @@ export const setupExpressApp = (): Express => {
 
   // Base routes declaration
   const locationBasePath = "/location";
-  const productBasePath = "/product";
-  // const productTypeBasePath = "/producttype";
+  const locationProductBasePath = "/locationproducts";
 
   // We setup middlewares here...
   app.use(cookieParser());
@@ -28,8 +28,15 @@ export const setupExpressApp = (): Express => {
 
   app.use(basePath, baseRouter);
 
+  console.log(basePath, locationProductBasePath);
+
   // We setup routes here...
   baseRouter.use(locationBasePath, authMiddleware, locationRouter);
+  baseRouter.use(
+    locationProductBasePath,
+    authMiddleware,
+    locationProductRouter
+  );
 
   return app;
 };

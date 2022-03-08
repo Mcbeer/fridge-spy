@@ -23,7 +23,7 @@ export const locationsItems$ = new BehaviorSubject<ILocationProduct[]>([
       name: "Test Product",
     },
     productType: undefined,
-    locationId: "3d081987-efa5-4da7-8c0f-75d1853b6a6d",
+    locationId: "ae671d29-e15d-4a19-9e93-29c50d3cec48",
     amount: 4,
     createdAt: "",
     updatedAt: "",

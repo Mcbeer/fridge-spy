@@ -1,0 +1,15 @@
+.Navbar {
+  background-color: var(--teal-700);
+  border-radius: 1rem;
+  padding-block: 4rem;
+  margin: 1rem;
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-evenly;
+    height: 100%;
+  }
+}

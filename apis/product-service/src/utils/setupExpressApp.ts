@@ -17,7 +17,7 @@ declare global {
 
 export const setupExpressApp = (): Express => {
   const app = express();
-  const apiVersion = "v" + process.env.API_VERSION;
+  const apiVersion = "v" + (process.env.API_VERSION || 1);
   const basePath = `/api/${apiVersion}`;
   const baseRouter = Router();
 
@@ -27,6 +27,8 @@ export const setupExpressApp = (): Express => {
   const productTypeBasePath = "/producttype";
 
   const whiteList = ["http://localhost:8000", "http://localhost:8001"];
+
+  console.log(basePath, productBasePath);
 
   // We setup middlewares here...
   app.use(cookieParser());

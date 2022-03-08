@@ -40,16 +40,16 @@ export const ProductProvider: React.FunctionComponent = ({ children }) => {
 
     productTypes$.next([
       {
-        id: "1",
-        name: "Yoghurt",
-        description: "Alle varianter af yoghurt",
+        id: "0ceaa59d-6f52-4eea-8f69-45755d5ea39c",
+        name: "Pasta",
+        description: "Alle varianter af pasta",
         createdAt: "",
         updatedAt: "",
       },
       {
-        id: "2",
-        name: "Brie",
-        description: "Alle varianter af brie",
+        id: "7b3249b7-67e0-4643-93da-a67dc048ce88",
+        name: "Sodavand",
+        description: "Alle varianter af sodavand",
         createdAt: "",
         updatedAt: "",
       },

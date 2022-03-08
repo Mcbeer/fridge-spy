@@ -1,18 +1,17 @@
 import { ILocationProduct } from "@fridgespy/types";
-import { NavigateFunction } from "react-router-dom";
+import { authorizedFetch } from "@fridgespy/utils";
 
-export const addLocationProduct = (
-  args: Partial<ILocationProduct>,
-  navigate: NavigateFunction
-) => {
+export const addLocationProduct = async (
+  args: Partial<ILocationProduct>
+): Promise<ILocationProduct> => {
   console.log("Adding product to location", args);
-  const { product, productType, amount, maximumAmount, minimumAmount } = args;
 
   // Send a post request to the service, adding the new item
-
-  // On the return, add the product to the list of products we have in the store
-
-  // locationsItems$.next([...locationsItems$.value, addedItem])
-
-  // navigate(-1);
+  return authorizedFetch(
+    `http://fridgespy.local:8002/api/v1/locationproducts`,
+    {
+      body: JSON.stringify(args),
+      method: "POST",
+    }
+  );
 };

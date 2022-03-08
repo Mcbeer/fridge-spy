@@ -1,7 +1,9 @@
 import { ILocationProduct } from "@fridgespy/types";
 import { Form, Formik } from "formik";
+import { useObservableState } from "observable-hooks";
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { LocationContext } from "../../context/LocationContext";
 import { ProductContext } from "../../context/ProductContext";
 import { locationProductActions } from "../../services/locationProducts";
 import { Button } from "../Button/Button";
@@ -10,13 +12,61 @@ import { PageTitle } from "../PageTitle/PageTitle";
 import { Search } from "../Search/Search";
 import "./EditLocationItem.scss";
 
+interface IEditLocationItemFormArgs {
+  productName: string;
+  productTypeName: string;
+  amount: number;
+  maximumAmount: number;
+  minimumAmount: number;
+}
+
 export const EditLocationItem = () => {
   const { products$, productTypes$ } = useContext(ProductContext);
+  const { locationsItems$ } = useContext(LocationContext);
   const { id, productId } = useParams<string>();
   const navigate = useNavigate();
+  const products = useObservableState(products$, []);
+  const productTypes = useObservableState(productTypes$, []);
 
-  const addLocationItemHandler = (values: Partial<ILocationProduct>) => {
-    locationProductActions.addLocationProduct(values, navigate);
+  const addLocationItemHandler = (values: IEditLocationItemFormArgs) => {
+    const locationItem: Partial<ILocationProduct> = {
+      locationId: id,
+      product: {
+        id: products.find((prod) => prod.name === values.productName)?.id || "",
+        name: values.productName,
+      },
+      productType: {
+        id:
+          productTypes.find((prod) => prod.name === values.productTypeName)
+            ?.id || "",
+        name: values.productTypeName,
+      },
+      amount:
+        typeof values.amount === "string"
+          ? parseInt(values.amount, 10)
+          : values.amount,
+      maximumAmount:
+        typeof values.maximumAmount === "string"
+          ? parseInt(values.maximumAmount, 10)
+          : values.maximumAmount,
+      minimumAmount:
+        typeof values.minimumAmount === "string"
+          ? parseInt(values.minimumAmount, 10)
+          : values.minimumAmount,
+    };
+
+    console.log("Adding product", locationItem);
+
+    locationProductActions
+      .addLocationProduct(locationItem)
+      .then((createdLocationItem) => {
+        console.log("Added item:", createdLocationItem);
+        locationsItems$.next([...locationsItems$.value, createdLocationItem]);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const initalItem = {
@@ -26,6 +76,8 @@ export const EditLocationItem = () => {
     maximumAmount: 10,
     minimumAmount: 1,
   };
+
+  console.log(id, productId);
 
   return (
     <div>

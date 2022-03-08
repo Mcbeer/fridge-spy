@@ -7,8 +7,8 @@ import {
 } from "react-icons/ai";
 
 export const Navbar = () => (
-  <nav className="bg-teal-700 rounded-2xl py-16 m-4">
-    <ul className="list-none flex flex-col gap-4 justify-evenly h-full">
+  <nav className="Navbar">
+    <ul className="Navbar__list">
       <NavItem icon={<AiOutlineDashboard size="2rem" />} linkTo="/overview">
         Overblik
       </NavItem>

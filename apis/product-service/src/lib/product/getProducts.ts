@@ -8,6 +8,8 @@ export const getProducts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  console.log("Getting all products");
+
   const { products } = getRequestQueryParams<{ products: string }>(req);
 
   if (!products) {

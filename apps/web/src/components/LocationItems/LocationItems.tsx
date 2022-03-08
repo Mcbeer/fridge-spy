@@ -1,6 +1,7 @@
 import { ILocationProduct } from "@fridgespy/types";
+import { authorizedFetch } from "@fridgespy/utils";
 import { useObservablePickState, useObservableState } from "observable-hooks";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { LocationContext } from "../../context/LocationContext";
@@ -10,9 +11,18 @@ import { LocationItem } from "../LocationItem/LocationItem";
 export const LocationItems = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { itemsOnLocation$ } = useContext(LocationContext);
+  const { itemsOnLocation$, locationsItems$ } = useContext(LocationContext);
 
   const [items] = useObservableState(() => itemsOnLocation$(id!), []);
+
+  useEffect(() => {
+    authorizedFetch(
+      `http://fridgespy.local:8002/api/v1/locationproducts/${id}`,
+      {}
+    ).then((products: ILocationProduct[]) => {
+      locationsItems$.next(products);
+    });
+  }, []);
 
   return (
     <section>
