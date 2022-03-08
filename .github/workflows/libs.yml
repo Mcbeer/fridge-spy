@@ -35,7 +35,12 @@ jobs:
       - name: Run build script
         run: npm run build -w libs/dates
         env:
-          CI: true     
+          CI: true
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
   
   # This workflow contains a single job called "build"
   build-express-helpers:
@@ -58,7 +63,12 @@ jobs:
       - name: Run build script
         run: npm run build -w libs/express-helpers
         env:
-          CI: true     
+          CI: true
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist 
  
   # This workflow contains a single job called "build"
   build-logging:
@@ -80,7 +90,12 @@ jobs:
       - name: Run build script
         run: npm run build -w libs/logging
         env:
-          CI: true     
+          CI: true
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
   
   # This workflow contains a single job called "build"
   build-types:
@@ -102,7 +117,12 @@ jobs:
       - name: Run build script
         run: npm run build -w libs/types
         env:
-          CI: true     
+          CI: true
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
   
   # This workflow contains a single job called "build"
   build-utils:
@@ -125,7 +145,12 @@ jobs:
       - name: Run build script
         run: npm run build -w libs/utils
         env:
-          CI: true     
+          CI: true
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
 
   # This workflow contains a single job called "build"
   build-validation:
@@ -147,4 +172,9 @@ jobs:
       - name: Run build script
         run: npm run build -w libs/validation
         env:
-          CI: true     
+          CI: true
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
