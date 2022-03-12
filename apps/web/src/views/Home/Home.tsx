@@ -6,12 +6,18 @@ import { Card } from "../../components/Card/Card";
 import { LocationCard } from "../../components/LocationCard/LocationCard";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { LocationContext } from "../../context/LocationContext";
+import { fetchLocations } from "../../services/location";
 import "./Home.scss";
 
 export const Home = () => {
   const navigate = useNavigate();
   const { locations$ } = useContext(LocationContext);
   const locations = useObservableGetState(locations$, []);
+
+  useEffect(() => {
+    // Fetch locations for the user
+    fetchLocations(locations$);
+  }, []);
 
   const handleAddLocation = useCallback(() => {
     navigate("/location/new");
@@ -20,7 +26,6 @@ export const Home = () => {
   return (
     <section className="Home">
       <PageTitle>Home</PageTitle>
-
       <ul className="Home__list">
         <li className="Home__list-item" onClick={handleAddLocation}>
           <Card>

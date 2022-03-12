@@ -3,6 +3,7 @@ import React from "react";
 import { ImageTooltip } from "../ImageTooltip/ImageTooltip";
 import { LocationItemActions } from "./LocationItemActions/LocationItemActions";
 import { LocationItemAmount } from "./LocationItemAmount/LocationItemAmount";
+import "./LocationItem.scss";
 
 export const LocationItem = ({
   id,

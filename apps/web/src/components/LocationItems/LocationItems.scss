@@ -1,0 +1,25 @@
+.LocationItems {
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  &__no-items {
+    text-align: center;
+  }
+}

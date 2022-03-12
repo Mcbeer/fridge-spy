@@ -7,7 +7,6 @@ import { appCache, appEvents } from "../..";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { updateProductById } from "../../database/product/updateProductById";
 import { queryProductTypeById } from "../../database/product_type/queryProductTypeById";
-import { getUserById } from "../../utils/getUserById";
 import { formatDBProductToProduct } from "./formatProduct";
 
 interface IUpdateProductArgs {
@@ -92,25 +91,10 @@ export const updateProduct = async (
     return;
   }
 
-  const [queryAddedByUserError, addedByUser] = await perhaps(
-    getUserById(updatedProduct.added_by)
-  );
-
-  if (queryAddedByUserError) {
-    respond<Error>(res).error(queryAddedByUserError);
-    return;
-  }
-
-  if (!addedByUser) {
-    respond<Error>(res).error(new Error("Could not fetch user..."));
-    return;
-  }
-
   const formattedProduct = formatDBProductToProduct({
     dbProduct: updatedProduct,
     brand,
     productType,
-    addedByUser,
   });
 
   // Set the product in the cache

@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist"
+  },
+  "include": [
+    "./src",
+  ],
+  "exclude": [
+    "./**/*.test.ts"
+  ],
+  "references": [
+    {
+      "path": "../../libs/logging/tsconfig.json",
+    },
+    {
+      "path": "../../libs/types/tsconfig.json"
+    },
+    {
+      "path": "../../libs/utils/tsconfig.json"
+    }
+  ]
+}

@@ -28,8 +28,6 @@ export const setupExpressApp = (): Express => {
 
   const whiteList = ["http://localhost:8000", "http://localhost:8001"];
 
-  console.log(basePath, productBasePath);
-
   // We setup middlewares here...
   app.use(cookieParser());
   app.use(

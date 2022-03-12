@@ -1,4 +1,4 @@
-import { ILocation, IUser } from "@fridgespy/types";
+import { IUser } from "@fridgespy/types";
 import React, { createContext } from "react";
 import { BehaviorSubject } from "rxjs";
 

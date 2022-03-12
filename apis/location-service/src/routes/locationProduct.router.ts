@@ -7,9 +7,7 @@ const router = Router();
 // Get all locations for the user
 router.get("/:locationId", getLocationProductsByLocationId);
 
+// Adds a new product
 router.post("/", addLocationProduct);
-
-// Delete a location
-// router.delete("/:id", removeLocation);
 
 export { router as locationProductRouter };

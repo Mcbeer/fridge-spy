@@ -5,6 +5,7 @@ import {
   AiOutlineDashboard,
   AiOutlineOrderedList,
 } from "react-icons/ai";
+import "./Navbar.scss";
 
 export const Navbar = () => (
   <nav className="Navbar">

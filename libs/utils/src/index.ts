@@ -13,6 +13,7 @@ export const perhaps = async <T>(
   }
 };
 
+/** A wrapper around fetch, to ensure correct headers and credentials are set */
 export const authorizedFetch = (
   path: string,
   options: RequestInit | undefined
@@ -33,6 +34,15 @@ export const authorizedFetch = (
 
     return response.json();
   });
+
+export const toInt = (input: string | number) => {
+  if (typeof input === "string") {
+    const asInt = parseInt(input, 10);
+    return isNaN(asInt) ? 0 : asInt;
+  }
+
+  return input;
+};
 
 export * from "./formatArrayToObject";
 export * from "./redisHelpers";

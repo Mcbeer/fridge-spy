@@ -1,0 +1,12 @@
+.SlideIn {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 2;
+  box-shadow: var(--shadow);
+  width: 60%;
+  opacity: 1;
+  padding: 2rem 1rem;
+}

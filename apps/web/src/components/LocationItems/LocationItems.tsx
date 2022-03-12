@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { LocationContext } from "../../context/LocationContext";
 import { Button } from "../Button/Button";
 import { LocationItem } from "../LocationItem/LocationItem";
+import "./LocationItems.scss";
 
 export const LocationItems = () => {
   const { id } = useParams();
@@ -26,8 +27,8 @@ export const LocationItems = () => {
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center justify-evenly">
+      <div className="LocationItems__top">
+        <div className="LocationItems__actions">
           <Button
             onClick={() => navigate("edit/new")}
             label="Add new"
@@ -37,14 +38,14 @@ export const LocationItems = () => {
         </div>
       </div>
       {items.length > 0 && (
-        <ul className="flex flex-col justify-center gap-2">
+        <ul className="LocationItems__list">
           {items.map((product: ILocationProduct) => {
             return <LocationItem key={product.id} {...product} />;
           })}
         </ul>
       )}
       {items.length === 0 && (
-        <div className="text-center">
+        <div className="LocationItems__no-items">
           We found no items on this location, why not add some!
         </div>
       )}

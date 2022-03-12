@@ -9,35 +9,6 @@ export const ProductContext = createContext({ products$, productTypes$ });
 
 export const ProductProvider: React.FunctionComponent = ({ children }) => {
   useEffect(() => {
-    products$.next([
-      {
-        id: "1",
-        name: "Romkugler",
-        barcode: "",
-        imageUrl: "",
-        addedBy: {
-          id: "1",
-          name: "User 1",
-          email: "something",
-        },
-        createdAt: "",
-        updatedAt: "",
-      },
-      {
-        id: "2",
-        name: "Græsk Yoghurt",
-        barcode: "",
-        imageUrl: "",
-        addedBy: {
-          id: "1",
-          name: "User 1",
-          email: "something",
-        },
-        createdAt: "",
-        updatedAt: "",
-      },
-    ]);
-
     productTypes$.next([
       {
         id: "0ceaa59d-6f52-4eea-8f69-45755d5ea39c",

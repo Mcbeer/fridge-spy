@@ -24,8 +24,6 @@ export interface IAddLocationProduct {
 export const addLocationProduct = async (req: Request, res: Response) => {
   const body = getRequestBody<IAddLocationProduct>(req);
 
-  console.log("Adding product to location", body);
-
   const [insertProductError, insertedProduct] = await perhaps(
     insertLocationProduct(body)
   );

@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import React, {
   FunctionComponent,
   useContext,
@@ -11,10 +12,11 @@ import {
   Routes,
 } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import { map } from "rxjs";
 import { EditLocationItem } from "./components/EditLocationItem/EditLocationItem";
 import { LocationEdit } from "./components/LocationEdit/LocationEdit";
 import { SlideIn } from "./components/SlideIn/SlideIn";
-import { LocationProvider } from "./context/LocationContext";
+import { LocationContext, LocationProvider } from "./context/LocationContext";
 import { ProductProvider } from "./context/ProductContext";
 import { UserContext, UserProvider } from "./context/UserContext";
 import { getUserSelf } from "./services/user/getUserSelf";
@@ -94,38 +96,40 @@ export const App = () => {
                   }
                 />
               </Routes>
-              <Routes>
-                <Route
-                  path="location/:id/edit/:productId"
-                  element={
-                    <SlideIn>
-                      <AuthorizedRoute>
-                        <EditLocationItem />
-                      </AuthorizedRoute>
-                    </SlideIn>
-                  }
-                />
-                <Route
-                  path="location/:id/edit/new"
-                  element={
-                    <SlideIn>
-                      <AuthorizedRoute>
-                        <EditLocationItem />
-                      </AuthorizedRoute>
-                    </SlideIn>
-                  }
-                />
-                <Route
-                  path="/location/new"
-                  element={
-                    <SlideIn>
-                      <AuthorizedRoute>
-                        <LocationEdit />
-                      </AuthorizedRoute>
-                    </SlideIn>
-                  }
-                />
-              </Routes>
+              <AnimatePresence>
+                <Routes>
+                  <Route
+                    path="location/:id/edit/:productId"
+                    element={
+                      <SlideIn>
+                        <AuthorizedRoute>
+                          <EditLocationItem />
+                        </AuthorizedRoute>
+                      </SlideIn>
+                    }
+                  />
+                  <Route
+                    path="location/:id/edit/new"
+                    element={
+                      <SlideIn>
+                        <AuthorizedRoute>
+                          <EditLocationItem />
+                        </AuthorizedRoute>
+                      </SlideIn>
+                    }
+                  />
+                  <Route
+                    path="/location/new"
+                    element={
+                      <SlideIn>
+                        <AuthorizedRoute>
+                          <LocationEdit />
+                        </AuthorizedRoute>
+                      </SlideIn>
+                    }
+                  />
+                </Routes>
+              </AnimatePresence>
             </LocationProvider>
           </ProductProvider>
         </UserProvider>
@@ -146,6 +150,10 @@ const AuthorizedRoute: FunctionComponent = ({ children }) => {
           user$.next(user);
           authorized$.next(true);
           setLoading(false);
+        })
+        .then(() => {
+          // TODO: implement SSE
+          // setupSSE();
         })
         .catch(() => {
           setLoading(false);

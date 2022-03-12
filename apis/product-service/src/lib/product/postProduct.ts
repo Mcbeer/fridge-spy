@@ -40,7 +40,7 @@ export const postProduct = async (
   }
 
   // Add the requester id to the new product, to fill out the "added_by" field
-  const addedById = req.user.id;
+  const addedByName = req.user.name;
 
   // Generate uuid for the product
   const productId = getUuid();
@@ -52,7 +52,7 @@ export const postProduct = async (
     barcode: body.barcode,
     brand_id: body.brandId,
     product_type_id: body.productTypeId,
-    added_by: addedById,
+    added_by: addedByName,
     image_url: body.image_url,
   };
 

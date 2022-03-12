@@ -3,13 +3,12 @@ import { perhaps } from "@fridgespy/utils";
 import { Request, Response } from "express";
 import { queryAllProducts } from "../../database/product/queryAllProducts";
 import { queryProductWhereIn } from "../../database/product/queryProductWhereIn";
+import { formatQueriedDBProductToProduct } from "./formatProduct";
 
 export const getProducts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log("Getting all products");
-
   const { products } = getRequestQueryParams<{ products: string }>(req);
 
   if (!products) {
@@ -25,11 +24,12 @@ export const getProducts = async (
       return;
     }
 
-    // const formattedProducts = allProducts.map(formatDBProductToProduct);
+    const formattedProducts = allProducts.map(formatQueriedDBProductToProduct);
 
-    respond(res).success(allProducts);
+    respond(res).success(formattedProducts);
   } else {
-    const productIds = products.split(",");
+    const productIds = JSON.parse(products);
+    console.table(productIds);
 
     const [queryError, queriedProducts] = await perhaps(
       queryProductWhereIn(productIds)

@@ -1,4 +1,5 @@
-import { locationLogger } from "@fridgespy/logging";
+import { getRequestQueryParams } from "@fridgespy/express-helpers";
+import { pushLogger } from "@fridgespy/logging";
 import { Request, Response } from "express";
 
 export interface SSEClient {
@@ -15,7 +16,7 @@ const clients = () => {
   };
 
   const remove = (id: string): void => {
-    subscribers = subscribers.filter((client) => client.id !== id);
+    subscribers = subscribers.filter((client) => !client.id.includes(id));
   };
 
   const getById = (id: string): SSEClient[] => {
@@ -31,6 +32,8 @@ const clients = () => {
 };
 
 export const setupSSE = (req: Request, res: Response) => {
+  const { locations } = getRequestQueryParams<{ locations: string[] }>(req);
+
   // Set the headers needed for SSE
   const headers = {
     "Content-Type": "text/event-stream",
@@ -48,7 +51,7 @@ export const setupSSE = (req: Request, res: Response) => {
   res.writeHead(200, headers);
 
   // The client id is the current date, and the user id combined, to facilitate multiple subscriptions from multiple devices
-  const clientId = Date.now() + req.user.id;
+  const clientId = Date.now() + req.user.id + locations;
 
   // Create the subscriber object
   const newSubscriber = {
@@ -79,7 +82,7 @@ export const publishClientEvent = async <T>(
     try {
       client.res.write(`data: ${JSON.stringify(data)}\n\n`);
     } catch (err) {
-      locationLogger.error(err);
+      pushLogger.error(err);
       continue;
     }
   }

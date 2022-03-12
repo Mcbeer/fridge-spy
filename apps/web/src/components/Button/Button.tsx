@@ -8,6 +8,7 @@ interface ButtonProps {
   icon?: ReactNode;
   iconPosition?: "right" | "left";
   type?: "submit" | "button";
+  disabled?: boolean;
 }
 
 export const Button = ({
@@ -17,11 +18,17 @@ export const Button = ({
   icon,
   iconPosition = "right",
   type = "button",
+  disabled = false,
 }: ButtonProps) => {
   const themeClasses = ["Button"];
 
   return (
-    <button className={themeClasses.join(" ")} onClick={onClick} type={type}>
+    <button
+      disabled={disabled}
+      className={themeClasses.join(" ")}
+      onClick={onClick}
+      type={type}
+    >
       {iconPosition === "left" && icon}
       <label
         className={

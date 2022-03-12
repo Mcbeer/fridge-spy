@@ -7,7 +7,6 @@ import { appCache } from "../..";
 import { queryBrandById } from "../../database/brand/queryBrandById";
 import { queryProductById } from "../../database/product/queryProductById";
 import { queryProductTypeById } from "../../database/product_type/queryProductTypeById";
-import { getUserById } from "../../utils/getUserById";
 import { formatDBProductToProduct } from "./formatProduct";
 
 export const getProductById = async (
@@ -60,25 +59,10 @@ export const getProductById = async (
     return;
   }
 
-  const [queryAddedByUserError, addedByUser] = await perhaps(
-    getUserById(product.added_by)
-  );
-
-  if (queryAddedByUserError) {
-    respond<Error>(res).error(queryAddedByUserError);
-    return;
-  }
-
-  if (!addedByUser) {
-    respond<Error>(res).error(new Error("Could not fetch user..."));
-    return;
-  }
-
   const formattedProduct = formatDBProductToProduct({
     dbProduct: product,
     brand,
     productType,
-    addedByUser,
   });
 
   if (!cacheProduct) {

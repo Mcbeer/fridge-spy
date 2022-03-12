@@ -1,11 +1,14 @@
 import { ILocationProduct } from "@fridgespy/types";
+import { perhaps, toInt } from "@fridgespy/utils";
 import { Form, Formik } from "formik";
+import { get } from "lodash";
 import { useObservableState } from "observable-hooks";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LocationContext } from "../../context/LocationContext";
 import { ProductContext } from "../../context/ProductContext";
-import { locationProductActions } from "../../services/locationProducts";
+import { addLocationProduct } from "../../services/location";
+import { fetchProducts } from "../../services/product";
 import { Button } from "../Button/Button";
 import { FormInput } from "../FormInput/FormInput";
 import { PageTitle } from "../PageTitle/PageTitle";
@@ -28,7 +31,11 @@ export const EditLocationItem = () => {
   const products = useObservableState(products$, []);
   const productTypes = useObservableState(productTypes$, []);
 
-  const addLocationItemHandler = (values: IEditLocationItemFormArgs) => {
+  useEffect(() => {
+    fetchProducts([], products$).then();
+  }, []);
+
+  const addLocationItemHandler = async (values: IEditLocationItemFormArgs) => {
     const locationItem: Partial<ILocationProduct> = {
       locationId: id,
       product: {
@@ -41,32 +48,21 @@ export const EditLocationItem = () => {
             ?.id || "",
         name: values.productTypeName,
       },
-      amount:
-        typeof values.amount === "string"
-          ? parseInt(values.amount, 10)
-          : values.amount,
-      maximumAmount:
-        typeof values.maximumAmount === "string"
-          ? parseInt(values.maximumAmount, 10)
-          : values.maximumAmount,
-      minimumAmount:
-        typeof values.minimumAmount === "string"
-          ? parseInt(values.minimumAmount, 10)
-          : values.minimumAmount,
+      amount: toInt(values.amount),
+      maximumAmount: toInt(values.maximumAmount),
+      minimumAmount: toInt(values.minimumAmount),
     };
 
-    console.log("Adding product", locationItem);
+    const [addError] = await perhaps(
+      addLocationProduct(locationItem, locationsItems$)
+    );
 
-    locationProductActions
-      .addLocationProduct(locationItem)
-      .then((createdLocationItem) => {
-        console.log("Added item:", createdLocationItem);
-        locationsItems$.next([...locationsItems$.value, createdLocationItem]);
-        navigate(-1);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    if (addError) {
+      console.error(addError);
+      return;
+    }
+
+    navigate(-1);
   };
 
   const initalItem = {
@@ -76,8 +72,6 @@ export const EditLocationItem = () => {
     maximumAmount: 10,
     minimumAmount: 1,
   };
-
-  console.log(id, productId);
 
   return (
     <div>

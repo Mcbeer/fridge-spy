@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { FormInput } from "../FormInput/FormInput";
 import { PageTitle } from "../PageTitle/PageTitle";
-import { addLocation } from "../../context/LocationContext";
 import "./LocationEdit.scss";
+import { addLocation } from "../../services/location";
+import { perhaps } from "@fridgespy/utils";
+import { LocationContext } from "../../context/LocationContext";
 
 export const LocationEdit = () => {
+  const { locations$ } = useContext(LocationContext);
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
 
   const addLocationHandler = async ({
     name,
@@ -23,7 +25,15 @@ export const LocationEdit = () => {
       return;
     }
     if (!id) {
-      await addLocation({ name, description });
+      const [addError] = await perhaps(
+        addLocation({ name, description, locations$ })
+      );
+
+      if (addError) {
+        console.error(addError);
+        return;
+      }
+
       navigate(-1);
     }
   };
@@ -40,13 +50,18 @@ export const LocationEdit = () => {
           }}
           onSubmit={addLocationHandler}
         >
-          {({ handleSubmit }) => (
+          {({ handleSubmit, isValid }) => (
             <Form className="LocationEdit__form">
               <FormInput name="name" label="Name" />
               <FormInput name="description" label="Description" />
 
               <div className="LocationEdit__form-actions">
-                <Button label="Add" type="submit" onClick={handleSubmit} />
+                <Button
+                  label="Add"
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={!isValid}
+                />
               </div>
             </Form>
           )}
