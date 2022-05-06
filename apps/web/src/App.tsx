@@ -95,6 +95,7 @@ export const App = () => {
                     </AuthorizedRoute>
                   }
                 />
+                <Route path="*" element={null} />
               </Routes>
               <AnimatePresence>
                 <Routes>
@@ -128,6 +129,7 @@ export const App = () => {
                       </SlideIn>
                     }
                   />
+                  <Route path="*" element={null} />
                 </Routes>
               </AnimatePresence>
             </LocationProvider>

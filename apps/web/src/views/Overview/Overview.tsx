@@ -1,9 +1,10 @@
 import React from "react";
+import { PageTitle } from "../../components/PageTitle/PageTitle";
 
 export const Overview = () => {
   return (
     <div>
-      <h1>Overview</h1>
+      <PageTitle>Overview</PageTitle>
     </div>
   );
 };

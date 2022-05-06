@@ -2,7 +2,9 @@
   &__top {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    gap: 1rem;
     margin-bottom: 2rem;
   }
 

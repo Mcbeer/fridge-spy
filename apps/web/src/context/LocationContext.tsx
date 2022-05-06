@@ -33,12 +33,28 @@ const locationById$ = (locationId: string) =>
     map((locations) => locations.find((location) => location.id === locationId))
   );
 
+const updateLocationItemAmount = (id: string, newAmount: number) => {
+  const updatedItems = locationsItems$.value.map((product) => {
+    if (product.id === id) {
+      console.log("Updating item...");
+      return {
+        ...product,
+        amount: newAmount,
+      };
+    }
+
+    return product;
+  });
+  locationsItems$.next(updatedItems);
+};
+
 export const LocationContext = createContext({
   locations$,
   locationsItems$,
   locationById$,
   itemsOnLocation$,
   almostExpiredItems$,
+  updateLocationItemAmount,
 });
 
 export const LocationProvider: React.FunctionComponent = ({ children }) => {
@@ -50,6 +66,7 @@ export const LocationProvider: React.FunctionComponent = ({ children }) => {
         locationById$,
         itemsOnLocation$,
         almostExpiredItems$,
+        updateLocationItemAmount,
       }}
     >
       {children}

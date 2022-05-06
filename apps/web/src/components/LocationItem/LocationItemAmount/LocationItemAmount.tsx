@@ -1,6 +1,7 @@
 import { clamp } from "lodash";
-import React, { ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent, useCallback, useContext } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { LocationContext } from "../../../context/LocationContext";
 import {
   LocationItemAmountButton,
   LocationItemAmountElement,
@@ -8,20 +9,23 @@ import {
 } from "./LocationItemAmount.styles";
 
 type LocationItemAmountProps = {
+  id: string;
   amount: number;
-  setAmount: (amount: number) => void;
 };
 
 export const LocationItemAmount = ({
+  id,
   amount = 0,
-  setAmount,
 }: LocationItemAmountProps) => {
+  const { updateLocationItemAmount } = useContext(LocationContext);
+
   const handleSetAmount = (newAmount: number) => {
-    setAmount(newAmount);
+    // Added the + to force it to int
+    updateLocationItemAmount(id, +newAmount);
   };
 
   const handleOnModifyAmount = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10);
+    const value = +event.target.value;
     const clampedValue = clamp(value, 0, 1000);
 
     handleSetAmount(clampedValue);
@@ -29,7 +33,7 @@ export const LocationItemAmount = ({
 
   return (
     <LocationItemAmountElement>
-      <LocationItemAmountButton onClick={() => handleSetAmount(amount + 1)}>
+      <LocationItemAmountButton onClick={() => handleSetAmount(+amount + 1)}>
         <AiOutlinePlus />
       </LocationItemAmountButton>
       <LocationItemAmountInput
@@ -37,7 +41,7 @@ export const LocationItemAmount = ({
         value={amount}
         onChange={handleOnModifyAmount}
       />
-      <LocationItemAmountButton onClick={() => handleSetAmount(amount - 1)}>
+      <LocationItemAmountButton onClick={() => handleSetAmount(+amount - 1)}>
         <AiOutlineMinus />
       </LocationItemAmountButton>
     </LocationItemAmountElement>
