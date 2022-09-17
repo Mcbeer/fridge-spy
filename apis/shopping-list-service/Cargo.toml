@@ -1,0 +1,18 @@
+[package]
+name = "shopping-list-service"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [".", "entity", "migration"]
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+dotenvy = "0.15"
+uuid = { version = "1.1.2", features = ["serde", "v4"]  }
+axum = "0.5.15"
+sea-orm = { version = "^0", features = [ "sqlx-postgres", "runtime-tokio-native-tls", "macros" ] }
+entity = { path = "entity" }
+migration = { path = "migration" }

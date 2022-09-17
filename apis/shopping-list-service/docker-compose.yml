@@ -1,0 +1,14 @@
+# https://github.com/docker/awesome-compose/blob/master/react-express-mysql/docker-compose.yaml
+
+version: '3.9'
+services:
+  db:
+    image: postgres:13.4
+    restart: always
+    ports:
+      - 1500:5432
+    environment:
+      - POSTGRES_USER=develop
+      - POSTGRES_DB=develop
+      - POSTGRES_PASSWORD=develop
+  
