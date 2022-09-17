@@ -1,0 +1,21 @@
+FROM node:latest
+
+# Treat warnings as failures
+ENV CI=true
+
+# Set default port
+ENV PORT=3000
+
+WORKDIR /code
+
+# Copy package files for the initial build
+COPY package.json /
+COPY package-lock.json /
+
+# Install packages
+RUN npm ci
+
+# We assume the source code has been volume mounted
+
+# May be better to run the following with node command, due to exit signals. We try NPM as a start though
+CMD [ "npm", "start" ]

@@ -1,0 +1,166 @@
+# https://github.com/docker/awesome-compose/blob/master/react-express-mysql/docker-compose.yaml
+
+version: '3.9'
+services:
+  location-service:
+    build:
+      context: .
+      dockerfile: ./apis/location-service/Dockerfile.dev
+    environment:
+      - DATABASE_URL=postgresql://develop:develop@location-db:5432/develop?connect_timeout=300
+      - NODE_ENV=development
+      - AUTH_URL=http://user-service:3005/
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - 3001:3001
+    volumes:
+      - ./apis/location-service/src:/code/apis/location-service/src:delegated
+      - ./apis/location-service/package.json:/code/apis/location-service/package.json:delegated
+      - ./apis/location-service/tsconfig.json:/code/apis/location-service/tsconfig.json:delegated
+      - ./libs:/code/libs:delegated
+    depends_on:
+      - location-db
+      - redis
+  # product-service:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./backend
+  #   environment:
+  #     - DATABASE_URL=postgresql://develop:develop@product-db:5432/develop?connect_timeout=300
+  #     - NODE_ENV=development
+  #     - AUTH_URL=http://user-service:3005/
+  #   ports:
+  #     - 3002:80
+  #     - 9229:9229
+  #     - 9230:9230
+  #   volumes:
+  #     - ./apis/product-service/src:/code/src:delegated
+  #     - ./apis/product-service/package.json:/code/package.json:delegated
+  #     - ./apis/product-service/package-lock.json:/code/package-lock.json:delegated
+  #     - ./apis/product-service/tsconfig.json:/code/tsconfig.json:delegated
+  #     - ./apis/product-service/types.d.ts:/code/types.d.ts:delegated
+  #   depends_on:
+  #     - product-db
+  #     - redis
+  # push-service:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./backend
+  #   environment:
+  #     - DATABASE_URL=postgresql://develop:develop@user-db:5432/develop?connect_timeout=300
+  #     - NODE_ENV=development
+  #   ports:
+  #     - 3001:80
+  #     - 9229:9229
+  #     - 9230:9230
+  #   volumes:
+  #     - ./apis/user-service/src:/code/src:delegated
+  #     - ./apis/user-service/package.json:/code/package.json:delegated
+  #     - ./apis/user-service/package-lock.json:/code/package-lock.json:delegated
+  #     - ./apis/user-service/tsconfig.json:/code/tsconfig.json:delegated
+  #     - ./apis/user-service/types.d.ts:/code/types.d.ts:delegated
+  #   depends_on:
+  #     - location-db
+  #     - redis
+  # shopping-list-service:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./backend
+  #   environment:
+  #     - DATABASE_URL=postgresql://develop:develop@user-db:5432/develop?connect_timeout=300
+  #     - NODE_ENV=development
+  #   ports:
+  #     - 3001:80
+  #     - 9229:9229
+  #     - 9230:9230
+  #   volumes:
+  #     - ./apis/user-service/src:/code/src:delegated
+  #     - ./apis/user-service/package.json:/code/package.json:delegated
+  #     - ./apis/user-service/package-lock.json:/code/package-lock.json:delegated
+  #     - ./apis/user-service/tsconfig.json:/code/tsconfig.json:delegated
+  #     - ./apis/user-service/types.d.ts:/code/types.d.ts:delegated
+  #   depends_on:
+  #     - location-db
+  #     - redis
+  # user-service:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./backend
+  #   environment:
+  #     - DATABASE_URL=postgresql://develop:develop@user-db:5432/develop?connect_timeout=300
+  #     - NODE_ENV=development
+  #   ports:
+  #     - 3005:80
+  #     - 9229:9229
+  #     - 9230:9230
+  #   volumes:
+  #     - ./apis/user-service/src:/code/src:delegated
+  #     - ./apis/user-service/package.json:/code/package.json:delegated
+  #     - ./apis/user-service/package-lock.json:/code/package-lock.json:delegated
+  #     - ./apis/user-service/tsconfig.json:/code/tsconfig.json:delegated
+  #     - ./apis/user-service/types.d.ts:/code/types.d.ts:delegated
+  #   depends_on:
+  #     - user-db
+  #     - redis
+
+  # web-app:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./apps/web
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./frontend/src:/code/src:delegated
+  #     - ./frontend/public:/code/public:delegated
+  #     - ./frontend/package.json:/code/package.json:delegated
+  #     - ./frontend/package-lock.json:/code/package-lock.json:delegated
+  #     - ./frontend/tsconfig.json:/code/tsconfig.json:delegated
+  #   depends_on:
+  #     - location-service
+
+  location-db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 9000:5432
+    environment:
+      - POSTGRES_USER=develop
+      - POSTGRES_DB=develop
+      - POSTGRES_PASSWORD=develop
+  # product-db:
+  #   image: postgres:latest
+  #   restart: always
+  #   ports:
+  #     - 9001:5432
+  #   environment:
+  #     - POSTGRES_USER=develop
+  #     - POSTGRES_DB=develop
+  #     - POSTGRES_PASSWORD=develop
+  # shopping-list-db:
+  #   image: postgres:latest
+  #   restart: always
+  #   ports:
+  #     - 9002:5432
+  #   environment:
+  #     - POSTGRES_USER=develop
+  #     - POSTGRES_DB=develop
+  #     - POSTGRES_PASSWORD=develop
+  # user-db:
+  #   image: postgres:latest
+  #   restart: always
+  #   ports:
+  #     - 9010:6379
+  #   environment:
+  #     - POSTGRES_USER=develop
+  #     - POSTGRES_DB=develop
+  #     - POSTGRES_PASSWORD=develop
+
+  # Setup a Redis instance shared by all services
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - 9003:5432
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
